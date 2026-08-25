@@ -1,0 +1,104 @@
+{
+  "id": "postais-api-arch",
+  "projectId": "postais-api",
+  "nodes": [
+    {
+      "id": "client",
+      "title": "Cliente",
+      "icon": "FiUser",
+      "category": "frontend",
+      "description": "Site institucional ou consumidor da API.",
+      "responsibility": "Consumir a API REST para exibir e gerenciar postais históricos.",
+      "inputs": "Requisição HTTP",
+      "outputs": "Dados históricos",
+      "technologies": ["HTML", "CSS", "JavaScript"]
+    },
+    {
+      "id": "api",
+      "title": "FastAPI",
+      "icon": "FiZap",
+      "category": "backend",
+      "description": "API REST com CRUD de postais, upload de imagens e autenticação.",
+      "responsibility": "Gerenciar postais, uploads, autenticação e servir dados via REST.",
+      "inputs": "Dados do postal + imagem",
+      "outputs": "Postal criado/atualizado",
+      "technologies": ["FastAPI", "Pydantic", "Python"]
+    },
+    {
+      "id": "auth",
+      "title": "JWT Auth",
+      "icon": "FiLock",
+      "category": "services",
+      "description": "Autenticação para acesso ao painel administrativo.",
+      "responsibility": "Proteger endpoints administrativos e gerenciar sessões.",
+      "inputs": "Credenciais do admin",
+      "outputs": "Token JWT",
+      "technologies": ["PyJWT", "passlib", "Python"]
+    },
+    {
+      "id": "upload",
+      "title": "Upload Manager",
+      "icon": "FiUpload",
+      "category": "services",
+      "description": "Serviço de upload e processamento de imagens.",
+      "responsibility": "Receber, validar e armazenar imagens de postais históricos.",
+      "inputs": "Arquivo de imagem",
+      "outputs": "URL da imagem processada",
+      "technologies": ["Pillow", "Python", "FastAPI"]
+    },
+    {
+      "id": "orm",
+      "title": "SQLAlchemy",
+      "icon": "FiDatabase",
+      "category": "backend",
+      "description": "ORM com slugs automáticos e paginação integrada.",
+      "responsibility": "Mapear postais, categorias e usuários para o banco de dados.",
+      "inputs": "Modelos ORM",
+      "outputs": "Consultas com paginação",
+      "technologies": ["SQLAlchemy", "Python"]
+    },
+    {
+      "id": "db",
+      "title": "PostgreSQL",
+      "icon": "FiDatabase",
+      "category": "database",
+      "description": "Banco de dados para persistência do acervo histórico.",
+      "responsibility": "Armazenar postais, imagens, categorias e usuários.",
+      "inputs": "Consultas SQL",
+      "outputs": "Dados do acervo",
+      "technologies": ["PostgreSQL", "SQLAlchemy", "Alembic"]
+    },
+    {
+      "id": "tests",
+      "title": "Pytest",
+      "icon": "FiCheckCircle",
+      "category": "infrastructure",
+      "description": "Suite de testes automatizados com Pytest.",
+      "responsibility": "Garantir qualidade do código através de testes unitários e de integração.",
+      "inputs": "Testes Python",
+      "outputs": "Relatório de cobertura",
+      "technologies": ["Pytest", "httpx", "SQLAlchemy"]
+    },
+    {
+      "id": "docker",
+      "title": "Docker",
+      "icon": "FiServer",
+      "category": "infrastructure",
+      "description": "Containerização da aplicação para deploy simplificado.",
+      "responsibility": "Empacotar API e dependências em container Docker.",
+      "inputs": "Dockerfile + requirements",
+      "outputs": "Container em execução",
+      "technologies": ["Docker", "Docker Compose"]
+    }
+  ],
+  "edges": [
+    { "from": "client", "to": "api" },
+    { "from": "api", "to": "auth" },
+    { "from": "api", "to": "upload" },
+    { "from": "api", "to": "orm" },
+    { "from": "orm", "to": "db" },
+    { "from": "api", "to": "tests" },
+    { "from": "api", "to": "docker" },
+    { "from": "db", "to": "docker" }
+  ]
+}

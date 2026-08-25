@@ -1,0 +1,105 @@
+{
+  "id": "tarefa-agent-arch",
+  "projectId": "tarefa-agent",
+  "nodes": [
+    {
+      "id": "client",
+      "title": "Cliente",
+      "icon": "FiUser",
+      "category": "frontend",
+      "description": "Usuário acessando o sistema de gerenciamento de tarefas.",
+      "responsibility": "Interagir com o dashboard, kanban e chat com IA.",
+      "inputs": "Ações do usuário (cliques, formulários)",
+      "outputs": "Requisições HTTP autenticadas",
+      "technologies": ["React", "TypeScript", "TailwindCSS"]
+    },
+    {
+      "id": "frontend",
+      "title": "React App",
+      "icon": "FiMonitor",
+      "category": "frontend",
+      "description": "Interface completa com dashboard, kanban e chat integrado.",
+      "responsibility": "Renderizar UI reativa, gerenciar estado da aplicação e roteamento.",
+      "inputs": "Dados da API REST",
+      "outputs": "Requisições HTTP + WebSocket",
+      "technologies": ["React", "TypeScript", "Zustand", "React Router"]
+    },
+    {
+      "id": "api",
+      "title": "FastAPI",
+      "icon": "FiZap",
+      "category": "backend",
+      "description": "API REST para gerenciamento completo de tarefas e autenticação.",
+      "responsibility": "Expor endpoints CRUD, autenticação JWT e integração com IA Gemini.",
+      "inputs": "Requisições HTTP autenticadas",
+      "outputs": "Respostas JSON + streaming de IA",
+      "technologies": ["FastAPI", "Pydantic", "SQLAlchemy"]
+    },
+    {
+      "id": "auth",
+      "title": "JWT Auth",
+      "icon": "FiLock",
+      "category": "services",
+      "description": "Serviço de autenticação e autorização JWT.",
+      "responsibility": "Emitir, validar e renovar tokens JWT para acesso seguro.",
+      "inputs": "Credenciais do usuário",
+      "outputs": "Token JWT + Refresh Token",
+      "technologies": ["PyJWT", "Python", "passlib"]
+    },
+    {
+      "id": "gemini",
+      "title": "Google Gemini",
+      "icon": "FiCpu",
+      "category": "services",
+      "description": "Integração com IA generativa para assistente inteligente.",
+      "responsibility": "Processar linguagem natural e gerar respostas contextuais para o chat.",
+      "inputs": "Mensagem do usuário + contexto da tarefa",
+      "outputs": "Resposta gerada por IA",
+      "technologies": ["Google Gemini API", "Python", "asyncio"]
+    },
+    {
+      "id": "orm",
+      "title": "SQLAlchemy",
+      "icon": "FiDatabase",
+      "category": "backend",
+      "description": "ORM para mapeamento objeto-relacional e queries otimizadas.",
+      "responsibility": "Mapear modelos Python para tabelas PostgreSQL e executar queries.",
+      "inputs": "Operações ORM",
+      "outputs": "Consultas SQL",
+      "technologies": ["SQLAlchemy", "asyncpg", "Python"]
+    },
+    {
+      "id": "db",
+      "title": "PostgreSQL",
+      "icon": "FiDatabase",
+      "category": "database",
+      "description": "Banco de dados relacional principal do sistema.",
+      "responsibility": "Persistir dados de usuários, tarefas, quadros e mensagens.",
+      "inputs": "Consultas SQL",
+      "outputs": "Dados persistidos",
+      "technologies": ["PostgreSQL", "SQLAlchemy", "Alembic"]
+    },
+    {
+      "id": "docker",
+      "title": "Docker",
+      "icon": "FiServer",
+      "category": "infrastructure",
+      "description": "Containerização completa da aplicação e dependências.",
+      "responsibility": "Empacotar frontend, backend e banco em containers para deploy reproduzível.",
+      "inputs": "Código fonte + Dockerfile",
+      "outputs": "Containers em execução",
+      "technologies": ["Docker", "Docker Compose", "Nginx"]
+    }
+  ],
+  "edges": [
+    { "from": "client", "to": "frontend" },
+    { "from": "frontend", "to": "api" },
+    { "from": "api", "to": "auth" },
+    { "from": "api", "to": "gemini" },
+    { "from": "api", "to": "orm" },
+    { "from": "orm", "to": "db" },
+    { "from": "api", "to": "docker" },
+    { "from": "frontend", "to": "docker" },
+    { "from": "db", "to": "docker" }
+  ]
+}

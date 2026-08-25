@@ -1,0 +1,80 @@
+{
+  "id": "flora-tropical-arch",
+  "projectId": "flora-tropical",
+  "nodes": [
+    {
+      "id": "visitor",
+      "title": "Visitante",
+      "icon": "FiUser",
+      "category": "frontend",
+      "description": "Usuário navegando pelo site institucional.",
+      "responsibility": "Explorar conteúdo sobre flora tropical de forma intuitiva.",
+      "inputs": "Navegação e cliques",
+      "outputs": "Requisições de conteúdo",
+      "technologies": ["HTML", "CSS", "JavaScript"]
+    },
+    {
+      "id": "site",
+      "title": "Site Institucional",
+      "icon": "FiMonitor",
+      "category": "frontend",
+      "description": "Site completo com arquitetura modular e componentes reutilizáveis.",
+      "responsibility": "Renderizar páginas com componentes modulares e responsivos.",
+      "inputs": "Dados mockados ou de API",
+      "outputs": "Páginas renderizadas",
+      "technologies": ["HTML5", "CSS3", "JavaScript (ES6+)"]
+    },
+    {
+      "id": "modules",
+      "title": "Arquitetura Modular",
+      "icon": "FiGrid",
+      "category": "infrastructure",
+      "description": "Sistema de módulos independentes e reutilizáveis.",
+      "responsibility": "Organizar o código em módulos com responsabilidade única.",
+      "inputs": "Módulos JavaScript",
+      "outputs": "Funcionalidades isoladas",
+      "technologies": ["ES6 Modules", "CSS Modules", "JavaScript"]
+    },
+    {
+      "id": "mock",
+      "title": "Mock Data System",
+      "icon": "FiDatabase",
+      "category": "services",
+      "description": "Sistema de dados mockados preparado para futura integração com API.",
+      "responsibility": "Simular dados de API para desenvolvimento e preparar interface de integração.",
+      "inputs": "Dados mockados",
+      "outputs": "Dados formatados para UI",
+      "technologies": ["JavaScript", "JSON", "Factory Pattern"]
+    },
+    {
+      "id": "responsive",
+      "title": "Responsividade",
+      "icon": "FiMonitor",
+      "category": "infrastructure",
+      "description": "Layout adaptável a todos os tamanhos de tela.",
+      "responsibility": "Garantir que o site funcione perfeitamente em qualquer dispositivo.",
+      "inputs": "CSS responsivo",
+      "outputs": "Layout adaptado",
+      "technologies": ["CSS Grid", "Flexbox", "Media Queries"]
+    },
+    {
+      "id": "components",
+      "title": "Componentes UI",
+      "icon": "FiLayers",
+      "category": "frontend",
+      "description": "Biblioteca de componentes reutilizáveis.",
+      "responsibility": "Fornecer componentes de interface consistentes e reutilizáveis.",
+      "inputs": "Design tokens",
+      "outputs": "Componentes renderizados",
+      "technologies": ["HTML", "CSS", "JavaScript"]
+    }
+  ],
+  "edges": [
+    { "from": "visitor", "to": "site" },
+    { "from": "site", "to": "modules" },
+    { "from": "site", "to": "mock" },
+    { "from": "site", "to": "responsive" },
+    { "from": "site", "to": "components" },
+    { "from": "mock", "to": "components" }
+  ]
+}

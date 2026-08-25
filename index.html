@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sallys Martins — Desenvolvedor Backend Python. APIs escaláveis com FastAPI, SQLAlchemy, PostgreSQL e Docker.">
+  <title>Sallys Martins — Backend Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ========== NAVBAR ========== -->
+  <header class="navbar" id="navbar">
+    <div class="container navbar__inner">
+      <a href="#" class="navbar__logo">SM</a>
+      <nav class="navbar__links" id="nav-links">
+        <a href="#sobre" class="navbar__link" data-section="sobre">Sobre</a>
+        <a href="#stack" class="navbar__link" data-section="stack">Stack</a>
+        <a href="#projetos" class="navbar__link" data-section="projetos">Projetos</a>
+        <a href="#evolucao" class="navbar__link" data-section="evolucao">Evolução</a>
+        <a href="#skills" class="navbar__link" data-section="skills">Skills</a>
+        <a href="#contato" class="navbar__link" data-section="contato">Contato</a>
+      </nav>
+      <a href="https://github.com/MartinsSallys" target="_blank" rel="noopener noreferrer" class="button button-primary button-sm navbar__cta">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        GitHub
+      </a>
+      <button class="navbar__toggle" id="nav-toggle" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ========== HERO ========== -->
+    <section class="hero" id="hero">
+      <div class="container hero__inner">
+        <div class="hero__content">
+          <p class="hero__label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Disponível para oportunidades
+          </p>
+          <h1>Sallys Martins</h1>
+          <p class="hero__subtitle" id="typewriter"></p>
+          <p class="hero__description">
+            Backend Developer construindo APIs e sistemas com Python, FastAPI, PostgreSQL e Docker.
+          </p>
+          <div class="hero__actions">
+            <a href="https://github.com/MartinsSallys" target="_blank" rel="noopener noreferrer" class="button button-primary">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/sallysmartinsdev/" target="_blank" rel="noopener noreferrer" class="button button-secondary">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+        <div class="hero__visual">
+          <div class="terminal hero__terminal">
+            <div class="terminal__header">
+              <span class="terminal__header-title">sallys@dev: ~</span>
+            </div>
+            <div class="terminal__body" id="terminal-body">
+              <p class="terminal__line"><span class="terminal__prompt">sallys@dev:~$</span> whoami</p>
+              <p class="terminal__line terminal__output">sallys-martins</p>
+              <p class="terminal__line"><span class="terminal__prompt">sallys@dev:~$</span> role</p>
+              <p class="terminal__line terminal__output">Backend Developer</p>
+              <p class="terminal__line"><span class="terminal__prompt">sallys@dev:~$</span> stack</p>
+              <p class="terminal__line terminal__output">Python FastAPI PostgreSQL Docker</p>
+              <p class="terminal__line"><span class="terminal__prompt">sallys@dev:~$</span> status</p>
+              <p class="terminal__line terminal__output">building systems...</p>
+              <p class="terminal__line"><span class="terminal__prompt">sallys@dev:~$</span> <span class="terminal__cursor"></span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SOBRE ========== -->
+    <section class="section" id="sobre">
+      <div class="container">
+        <p class="section__label reveal">Quem está por trás do código</p>
+        <h2 class="section__title reveal reveal--delay-1">Sallys Martins</h2>
+        <div class="about__grid">
+          <div class="about__photo-terminal reveal reveal--delay-2">
+            <div class="about__photo-frame">
+              <div class="about__photo-header">sallys@dev: ~/about</div>
+              <div class="about__photo-body">
+                <div class="about__photo">
+                  <img src="assets/images/SallysIA.png" alt="Foto de Sallys Martins" />
+                  <span>Sallys Martins</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="about__text reveal reveal--delay-3">
+            <p>
+              Sou Sallys Martins, desenvolvedor focado em backend e construção de APIs e sistemas.
+              Atualmente trabalho principalmente com Python, FastAPI, SQLAlchemy, PostgreSQL e Docker.
+            </p>
+            <p>
+              Meu foco é evoluir cada vez mais em arquitetura, backend e engenharia de software.
+              Acredito que código bom é código que outros desenvolvedores conseguem ler, manter e estender.
+            </p>
+            <div class="about__tech">
+              <span class="badge">Python</span>
+              <span class="badge">FastAPI</span>
+              <span class="badge">SQLAlchemy</span>
+              <span class="badge">PostgreSQL</span>
+              <span class="badge">Docker</span>
+            </div>
+            <div class="about__stats">
+              <div class="stat">
+                <span class="stat__number">5+</span>
+                <span class="stat__label">Projetos construídos</span>
+              </div>
+              <div class="stat">
+                <span class="stat__number">94%</span>
+                <span class="stat__label">Cobertura de testes</span>
+              </div>
+              <div class="stat">
+                <span class="stat__number">8</span>
+                <span class="stat__label">Tecnologias na stack</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== TECH STACK — Architecture Diagram ========== -->
+    <section class="section section--alt" id="stack">
+      <div class="container">
+        <p class="section__label reveal">System Architecture</p>
+        <h2 class="section__title reveal reveal--delay-1">Arquitetura dos meus sistemas</h2>
+        <p class="section__description reveal reveal--delay-2">Como os componentes se conectam para formar uma aplicação backend.</p>
+
+        <!-- Project Selector -->
+        <div class="arch-selector reveal reveal--delay-2" id="arch-selector">
+          <button class="arch-selector__tab arch-selector__tab--active" data-project="generic">Visão Geral</button>
+          <button class="arch-selector__tab" data-project="tarefa-agent">TarefaAgent</button>
+          <button class="arch-selector__tab" data-project="beck-global">BeckGlobal</button>
+          <button class="arch-selector__tab" data-project="postais-api">Postais API</button>
+        </div>
+
+        <!-- Architecture Canvas -->
+        <div class="arch-canvas reveal reveal--delay-3" id="arch-canvas">
+          <!-- Zoom Controls -->
+          <div class="arch-controls">
+            <button class="arch-controls__btn" id="arch-zoom-in" aria-label="Zoom in">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+            <button class="arch-controls__btn" id="arch-zoom-out" aria-label="Zoom out">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+            <button class="arch-controls__btn" id="arch-zoom-reset" aria-label="Reset view">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+            </button>
+          </div>
+
+          <!-- Diagram (rendered by JS) -->
+          <div class="arch-diagram" id="arch-diagram"></div>
+
+          <!-- Tooltip -->
+          <div class="arch-tooltip" id="arch-tooltip">
+            <span class="arch-tooltip__text" id="arch-tooltip-text"></span>
+          </div>
+
+          <!-- Legend -->
+          <div class="arch-legend">
+            <span class="arch-legend__item"><span class="arch-legend__dot"></span>Core Flow</span>
+            <span class="arch-legend__item"><span class="arch-legend__dot arch-legend__dot--aux"></span>Auxiliary</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== PROJETOS — Terminal File Explorer ========== -->
+    <section class="section arch-section" id="projetos">
+      <div class="container">
+        <p class="section__label reveal">~/projects</p>
+        <h2 class="section__title reveal reveal--delay-1">Sistemas que construí</h2>
+        <p class="section__description reveal reveal--delay-2">Projetos desenvolvidos por mim — explore a estrutura de cada sistema.</p>
+
+        <!-- Terminal Window -->
+        <div class="terminal-explorer reveal reveal--delay-3" id="terminal-explorer">
+          <div class="terminal-explorer__header">
+            <div class="terminal-explorer__dots">
+              <span class="terminal-explorer__dot terminal-explorer__dot--red"></span>
+              <span class="terminal-explorer__dot terminal-explorer__dot--yellow"></span>
+              <span class="terminal-explorer__dot terminal-explorer__dot--green"></span>
+            </div>
+            <span class="terminal-explorer__path" id="terminal-path">sallys@dev: ~/projects</span>
+          </div>
+          <div class="terminal-explorer__body" id="explorer-body">
+            <div class="terminal-explorer__line">
+              <span class="terminal-explorer__prompt">$</span>
+              <span class="terminal-explorer__cmd">ls</span>
+            </div>
+            <div class="terminal-explorer__output"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== EVOLUÇÃO ========== -->
+    <section class="section section--alt" id="evolucao">
+      <div class="container">
+        <p class="section__label reveal">Evolução técnica</p>
+        <h2 class="section__title reveal reveal--delay-1">Minha jornada</h2>
+        <div class="staircase">
+          <div class="staircase__line"></div>
+
+          <div class="staircase__step reveal">
+            <div class="staircase__dot staircase__dot--active"></div>
+            <div class="staircase__card">
+              <span class="staircase__number">01</span>
+              <h3 class="staircase__title">O Começo</h3>
+              <p class="staircase__desc">Primeiros contatos com lógica de programação e desenvolvimento web. HTML, CSS e os primeiros passos na programação.</p>
+              <div class="staircase__tags"><span class="badge badge--sm badge--outline">HTML5</span><span class="badge badge--sm badge--outline">CSS3</span></div>
+            </div>
+          </div>
+
+          <div class="staircase__step reveal">
+            <div class="staircase__dot staircase__dot--active"></div>
+            <div class="staircase__card">
+              <span class="staircase__number">02</span>
+              <h3 class="staircase__title">JavaScript</h3>
+              <p class="staircase__desc">Comecei a adicionar interatividade e lógica nas páginas. Aplicações dinâmicas e manipulação do DOM.</p>
+              <div class="staircase__tags"><span class="badge badge--sm badge--outline">JavaScript</span><span class="badge badge--sm badge--outline">ES6+</span></div>
+            </div>
+          </div>
+
+          <div class="staircase__step reveal">
+            <div class="staircase__dot staircase__dot--active"></div>
+            <div class="staircase__card">
+              <span class="staircase__number">03</span>
+              <h3 class="staircase__title">Python</h3>
+              <p class="staircase__desc">Migrei para o backend e automação de processos. Sintaxe, funções, estruturas de dados e POO.</p>
+              <div class="staircase__tags"><span class="badge badge--sm badge--outline">Python</span><span class="badge badge--sm badge--outline">Pytest</span></div>
+            </div>
+          </div>
+
+          <div class="staircase__step reveal">
+            <div class="staircase__dot staircase__dot--active"></div>
+            <div class="staircase__card">
+              <span class="staircase__number">04</span>
+              <h3 class="staircase__title">Banco de Dados</h3>
+              <p class="staircase__desc">Modelagem e persistência de dados relacionais. SQL, PostgreSQL e ORM com SQLAlchemy.</p>
+              <div class="staircase__tags"><span class="badge badge--sm badge--outline">PostgreSQL</span><span class="badge badge--sm badge--outline">SQLAlchemy</span><span class="badge badge--sm badge--outline">Alembic</span></div>
+            </div>
+          </div>
+
+          <div class="staircase__step reveal">
+            <div class="staircase__dot staircase__dot--active"></div>
+            <div class="staircase__card">
+              <span class="staircase__number">05</span>
+              <h3 class="staircase__title">APIs</h3>
+              <p class="staircase__desc">Comecei a entender como sistemas conversam através de HTTP e APIs REST. FastAPI, Pydantic e documentação.</p>
+              <div class="staircase__tags"><span class="badge badge--sm badge--outline">FastAPI</span><span class="badge badge--sm badge--outline">Pydantic</span><span class="badge badge--sm badge--outline">REST</span></div>
+            </div>
+          </div>
+
+          <div class="staircase__step reveal">
+            <div class="staircase__dot staircase__dot--active"></div>
+            <div class="staircase__card">
+              <span class="staircase__number">06</span>
+              <h3 class="staircase__title">Backend</h3>
+              <p class="staircase__desc">Autenticação, testes, arquitetura de sistemas. Construção de APIs robustas e escaláveis.</p>
+              <div class="staircase__tags"><span class="badge badge--sm badge--outline">JWT</span><span class="badge badge--sm badge--outline">Clean Architecture</span><span class="badge badge--sm badge--outline">Testes</span></div>
+            </div>
+          </div>
+
+          <div class="staircase__step reveal">
+            <div class="staircase__dot staircase__dot--active"></div>
+            <div class="staircase__card">
+              <span class="staircase__number">07</span>
+              <h3 class="staircase__title">Infraestrutura</h3>
+              <p class="staircase__desc">Containerização, ambientes reproduzíveis e deploy simplificado com Docker.</p>
+              <div class="staircase__tags"><span class="badge badge--sm badge--outline">Docker</span><span class="badge badge--sm badge--outline">Docker Compose</span></div>
+            </div>
+          </div>
+
+          <div class="staircase__step reveal">
+            <div class="staircase__dot staircase__dot--current"></div>
+            <div class="staircase__card staircase__card--current">
+              <span class="staircase__number">08</span>
+              <h3 class="staircase__title">Hoje</h3>
+              <p class="staircase__desc">Construção de sistemas completos, arquitetura de software, projetos reais e evolução contínua em engenharia.</p>
+              <div class="staircase__tags">
+                <span class="badge badge--sm">FastAPI</span><span class="badge badge--sm">PostgreSQL</span><span class="badge badge--sm">Docker</span><span class="badge badge--sm">Arquitetura</span>
+              </div>
+              <span class="staircase__here"><span class="staircase__here-dot"></span> you are here</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SKILLS ========== -->
+    <section class="section" id="skills">
+      <div class="container">
+        <p class="section__label reveal">Skills</p>
+        <h2 class="section__title reveal reveal--delay-1">O que sei fazer</h2>
+        <div class="skills-grid">
+
+          <div class="skill-card reveal">
+            <h3 class="skill-card__title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              Backend
+            </h3>
+            <ul class="skill-card__list">
+              <li class="skill-card__item">Criação de APIs REST</li>
+              <li class="skill-card__item">CRUD completo</li>
+              <li class="skill-card__item">Autenticação e autorização</li>
+              <li class="skill-card__item">Validação de dados</li>
+              <li class="skill-card__item">Arquitetura de serviços</li>
+              <li class="skill-card__item">Integração com banco de dados</li>
+              <li class="skill-card__item">Tratamento de erros</li>
+            </ul>
+            <div class="skill-card__projects">
+              <span class="skill-card__projects-title">Utilizado em</span>
+              <span class="skill-card__project-link">TarefaAgent</span>
+              <span class="skill-card__project-link">BeckGlobal</span>
+              <span class="skill-card__project-link">Postais API</span>
+            </div>
+          </div>
+
+          <div class="skill-card reveal">
+            <h3 class="skill-card__title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+              Database
+            </h3>
+            <ul class="skill-card__list">
+              <li class="skill-card__item">SQL e consultas complexas</li>
+              <li class="skill-card__item">PostgreSQL</li>
+              <li class="skill-card__item">Modelagem de dados</li>
+              <li class="skill-card__item">Relacionamentos</li>
+              <li class="skill-card__item">ORM com SQLAlchemy</li>
+              <li class="skill-card__item">Migrações com Alembic</li>
+            </ul>
+            <div class="skill-card__projects">
+              <span class="skill-card__projects-title">Utilizado em</span>
+              <span class="skill-card__project-link">TarefaAgent</span>
+              <span class="skill-card__project-link">BeckGlobal</span>
+              <span class="skill-card__project-link">Postais API</span>
+            </div>
+          </div>
+
+          <div class="skill-card reveal">
+            <h3 class="skill-card__title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+              Testing
+            </h3>
+            <ul class="skill-card__list">
+              <li class="skill-card__item">Pytest</li>
+              <li class="skill-card__item">Testes de API</li>
+              <li class="skill-card__item">Testes de serviços</li>
+              <li class="skill-card__item">Cobertura de código</li>
+              <li class="skill-card__item">Organização de testes</li>
+            </ul>
+            <div class="skill-card__projects">
+              <span class="skill-card__projects-title">Utilizado em</span>
+              <span class="skill-card__project-link">TarefaAgent</span>
+              <span class="skill-card__project-link">Postais API</span>
+            </div>
+          </div>
+
+          <div class="skill-card reveal">
+            <h3 class="skill-card__title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+              Infrastructure
+            </h3>
+            <ul class="skill-card__list">
+              <li class="skill-card__item">Docker e containerização</li>
+              <li class="skill-card__item">Docker Compose</li>
+              <li class="skill-card__item">Variáveis de ambiente</li>
+              <li class="skill-card__item">Ambientes de desenvolvimento</li>
+            </ul>
+            <div class="skill-card__projects">
+              <span class="skill-card__projects-title">Utilizado em</span>
+              <span class="skill-card__project-link">TarefaAgent</span>
+              <span class="skill-card__project-link">BeckGlobal</span>
+              <span class="skill-card__project-link">Postais API</span>
+            </div>
+          </div>
+
+          <div class="skill-card reveal">
+            <h3 class="skill-card__title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              Engineering
+            </h3>
+            <ul class="skill-card__list">
+              <li class="skill-card__item">Git e controle de versão</li>
+              <li class="skill-card__item">GitHub e colaboração</li>
+              <li class="skill-card__item">Organização de projetos</li>
+              <li class="skill-card__item">Arquitetura de software</li>
+              <li class="skill-card__item">Documentação técnica</li>
+            </ul>
+            <div class="skill-card__projects">
+              <span class="skill-card__projects-title">Utilizado em</span>
+              <span class="skill-card__project-link">Todos os projetos</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== CONTATO ========== -->
+    <section class="section section--alt" id="contato">
+      <div class="container">
+        <div class="contato">
+          <p class="section__label reveal">Contato</p>
+          <h2 class="section__title reveal reveal--delay-1">Vamos conversar?</h2>
+          <p class="contato__desc reveal reveal--delay-2">
+            Aberto a oportunidades, colaborações e conversas sobre tecnologia.
+            Me chame no LinkedIn ou por email.
+          </p>
+          <div class="contato__links reveal reveal--delay-3">
+            <a href="https://github.com/MartinsSallys" target="_blank" rel="noopener noreferrer" class="button button-secondary">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/sallysmartinsdev/" target="_blank" rel="noopener noreferrer" class="button button-secondary">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+            <a href="mailto:sallys@email.com" class="button button-secondary">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              Email
+            </a>
+          </div>
+          <div class="contato__cta reveal reveal--delay-4">
+            <a href="/curriculo.pdf" class="button button-primary">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download Currículo
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p class="footer__copy">&copy; 2026 Sallys Martins. Todos os direitos reservados.</p>
+      <div class="footer__links">
+        <a href="https://github.com/MartinsSallys" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/sallysmartinsdev/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+        <a href="mailto:sallys@email.com" aria-label="Email">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+{
+  "id": "postais-frontend-arch",
+  "projectId": "postais-frontend",
+  "nodes": [
+    {
+      "id": "visitor",
+      "title": "Visitante",
+      "icon": "FiUser",
+      "category": "frontend",
+      "description": "Usuário navegando pelo site de memória histórica.",
+      "responsibility": "Explorar a timeline histórica e comparar imagens antes/depois.",
+      "inputs": "Navegação e cliques",
+      "outputs": "Requisições de conteúdo",
+      "technologies": ["HTML", "CSS", "JavaScript"]
+    },
+    {
+      "id": "pages",
+      "title": "Site Institucional",
+      "icon": "FiMonitor",
+      "category": "frontend",
+      "description": "Site completo com timeline, galeria e painel administrativo.",
+      "responsibility": "Renderizar conteúdo estático com transições suaves e layout responsivo.",
+      "inputs": "Dados do acervo histórico",
+      "outputs": "Páginas renderizadas",
+      "technologies": ["HTML5", "CSS3", "JavaScript"]
+    },
+    {
+      "id": "timeline",
+      "title": "Timeline Histórica",
+      "icon": "FiClock",
+      "category": "frontend",
+      "description": "Componente interativo de linha do tempo histórica.",
+      "responsibility": "Exibir eventos históricos em ordem cronológica com animações.",
+      "inputs": "Dados históricos",
+      "outputs": "Timeline renderizada",
+      "technologies": ["CSS Animations", "IntersectionObserver"]
+    },
+    {
+      "id": "compare",
+      "title": "Antes e Depois",
+      "icon": "FiRepeat",
+      "category": "frontend",
+      "description": "Comparador visual de imagens históricas.",
+      "responsibility": "Permitir comparação interativa entre imagens antigas e atuais.",
+      "inputs": "Par de imagens",
+      "outputs": "Visualização comparativa",
+      "technologies": ["CSS", "JavaScript", "Canvas"]
+    },
+    {
+      "id": "admin",
+      "title": "Painel Admin",
+      "icon": "FiSettings",
+      "category": "frontend",
+      "description": "Painel administrativo para gerenciar conteúdo.",
+      "responsibility": "Permitir gerenciamento de postais, categorias e usuários.",
+      "inputs": "Ações do administrador",
+      "outputs": "Conteúdo gerenciado",
+      "technologies": ["JavaScript", "CSS", "HTML"]
+    },
+    {
+      "id": "responsive",
+      "title": "Design Responsivo",
+      "icon": "FiMonitor",
+      "category": "infrastructure",
+      "description": "Layout adaptável para todos os dispositivos.",
+      "responsibility": "Garantir experiência consistente em desktop, tablet e mobile.",
+      "inputs": "CSS + Media Queries",
+      "outputs": "Layout adaptado",
+      "technologies": ["CSS Grid", "Flexbox", "Media Queries"]
+    }
+  ],
+  "edges": [
+    { "from": "visitor", "to": "pages" },
+    { "from": "pages", "to": "timeline" },
+    { "from": "pages", "to": "compare" },
+    { "from": "pages", "to": "admin" },
+    { "from": "pages", "to": "responsive" },
+    { "from": "visitor", "to": "admin" }
+  ]
+}

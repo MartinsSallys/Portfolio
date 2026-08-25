@@ -1,0 +1,105 @@
+{
+  "id": "beck-global-arch",
+  "projectId": "beck-global",
+  "nodes": [
+    {
+      "id": "client",
+      "title": "Cliente",
+      "icon": "FiUser",
+      "category": "frontend",
+      "description": "Consumidor da API REST (aplicação, Postman ou frontend).",
+      "responsibility": "Realizar requisições HTTP autenticadas para os endpoints CRUD.",
+      "inputs": "Requisição HTTP",
+      "outputs": "Resposta JSON",
+      "technologies": ["React", "Axios", "Postman"]
+    },
+    {
+      "id": "api",
+      "title": "FastAPI",
+      "icon": "FiZap",
+      "category": "backend",
+      "description": "Boilerplate de API REST com documentação automática e health check.",
+      "responsibility": "Expor endpoints CRUD, health check e autenticação com documentação Swagger.",
+      "inputs": "Requisição HTTP",
+      "outputs": "Resposta HTTP + OpenAPI docs",
+      "technologies": ["FastAPI", "Pydantic", "Uvicorn"]
+    },
+    {
+      "id": "auth",
+      "title": "JWT Auth",
+      "icon": "FiLock",
+      "category": "services",
+      "description": "Middleware de autenticação JWT integrado ao FastAPI.",
+      "responsibility": "Proteger endpoints com tokens JWT e gerenciar autenticação.",
+      "inputs": "Credenciais",
+      "outputs": "Token JWT",
+      "technologies": ["PyJWT", "python-decouple"]
+    },
+    {
+      "id": "orm",
+      "title": "SQLAlchemy",
+      "icon": "FiDatabase",
+      "category": "backend",
+      "description": "ORM com suporte a migrations via Alembic.",
+      "responsibility": "Gerenciar modelos, sessões e migrations do banco de dados.",
+      "inputs": "Modelos Python",
+      "outputs": "Tabelas + Queries",
+      "technologies": ["SQLAlchemy", "Alembic", "Python"]
+    },
+    {
+      "id": "migrations",
+      "title": "Alembic",
+      "icon": "FiGitBranch",
+      "category": "infrastructure",
+      "description": "Sistema de migrações versionadas para evolução do schema.",
+      "responsibility": "Criar e aplicar migrações de banco de forma reproduzível.",
+      "inputs": "Comandos Alembic",
+      "outputs": "Schema atualizado",
+      "technologies": ["Alembic", "SQLAlchemy"]
+    },
+    {
+      "id": "config",
+      "title": "Config via .env",
+      "icon": "FiSettings",
+      "category": "infrastructure",
+      "description": "Gerenciamento de configurações via variáveis de ambiente.",
+      "responsibility": "Centralizar configurações sensíveis e específicas do ambiente.",
+      "inputs": "Arquivo .env",
+      "outputs": "Configurações validadas",
+      "technologies": ["python-decouple", "Pydantic Settings"]
+    },
+    {
+      "id": "db",
+      "title": "PostgreSQL",
+      "icon": "FiDatabase",
+      "category": "database",
+      "description": "Banco de dados relacional para persistência dos dados.",
+      "responsibility": "Armazenar e recuperar dados com integridade relacional.",
+      "inputs": "Consultas SQL",
+      "outputs": "Resultados das consultas",
+      "technologies": ["PostgreSQL", "SQLAlchemy"]
+    },
+    {
+      "id": "docker",
+      "title": "Docker Compose",
+      "icon": "FiServer",
+      "category": "infrastructure",
+      "description": "Orquestração multi-container para ambiente de desenvolvimento.",
+      "responsibility": "Gerenciar serviços de API, banco de dados e dependências.",
+      "inputs": "docker-compose.yml",
+      "outputs": "Ambiente completo em execução",
+      "technologies": ["Docker", "Docker Compose"]
+    }
+  ],
+  "edges": [
+    { "from": "client", "to": "api" },
+    { "from": "api", "to": "auth" },
+    { "from": "api", "to": "orm" },
+    { "from": "orm", "to": "migrations" },
+    { "from": "orm", "to": "db" },
+    { "from": "migrations", "to": "db" },
+    { "from": "api", "to": "config" },
+    { "from": "api", "to": "docker" },
+    { "from": "db", "to": "docker" }
+  ]
+}
