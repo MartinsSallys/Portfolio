@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +15,6 @@
   <!-- ========== NAVBAR ========== -->
   <header class="navbar" id="navbar">
     <div class="container navbar__inner">
-      <a href="#" class="navbar__logo">SM</a>
       <nav class="navbar__links" id="nav-links">
         <a href="#sobre" class="navbar__link" data-section="sobre">Sobre</a>
         <a href="#stack" class="navbar__link" data-section="stack">Stack</a>
@@ -24,10 +23,16 @@
         <a href="#skills" class="navbar__link" data-section="skills">Skills</a>
         <a href="#contato" class="navbar__link" data-section="contato">Contato</a>
       </nav>
-      <a href="https://github.com/MartinsSallys" target="_blank" rel="noopener noreferrer" class="button button-primary button-sm navbar__cta">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-        GitHub
-      </a>
+      <div class="navbar__actions">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Alternar tema">
+          <svg class="theme-toggle__icon theme-toggle__icon--dark" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="theme-toggle__icon theme-toggle__icon--light" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <a href="https://github.com/MartinsSallys" target="_blank" rel="noopener noreferrer" class="button button-primary button-sm navbar__cta">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          GitHub
+        </a>
+      </div>
       <button class="navbar__toggle" id="nav-toggle" aria-label="Abrir menu">
         <span></span><span></span><span></span>
       </button>
@@ -38,13 +43,117 @@
 
     <!-- ========== HERO ========== -->
     <section class="hero" id="hero">
+      <div class="hero__bg">
+        <div class="hero__grid"></div>
+        <div class="hero__glow"></div>
+
+        <!-- Floating code snippets -->
+        <div class="hero__code hero__code--1">
+          <span>def</span> create_api():<br>
+          &nbsp;&nbsp;app = FastAPI()<br>
+          &nbsp;&nbsp;<span>return</span> app
+        </div>
+        <div class="hero__code hero__code--2">
+          <span>SELECT</span> * <span>FROM</span><br>
+          users <span>WHERE</span> active<br>
+          = <span>TRUE</span>;
+        </div>
+        <div class="hero__code hero__code--3">
+          docker compose up -d
+        </div>
+        <div class="hero__code hero__code--4">
+          <span>class</span> User(Base):<br>
+          &nbsp;&nbsp;__tablename__ =<br>
+          &nbsp;&nbsp;<span>"users"</span>
+        </div>
+        <div class="hero__code hero__code--5">
+          <span>@app</span>.get(<span>"/api"</span>)<br>
+          <span>async def</span> root():<br>
+          &nbsp;&nbsp;<span>return</span> {<span>"ok"</span>: True}
+        </div>
+
+        <!-- Floating tech icons -->
+        <div class="hero__icon hero__icon--1">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <div class="hero__icon hero__icon--2">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+        </div>
+        <div class="hero__icon hero__icon--3">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+        </div>
+        <div class="hero__icon hero__icon--4">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <div class="hero__icon hero__icon--5">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </div>
+
+        <!-- Tux the Linux Penguin -->
+        <div class="hero__tux">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="currentColor">
+            <ellipse cx="32" cy="52" rx="16" ry="10" fill="#1a1a2e" opacity="0.9"/>
+            <ellipse cx="32" cy="48" rx="14" ry="14" fill="#1a1a2e"/>
+            <circle cx="32" cy="32" r="16" fill="#f5f5f5"/>
+            <ellipse cx="32" cy="36" rx="11" ry="10" fill="#f5f5f5"/>
+            <circle cx="26" cy="30" r="4" fill="#1a1a2e"/>
+            <circle cx="38" cy="30" r="4" fill="#1a1a2e"/>
+            <circle cx="27" cy="29" r="1.5" fill="#fff"/>
+            <circle cx="39" cy="29" r="1.5" fill="#fff"/>
+            <ellipse cx="32" cy="36" rx="5" ry="3.5" fill="#f59e0b"/>
+            <path d="M29 35 Q32 40 35 35" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round"/>
+            <ellipse cx="22" cy="44" rx="5" ry="7" fill="#f5f5f5"/>
+            <ellipse cx="42" cy="44" rx="5" ry="7" fill="#f5f5f5"/>
+            <ellipse cx="20" cy="54" rx="7" ry="3" fill="#f59e0b"/>
+            <ellipse cx="44" cy="54" rx="7" ry="3" fill="#f59e0b"/>
+          </svg>
+        </div>
+
+        <!-- Tech Icons - floating everywhere -->
+        <div class="hero__tech hero__tech--python">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M11.914 0C5.82 0 6.2 2.656 6.2 2.656l.007 2.752h5.814v.826H3.5S0 5.789 0 11.968s3.213 5.728 3.213 5.728h1.91v-2.731s-.103-3.213 3.154-3.213h5.491s3.053.049 3.053-2.952V3.568S18.284 0 11.914 0zM8.708 1.84a1.06 1.06 0 0 1 1.06 1.06 1.06 1.06 0 0 1-1.06 1.06A1.06 1.06 0 0 1 7.648 2.9 1.06 1.06 0 0 1 8.708 1.84z"/>
+            <path d="M12.086 24c6.094 0 5.714-2.656 5.714-2.656l-.007-2.752h-5.814v-.826H20.5S24 18.211 24 12.032s-3.213-5.728-3.213-5.728h-1.91v2.731s.103 3.213-3.154 3.213h-5.491s-3.053-.049-3.053 2.952v5.556S5.716 24 12.086 24zm3.206-1.84a1.06 1.06 0 0 1-1.06-1.06 1.06 1.06 0 0 1 1.06-1.06 1.06 1.06 0 0 1 1.06 1.06 1.06 1.06 0 0 1-1.06 1.06z"/>
+          </svg>
+        </div>
+        <div class="hero__tech hero__tech--fastapi">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="hero__tech hero__tech--docker">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor" opacity="0.8">
+            <path d="M13.983 11.078h2.119a.186.186 0 00.186-.186V9.006a.186.186 0 00-.186-.186h-2.119a.186.186 0 00-.186.186v1.886c0 .103.083.186.186.186zm-2.954-5.43h2.118a.186.186 0 00.186-.185V3.577a.186.186 0 00-.186-.186h-2.118a.186.186 0 00-.186.186v1.886c0 .102.084.185.186.185zm0 2.716h2.118a.187.187 0 00.186-.186V6.292a.186.186 0 00-.186-.186h-2.118a.186.186 0 00-.186.186v1.886c0 .103.084.186.186.186zm-2.93 0h2.12a.186.186 0 00.184-.186V6.292a.185.185 0 00-.185-.186H8.1a.186.186 0 00-.185.186v1.886c0 .103.083.186.185.186zm-2.964 0h2.119a.186.186 0 00.185-.186V6.292a.186.186 0 00-.185-.186H5.136a.186.186 0 00-.186.186v1.886c0 .103.084.186.186.186zm5.893 2.715h2.118a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.118a.186.186 0 00-.186.186v1.887c0 .102.084.185.186.185zm-2.93 0h2.12a.185.185 0 00.184-.185V9.006a.185.185 0 00-.184-.186h-2.12a.186.186 0 00-.184.186v1.887c0 .102.083.185.185.185zm-2.964 0h2.119a.185.185 0 00.185-.185V9.006a.186.186 0 00-.185-.186H5.136a.186.186 0 00-.186.186v1.887c0 .102.084.185.186.185zm-2.92 0h2.12a.185.185 0 00.184-.185V9.006a.185.185 0 00-.184-.186h-2.12a.185.185 0 00-.184.186v1.887c0 .102.083.185.185.185zM23.763 9.89c-.065-.051-.672-.51-1.954-.51-.338.001-.676.03-1.01.087-.248-1.7-1.653-2.53-1.716-2.566l-.344-.199-.226.327c-.284.438-.49.922-.612 1.43-.23.97-.09 1.882.403 2.661-.595.332-1.55.413-1.744.42H.751a.751.751 0 00-.75.748 11.687 11.687 0 00.692 4.062c.545 1.428 1.355 2.48 2.41 3.124 1.18.723 3.1 1.137 5.275 1.137.983.003 1.963-.086 2.93-.266a12.248 12.248 0 003.823-1.389c.98-.567 1.86-1.288 2.61-2.136 1.252-1.418 1.998-2.997 2.553-4.4h.221c1.372 0 2.215-.549 2.68-1.009.309-.293.55-.65.707-1.046l.098-.288z"/>
+          </svg>
+        </div>
+        <div class="hero__tech hero__tech--postgres">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <ellipse cx="12" cy="5" rx="9" ry="3"/>
+            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+          </svg>
+        </div>
+        <div class="hero__tech hero__tech--git">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="18" cy="18" r="3"/>
+            <circle cx="6" cy="6" r="3"/>
+            <path d="M6 21V9a9 9 0 0 0 9 9"/>
+          </svg>
+        </div>
+        <div class="hero__tech hero__tech--linux">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587-.003 1.23-.269 2.26-.334.699-.058 1.574.267 2.577.2.025.134.063.198.114.333l.003.003c.391.778 1.113 1.368 1.884 1.43.083.006.166.01.249.013a.55.55 0 00.13-.02l.007.003.007.003.005.002.012.006.03.014c.074.035.147.068.222.1.148.065.3.121.455.169l.058.016.03.01.015.005.014.004.033.01.094.029.066.02.032.01c.2.057.388.096.565.123.212.032.41.043.6.043h.052a2.376 2.376 0 00.313-.022l.007-.001.015-.002a3.47 3.47 0 00.592-.15l.027-.008.013-.005.014-.005.052-.023.041-.02c.385-.18.731-.44 1.015-.778l.018-.023.012-.017.012-.017c.076-.103.146-.21.21-.32.207-.356.327-.76.327-1.183v-.039l.003-.038c.025-.38.013-.762-.038-1.139a.107.107 0 01.027-.086c.115-.115.221-.24.314-.378.18-.264.318-.56.403-.875.086-.316.118-.65.094-.984a3.35 3.35 0 00-.076-.422l-.007-.03c-.168-.72-.53-1.398-1.04-1.944-.104-.111-.217-.212-.336-.304a5.21 5.21 0 01-.15-.123l-.018-.015-.014-.012-.022-.018a5.2 5.2 0 00-1.576-.792 5.24 5.24 0 00-.603-.171l-.027-.006a5.308 5.308 0 00-.576-.1l-.067-.005a5.32 5.32 0 00-.394-.015h-.074a5.18 5.18 0 00-.984.118l-.063.015a4.997 4.997 0 00-.726.212l-.04.015-.022.009-.014.006-.032.014c-.35.16-.663.373-.933.634a2.583 2.583 0 00-.128-.008c-.798-.045-1.478.28-2.06.818l-.026.025-.014.014c-.323.328-.568.727-.718 1.17-.153.438-.207.909-.159 1.371a3.437 3.437 0 00.1 1.084l.004.016c.028.134.062.265.102.393a.106.106 0 01-.018.087c-.185.202-.356.42-.508.652-.274.418-.464.894-.555 1.4-.091.507-.085 1.028.017 1.531.009.044.018.087.03.13a.073.073 0 01.007.036l-.002.006.005-.003a.97.97 0 01.186.144c.228.205.427.44.587.7.16.261.28.545.353.845.02.085.035.17.046.256.034.192.04.387.012.58a.103.103 0 01-.01.033l.014-.038c.104.286.132.596.08.9a1.88 1.88 0 01-.228.624l-.012.021c-.118.187-.258.36-.417.514-.161.156-.341.288-.534.394-.098.055-.2.103-.305.146l-.027.011-.008.003-.006.003a1.49 1.49 0 01-.335.105l-.037.008-.014.002-.013.002a1.3 1.3 0 01-.332.017h-.012l-.025-.003a1.05 1.05 0 01-.233-.056l-.024-.008-.016-.007-.013-.006a.64.64 0 00-.092-.046l-.014-.006-.033-.013-.03-.011a.93.93 0 01-.162-.083l-.01-.006-.008-.006-.005-.004-.013-.01a.99.99 0 00-.079-.06l-.004-.003-.002-.002a.36.36 0 01-.033-.026l-.007-.007-.003-.004a.2.2 0 01-.013-.017l-.002-.003-.001-.002v-.003a.09.09 0 01-.005-.012v-.003c-.057-.311-.077-.631-.056-.948.002-.032.006-.063.012-.094.02-.133.056-.263.106-.387.148-.356.423-.65.765-.841.06-.034.122-.063.186-.088l.01-.004.012-.005a.83.83 0 01.17-.052l.008-.002.009-.002a2.22 2.22 0 01.422-.025h.018l.03.002.014.001c.335.017.65.096.936.232.118.057.23.123.336.198l.014.01.007.006.006.005.006.005c.245.21.44.465.576.755.056.12.104.245.143.374.068.192.103.394.104.598v.004l-.002.024v.01c-.005.231-.04.46-.103.682-.063.222-.156.433-.275.63l-.007.011-.005.01-.005.009-.005.009-.01.017-.02.033-.013.019-.016.022-.06.082c-.128.163-.282.306-.456.421-.175.116-.371.199-.578.245l-.014.003-.012.002-.014.002-.02.003-.016.002-.017.001h-.015l-.016-.001-.015-.002-.016-.003-.014-.004-.014-.004-.013-.005a.8.8 0 01-.116-.075l-.013-.01-.01-.009-.01-.01a.82.82 0 01-.118-.146l-.007-.011-.006-.012-.005-.01-.006-.013-.004-.009-.005-.012-.003-.008-.004-.012-.002-.007-.003-.01-.002-.007-.002-.008-.001-.007v-.01l-.001-.007v-.018c-.003-.224.01-.449.038-.67.016-.11.038-.22.066-.327.076-.298.196-.581.355-.841.037-.06.077-.118.12-.174.077-.1.163-.192.257-.276.026-.024.053-.046.082-.067l.018-.013.015-.01c.145-.093.303-.169.47-.226.165-.057.338-.094.514-.11l.03-.003.031-.002.031-.001c.368-.004.738.027 1.1.093l.029.006.027.006.028.008c.132.038.262.082.388.132l.034.015.03.014.032.016c.19.1.367.222.525.363.09.08.172.168.246.262l.013.018.008.012.006.01.006.01.005.01.005.01.003.007.004.01.002.006.003.01.001.005.002.008v.005c.001.005.002.01.002.015v.016c-.001.098-.01.196-.027.293-.037.212-.108.417-.21.606-.103.19-.24.36-.4.502-.036.032-.075.062-.116.089l-.02.014-.013.009-.015.01-.042.028-.027.016-.027.015-.056.03-.032.015-.03.013-.059.024-.032.012-.034.012-.061.02-.035.01-.037.01-.067.017-.04.009-.041.008-.072.014-.04.007-.042.006-.074.01-.043.005-.045.004-.078.007-.045.003-.048.002-.081.002h-.016l-.026.001-.015.001-.007.001-.014.001-.028.001-.02.001-.023.001-.018.001-.022.001-.022.001-.02.001-.021.001-.02.001-.02.001-.018.001-.02.001-.017.001-.019.001-.016.001-.018.001-.015.001-.017.001h-.014l-.016-.001-.014-.001-.016-.001-.013-.001-.015-.001-.013-.001-.014-.002-.012-.002-.013-.002-.011-.002-.012-.003-.01-.003-.011-.004-.009-.004-.01-.005-.008-.005-.009-.006-.007-.006-.008-.008-.006-.008-.007-.01-.005-.01-.006-.011-.005-.011-.006-.012-.006-.012-.006-.013-.007-.013-.007-.014-.008-.014-.008-.015-.009-.015-.01-.016-.01-.016-.012-.017-.012-.017-.014-.017-.015-.017-.017-.016-.018-.016-.02-.015-.022-.014-.024-.013-.026-.011-.029-.01-.031-.008-.035-.006-.038-.005-.044-.003-.05-.002-.06-.001h-.039l-.031.001-.023.002-.02.002-.018.003-.016.003-.015.004-.014.005-.013.005-.012.006-.011.007-.01.008-.009.009-.008.01-.008.011-.007.012-.006.014-.005.015-.005.017-.004.019-.003.021-.003.024-.002.028-.001.032v.013l.002.015.003.014.004.013.005.012.006.012.007.01.008.01.009.009.01.009.011.008.012.007.014.007.015.006.017.005.019.004.021.004.024.003.028.002.034.001h.016c.062-.001.124-.003.186-.006.251-.014.498-.043.739-.088.242-.045.478-.105.705-.18.113-.037.223-.078.33-.124l.015-.007.015-.007.015-.008.015-.008.015-.009.015-.009.015-.01.014-.01.014-.01.014-.011.013-.012.012-.012.012-.013.011-.014.01-.014.009-.015.008-.016.007-.017.006-.018.005-.019.004-.021.003-.022.002-.024.001-.026h-.01l-.028-.003-.025-.004-.022-.005-.021-.006-.019-.007-.018-.008-.017-.009-.015-.01-.014-.011-.013-.012-.012-.013-.01-.014-.009-.016-.008-.017-.006-.018-.005-.02-.004-.022-.002-.024-.001-.027v-.013l.002-.015.003-.014.004-.013.005-.012.006-.012.007-.01.008-.01.009-.009.01-.009.011-.008.012-.007.014-.007.015-.006.017-.005.019-.004.021-.004.024-.003.028-.002.034-.001h.016c.062-.001.124-.003.186-.006.251-.014.498-.043.739-.088.242-.045.478-.105.705-.18.113-.037.223-.078.33-.124l.015-.007.015-.007.015-.008.015-.008.015-.009.015-.009.015-.01.014-.01.014-.01.014-.011.013-.012.012-.012.012-.013.011-.014.01-.014.009-.015.008-.016.007-.017.006-.018.005-.019.004-.021.003-.022.002-.024.001-.026h-.01l-.028-.003-.025-.004-.022-.005-.021-.006-.019-.007-.018-.008-.017-.009-.015-.01-.014-.011-.013-.012-.012-.013-.01-.014-.009-.016-.008-.017-.006-.018-.005-.02-.004-.022-.002-.024-.001-.027v-.013c.003-.048.008-.096.016-.143.032-.188.088-.372.167-.547.079-.175.18-.338.299-.484.06-.073.124-.143.193-.21l.025-.024.02-.018.022-.02.022-.019.023-.018.024-.017.025-.016.026-.015.028-.014.029-.013.031-.012.033-.01.036-.009.038-.008.042-.006.046-.005.051-.004.058-.002.066-.001h.01c.093.003.186.012.276.027l.02.004.018.005.017.006.016.007.014.008.013.009.012.01.011.011.01.012.008.013.007.014.006.016.005.017.003.019.002.021.001.023v.01c-.001.023-.005.045-.011.067-.026.112-.07.221-.131.322-.062.102-.14.197-.23.283l-.02.018-.021.017-.022.016-.024.015-.025.014-.027.013-.029.011-.031.01-.034.008-.037.007-.041.005-.046.004-.052.002-.06.001h-.014l-.044-.002-.038-.003-.033-.005-.029-.006-.025-.008-.022-.01-.019-.011-.017-.013-.015-.015-.012-.016-.01-.018-.008-.02-.006-.022-.005-.024-.003-.026-.002-.029v-.017l.002-.016.003-.014.004-.013.005-.012.006-.012.007-.01.008-.01.009-.009.01-.009.011-.008.012-.007.014-.007.015-.006.017-.005.019-.004.021-.004.024-.003.028-.002.034-.001h.016c.062-.001.124-.003.186-.006.251-.014.498-.043.739-.088.242-.045.478-.105.705-.18.113-.037.223-.078.33-.124l.015-.007.015-.007.015-.008.015-.008.015-.009.015-.009.015-.01.014-.01.014-.01.014-.011.013-.012.012-.012.012-.013.011-.014.01-.014.009-.015.008-.016.007-.017.006-.018.005-.019.004-.021.003-.022.002-.024.001-.026h-.01l-.028-.003-.025-.004-.022-.005-.021-.006-.019-.007-.018-.008-.017-.009-.015-.01-.014-.011-.013-.012-.012-.013-.01-.014-.009-.016-.008-.017-.006-.018-.005-.02-.004-.022-.002-.024-.001-.027v-.013c.003-.048.008-.096.016-.143.032-.188.088-.372.167-.547.079-.175.18-.338.299-.484.06-.073.124-.143.193-.21l.025-.024.02-.018.022-.02.022-.019.023-.018.024-.017.025-.016.026-.015.028-.014.029-.013.031-.012.033-.01.036-.009.038-.008.042-.006.046-.005.051-.004.058-.002.066-.001h.01c.093.003.186.012.276.027l.02.004.018.005.017.006.016.007.014.008.013.009.012.01.011.011.01.012.008.013.007.014.006.016.005.017.003.019.002.021.001.023v.01c-.001.023-.005.045-.011.067-.026.112-.07.221-.131.322-.062.102-.14.197-.23.283l-.02.018-.021.017-.022.016-.024.015-.025.014-.027.013-.029.011-.031.01-.034.008-.037.007-.041.005-.046.004-.052.002-.06.001h-.014l-.044-.002-.038-.003-.033-.005-.029-.006-.025-.008-.022-.01-.019-.011-.017-.013-.015-.015-.012-.016-.01-.018-.008-.02-.006-.022-.005-.024-.003-.026-.002-.029v-.017z"/>
+          </svg>
+        </div>
+      </div>
+
       <div class="container hero__inner">
         <div class="hero__content">
           <p class="hero__label">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             Disponível para oportunidades
           </p>
-          <h1>Sallys Martins</h1>
+          <h1 class="hero__name">Sallys Martins</h1>
           <p class="hero__subtitle" id="typewriter"></p>
           <p class="hero__description">
             Backend Developer construindo APIs e sistemas com Python, FastAPI, PostgreSQL e Docker.
@@ -59,23 +168,16 @@
               LinkedIn
             </a>
           </div>
-        </div>
-        <div class="hero__visual">
-          <div class="terminal hero__terminal">
-            <div class="terminal__header">
-              <span class="terminal__header-title">sallys@dev: ~</span>
-            </div>
-            <div class="terminal__body" id="terminal-body">
-              <p class="terminal__line"><span class="terminal__prompt">sallys@dev:~$</span> whoami</p>
-              <p class="terminal__line terminal__output">sallys-martins</p>
-              <p class="terminal__line"><span class="terminal__prompt">sallys@dev:~$</span> role</p>
-              <p class="terminal__line terminal__output">Backend Developer</p>
-              <p class="terminal__line"><span class="terminal__prompt">sallys@dev:~$</span> stack</p>
-              <p class="terminal__line terminal__output">Python FastAPI PostgreSQL Docker</p>
-              <p class="terminal__line"><span class="terminal__prompt">sallys@dev:~$</span> status</p>
-              <p class="terminal__line terminal__output">building systems...</p>
-              <p class="terminal__line"><span class="terminal__prompt">sallys@dev:~$</span> <span class="terminal__cursor"></span></p>
-            </div>
+          <div class="hero__socials">
+            <a href="https://github.com/MartinsSallys" target="_blank" rel="noopener noreferrer" class="hero__social" aria-label="GitHub">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/in/sallysmartinsdev/" target="_blank" rel="noopener noreferrer" class="hero__social" aria-label="LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+            <a href="mailto:sallys@email.com" class="hero__social" aria-label="Email">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </a>
           </div>
         </div>
       </div>
@@ -133,61 +235,119 @@
       </div>
     </section>
 
-    <!-- ========== TECH STACK — Architecture Diagram ========== -->
+    <!-- ========== TECH STACK ========== -->
     <section class="section section--alt" id="stack">
       <div class="container">
         <p class="section__label reveal">System Architecture</p>
         <h2 class="section__title reveal reveal--delay-1">Arquitetura dos meus sistemas</h2>
         <p class="section__description reveal reveal--delay-2">Como os componentes se conectam para formar uma aplicação backend.</p>
 
-        <!-- Project Selector -->
-        <div class="arch-selector reveal reveal--delay-2" id="arch-selector">
-          <button class="arch-selector__tab arch-selector__tab--active" data-project="generic">Visão Geral</button>
-          <button class="arch-selector__tab" data-project="tarefa-agent">TarefaAgent</button>
-          <button class="arch-selector__tab" data-project="beck-global">BeckGlobal</button>
-          <button class="arch-selector__tab" data-project="postais-api">Postais API</button>
+        <div class="arch-controls-row reveal reveal--delay-2">
+          <div class="arch-selector" id="arch-selector">
+            <button class="arch-selector__tab arch-selector__tab--active" data-project="generic">Visão Geral</button>
+            <button class="arch-selector__tab" data-project="postais-parnaiba">Postais da Parnaíba</button>
+            <button class="arch-selector__tab" data-project="beck-global">BeckGlobal</button>
+            <button class="arch-selector__tab" data-project="postais-api">Postais API</button>
+          </div>
+          <div class="view-mode" id="view-mode">
+            <button class="view-mode__tab view-mode__tab--active" data-mode="both">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              Design + Vídeo
+            </button>
+            <div class="view-mode__dropdown" id="view-design-dropdown">
+              <button class="view-mode__tab" data-mode="design-web">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                Design Web
+              </button>
+              <button class="view-mode__tab" data-mode="design-system">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                Design System
+              </button>
+            </div>
+            <button class="view-mode__tab view-mode__parent" id="view-design-toggle" data-mode="design">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+              Só Design
+              <svg class="view-mode__chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <button class="view-mode__tab" data-mode="video">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Só Vídeo
+            </button>
+          </div>
         </div>
 
-        <!-- Architecture Canvas -->
-        <div class="arch-canvas reveal reveal--delay-3" id="arch-canvas">
-          <!-- Zoom Controls -->
-          <div class="arch-controls">
-            <button class="arch-controls__btn" id="arch-zoom-in" aria-label="Zoom in">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            </button>
-            <button class="arch-controls__btn" id="arch-zoom-out" aria-label="Zoom out">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            </button>
-            <button class="arch-controls__btn" id="arch-zoom-reset" aria-label="Reset view">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
-            </button>
+        <div class="arch-content reveal reveal--delay-3" id="arch-content">
+          <div class="arch-canvas" id="arch-canvas">
+            <div class="arch-controls">
+              <button class="arch-controls__btn" id="arch-zoom-in" aria-label="Zoom in">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+              <button class="arch-controls__btn" id="arch-zoom-out" aria-label="Zoom out">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+              <button class="arch-controls__btn" id="arch-zoom-reset" aria-label="Reset view">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+              </button>
+            </div>
+            <div class="arch-diagram" id="arch-diagram"></div>
+            <div class="arch-tooltip" id="arch-tooltip">
+              <span class="arch-tooltip__text" id="arch-tooltip-text"></span>
+            </div>
+            <div class="arch-legend">
+              <span class="arch-legend__item"><span class="arch-legend__dot"></span>Core Flow</span>
+              <span class="arch-legend__item"><span class="arch-legend__dot arch-legend__dot--aux"></span>Auxiliary</span>
+            </div>
+            <div class="arch-running-label">
+              <span class="arch-running-label__dot"></span>
+              Sistema ativo
+            </div>
           </div>
-
-          <!-- Diagram (rendered by JS) -->
-          <div class="arch-diagram" id="arch-diagram"></div>
-
-          <!-- Tooltip -->
-          <div class="arch-tooltip" id="arch-tooltip">
-            <span class="arch-tooltip__text" id="arch-tooltip-text"></span>
+          <div class="design-carousel" id="design-carousel">
+            <div class="design-carousel__track" id="design-carousel-track">
+              <div class="design-carousel__slide design-carousel__slide--active">
+                <div class="design-carousel__placeholder">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                  <span>Selecione um projeto para ver os designs</span>
+                </div>
+              </div>
+            </div>
+            <div class="design-carousel__controls">
+              <button class="design-carousel__btn design-carousel__btn--prev" id="design-carousel-prev" aria-label="Anterior">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+              <div class="design-carousel__dots" id="design-carousel-dots"></div>
+              <button class="design-carousel__btn design-carousel__btn--next" id="design-carousel-next" aria-label="Próximo">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+            <div class="design-carousel__info" id="design-carousel-info">
+              <h3 class="design-carousel__title" id="design-carousel-title">Design Web</h3>
+              <p class="design-carousel__desc" id="design-carousel-desc">Layouts e interfaces dos projetos.</p>
+            </div>
           </div>
-
-          <!-- Legend -->
-          <div class="arch-legend">
-            <span class="arch-legend__item"><span class="arch-legend__dot"></span>Core Flow</span>
-            <span class="arch-legend__item"><span class="arch-legend__dot arch-legend__dot--aux"></span>Auxiliary</span>
+          <div class="video-panel" id="video-panel">
+            <div class="video-panel__container">
+              <div class="video-panel__placeholder" id="video-placeholder">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <span>Selecione um projeto para ver o vídeo</span>
+              </div>
+              <iframe class="video-panel__iframe" id="video-iframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="video-panel__info" id="video-info">
+              <h3 class="video-panel__title" id="video-title">Visão Geral</h3>
+              <p class="video-panel__desc" id="video-desc">Diagrama completo da arquitetura backend utilisada nos projetos.</p>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ========== PROJETOS — Terminal File Explorer ========== -->
+    <!-- ========== PROJETOS ========== -->
     <section class="section arch-section" id="projetos">
       <div class="container">
         <p class="section__label reveal">~/projects</p>
         <h2 class="section__title reveal reveal--delay-1">Sistemas que construí</h2>
         <p class="section__description reveal reveal--delay-2">Projetos desenvolvidos por mim — explore a estrutura de cada sistema.</p>
-
-        <!-- Terminal Window -->
         <div class="terminal-explorer reveal reveal--delay-3" id="terminal-explorer">
           <div class="terminal-explorer__header">
             <div class="terminal-explorer__dots">
@@ -213,92 +373,106 @@
       <div class="container">
         <p class="section__label reveal">Evolução técnica</p>
         <h2 class="section__title reveal reveal--delay-1">Minha jornada</h2>
-        <div class="staircase">
-          <div class="staircase__line"></div>
-
-          <div class="staircase__step reveal">
-            <div class="staircase__dot staircase__dot--active"></div>
-            <div class="staircase__card">
-              <span class="staircase__number">01</span>
-              <h3 class="staircase__title">O Começo</h3>
-              <p class="staircase__desc">Primeiros contatos com lógica de programação e desenvolvimento web. HTML, CSS e os primeiros passos na programação.</p>
-              <div class="staircase__tags"><span class="badge badge--sm badge--outline">HTML5</span><span class="badge badge--sm badge--outline">CSS3</span></div>
-            </div>
-          </div>
-
-          <div class="staircase__step reveal">
-            <div class="staircase__dot staircase__dot--active"></div>
-            <div class="staircase__card">
-              <span class="staircase__number">02</span>
-              <h3 class="staircase__title">JavaScript</h3>
-              <p class="staircase__desc">Comecei a adicionar interatividade e lógica nas páginas. Aplicações dinâmicas e manipulação do DOM.</p>
-              <div class="staircase__tags"><span class="badge badge--sm badge--outline">JavaScript</span><span class="badge badge--sm badge--outline">ES6+</span></div>
-            </div>
-          </div>
-
-          <div class="staircase__step reveal">
-            <div class="staircase__dot staircase__dot--active"></div>
-            <div class="staircase__card">
-              <span class="staircase__number">03</span>
-              <h3 class="staircase__title">Python</h3>
-              <p class="staircase__desc">Migrei para o backend e automação de processos. Sintaxe, funções, estruturas de dados e POO.</p>
-              <div class="staircase__tags"><span class="badge badge--sm badge--outline">Python</span><span class="badge badge--sm badge--outline">Pytest</span></div>
-            </div>
-          </div>
-
-          <div class="staircase__step reveal">
-            <div class="staircase__dot staircase__dot--active"></div>
-            <div class="staircase__card">
-              <span class="staircase__number">04</span>
-              <h3 class="staircase__title">Banco de Dados</h3>
-              <p class="staircase__desc">Modelagem e persistência de dados relacionais. SQL, PostgreSQL e ORM com SQLAlchemy.</p>
-              <div class="staircase__tags"><span class="badge badge--sm badge--outline">PostgreSQL</span><span class="badge badge--sm badge--outline">SQLAlchemy</span><span class="badge badge--sm badge--outline">Alembic</span></div>
-            </div>
-          </div>
-
-          <div class="staircase__step reveal">
-            <div class="staircase__dot staircase__dot--active"></div>
-            <div class="staircase__card">
-              <span class="staircase__number">05</span>
-              <h3 class="staircase__title">APIs</h3>
-              <p class="staircase__desc">Comecei a entender como sistemas conversam através de HTTP e APIs REST. FastAPI, Pydantic e documentação.</p>
-              <div class="staircase__tags"><span class="badge badge--sm badge--outline">FastAPI</span><span class="badge badge--sm badge--outline">Pydantic</span><span class="badge badge--sm badge--outline">REST</span></div>
-            </div>
-          </div>
-
-          <div class="staircase__step reveal">
-            <div class="staircase__dot staircase__dot--active"></div>
-            <div class="staircase__card">
-              <span class="staircase__number">06</span>
-              <h3 class="staircase__title">Backend</h3>
-              <p class="staircase__desc">Autenticação, testes, arquitetura de sistemas. Construção de APIs robustas e escaláveis.</p>
-              <div class="staircase__tags"><span class="badge badge--sm badge--outline">JWT</span><span class="badge badge--sm badge--outline">Clean Architecture</span><span class="badge badge--sm badge--outline">Testes</span></div>
-            </div>
-          </div>
-
-          <div class="staircase__step reveal">
-            <div class="staircase__dot staircase__dot--active"></div>
-            <div class="staircase__card">
-              <span class="staircase__number">07</span>
-              <h3 class="staircase__title">Infraestrutura</h3>
-              <p class="staircase__desc">Containerização, ambientes reproduzíveis e deploy simplificado com Docker.</p>
-              <div class="staircase__tags"><span class="badge badge--sm badge--outline">Docker</span><span class="badge badge--sm badge--outline">Docker Compose</span></div>
-            </div>
-          </div>
-
-          <div class="staircase__step reveal">
-            <div class="staircase__dot staircase__dot--current"></div>
-            <div class="staircase__card staircase__card--current">
-              <span class="staircase__number">08</span>
-              <h3 class="staircase__title">Hoje</h3>
-              <p class="staircase__desc">Construção de sistemas completos, arquitetura de software, projetos reais e evolução contínua em engenharia.</p>
-              <div class="staircase__tags">
-                <span class="badge badge--sm">FastAPI</span><span class="badge badge--sm">PostgreSQL</span><span class="badge badge--sm">Docker</span><span class="badge badge--sm">Arquitetura</span>
+        <p class="section__description reveal reveal--delay-2">Cada etapa que me trouxe até aqui.</p>
+        <div class="timeline reveal reveal--delay-3" id="timeline">
+          <button class="timeline__arrow timeline__arrow--left" id="timeline-left" aria-label="Rolar para esquerda">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <div class="timeline__track" id="timeline-track">
+            <div class="timeline__line"></div>
+            <div class="timeline__item" data-step="0">
+              <div class="timeline__dot timeline__dot--active"></div>
+              <div class="timeline__card">
+                <span class="timeline__number">01</span>
+                <h3 class="timeline__title">O Começo</h3>
+                <p class="timeline__desc">Primeiros contatos com lógica de programação e desenvolvimento web.</p>
+                <div class="timeline__tags"><span class="badge badge--sm badge--outline">HTML5</span><span class="badge badge--sm badge--outline">CSS3</span></div>
+                <button class="timeline__expand" aria-label="Expandir"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+                <div class="timeline__extra"><p>HTML, CSS e os primeiros passos na programação. Entendi a base de como a web funciona.</p></div>
               </div>
-              <span class="staircase__here"><span class="staircase__here-dot"></span> you are here</span>
+            </div>
+            <div class="timeline__item" data-step="1">
+              <div class="timeline__dot timeline__dot--active"></div>
+              <div class="timeline__card">
+                <span class="timeline__number">02</span>
+                <h3 class="timeline__title">JavaScript</h3>
+                <p class="timeline__desc">Interatividade e lógica nas páginas. Aplicações dinâmicas.</p>
+                <div class="timeline__tags"><span class="badge badge--sm badge--outline">JavaScript</span><span class="badge badge--sm badge--outline">ES6+</span></div>
+                <button class="timeline__expand" aria-label="Expandir"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+                <div class="timeline__extra"><p>Manipulação do DOM, fetch API, módulos ES6+. Aprendi a pensar em lógica de programa real.</p></div>
+              </div>
+            </div>
+            <div class="timeline__item" data-step="2">
+              <div class="timeline__dot timeline__dot--active"></div>
+              <div class="timeline__card">
+                <span class="timeline__number">03</span>
+                <h3 class="timeline__title">Python</h3>
+                <p class="timeline__desc">Migrei para o backend e automação de processos.</p>
+                <div class="timeline__tags"><span class="badge badge--sm badge--outline">Python</span><span class="badge badge--sm badge--outline">Pytest</span></div>
+                <button class="timeline__expand" aria-label="Expandir"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+                <div class="timeline__extra"><p>Sintaxe, funções, estruturas de dados e POO. Encontrei minha linguagem principal.</p></div>
+              </div>
+            </div>
+            <div class="timeline__item" data-step="3">
+              <div class="timeline__dot timeline__dot--active"></div>
+              <div class="timeline__card">
+                <span class="timeline__number">04</span>
+                <h3 class="timeline__title">Banco de Dados</h3>
+                <p class="timeline__desc">Modelagem e persistência de dados relacionais.</p>
+                <div class="timeline__tags"><span class="badge badge--sm badge--outline">PostgreSQL</span><span class="badge badge--sm badge--outline">SQLAlchemy</span><span class="badge badge--sm badge--outline">Alembic</span></div>
+                <button class="timeline__expand" aria-label="Expandir"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+                <div class="timeline__extra"><p>SQL, consultas complexas, relacionamentos e ORM. Entendi como dados vivem em sistemas reais.</p></div>
+              </div>
+            </div>
+            <div class="timeline__item" data-step="4">
+              <div class="timeline__dot timeline__dot--active"></div>
+              <div class="timeline__card">
+                <span class="timeline__number">05</span>
+                <h3 class="timeline__title">APIs</h3>
+                <p class="timeline__desc">Sistemas conversando via HTTP e APIs REST.</p>
+                <div class="timeline__tags"><span class="badge badge--sm badge--outline">FastAPI</span><span class="badge badge--sm badge--outline">Pydantic</span><span class="badge badge--sm badge--outline">REST</span></div>
+                <button class="timeline__expand" aria-label="Expandir"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+                <div class="timeline__extra"><p>FastAPI, validação com Pydantic, documentação automática. Comecei a construir sistemas completos.</p></div>
+              </div>
+            </div>
+            <div class="timeline__item" data-step="5">
+              <div class="timeline__dot timeline__dot--active"></div>
+              <div class="timeline__card">
+                <span class="timeline__number">06</span>
+                <h3 class="timeline__title">Backend</h3>
+                <p class="timeline__desc">Autenticação, testes, arquitetura de sistemas.</p>
+                <div class="timeline__tags"><span class="badge badge--sm badge--outline">JWT</span><span class="badge badge--sm badge--outline">Clean Architecture</span><span class="badge badge--sm badge--outline">Testes</span></div>
+                <button class="timeline__expand" aria-label="Expandir"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+                <div class="timeline__extra"><p>APIs robustas e escaláveis. JWT, clean architecture e testes automatizados.</p></div>
+              </div>
+            </div>
+            <div class="timeline__item" data-step="6">
+              <div class="timeline__dot timeline__dot--active"></div>
+              <div class="timeline__card">
+                <span class="timeline__number">07</span>
+                <h3 class="timeline__title">Infraestrutura</h3>
+                <p class="timeline__desc">Containerização e deploy com Docker.</p>
+                <div class="timeline__tags"><span class="badge badge--sm badge--outline">Docker</span><span class="badge badge--sm badge--outline">Docker Compose</span></div>
+                <button class="timeline__expand" aria-label="Expandir"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+                <div class="timeline__extra"><p>Ambientes reproduzíveis, containers, deploy simplificado. Meus sistemas rodando em qualquer lugar.</p></div>
+              </div>
+            </div>
+            <div class="timeline__item" data-step="7">
+              <div class="timeline__dot timeline__dot--current"></div>
+              <div class="timeline__card timeline__card--current">
+                <span class="timeline__number">08</span>
+                <h3 class="timeline__title">Hoje</h3>
+                <p class="timeline__desc">Sistemas completos e evolução contínua.</p>
+                <div class="timeline__tags"><span class="badge badge--sm">FastAPI</span><span class="badge badge--sm">PostgreSQL</span><span class="badge badge--sm">Docker</span><span class="badge badge--sm">Arquitetura</span></div>
+                <button class="timeline__expand" aria-label="Expandir"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+                <div class="timeline__extra"><p>Construção de sistemas completos, arquitetura de software, projetos reais e engenharia de verdade.</p></div>
+                <span class="timeline__here"><span class="timeline__here-dot"></span> you are here</span>
+              </div>
             </div>
           </div>
-
+          <button class="timeline__arrow timeline__arrow--right" id="timeline-right" aria-label="Rolar para direita">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
         </div>
       </div>
     </section>
@@ -309,10 +483,9 @@
         <p class="section__label reveal">Skills</p>
         <h2 class="section__title reveal reveal--delay-1">O que sei fazer</h2>
         <div class="skills-grid">
-
           <div class="skill-card reveal">
             <h3 class="skill-card__title">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
               Backend
             </h3>
             <ul class="skill-card__list">
@@ -326,15 +499,14 @@
             </ul>
             <div class="skill-card__projects">
               <span class="skill-card__projects-title">Utilizado em</span>
-              <span class="skill-card__project-link">TarefaAgent</span>
+              <span class="skill-card__project-link">Postais da Parnaíba</span>
               <span class="skill-card__project-link">BeckGlobal</span>
               <span class="skill-card__project-link">Postais API</span>
             </div>
           </div>
-
           <div class="skill-card reveal">
             <h3 class="skill-card__title">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
               Database
             </h3>
             <ul class="skill-card__list">
@@ -347,15 +519,14 @@
             </ul>
             <div class="skill-card__projects">
               <span class="skill-card__projects-title">Utilizado em</span>
-              <span class="skill-card__project-link">TarefaAgent</span>
+              <span class="skill-card__project-link">Postais da Parnaíba</span>
               <span class="skill-card__project-link">BeckGlobal</span>
               <span class="skill-card__project-link">Postais API</span>
             </div>
           </div>
-
           <div class="skill-card reveal">
             <h3 class="skill-card__title">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
               Testing
             </h3>
             <ul class="skill-card__list">
@@ -367,14 +538,13 @@
             </ul>
             <div class="skill-card__projects">
               <span class="skill-card__projects-title">Utilizado em</span>
-              <span class="skill-card__project-link">TarefaAgent</span>
+              <span class="skill-card__project-link">Postais da Parnaíba</span>
               <span class="skill-card__project-link">Postais API</span>
             </div>
           </div>
-
           <div class="skill-card reveal">
             <h3 class="skill-card__title">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
               Infrastructure
             </h3>
             <ul class="skill-card__list">
@@ -385,15 +555,14 @@
             </ul>
             <div class="skill-card__projects">
               <span class="skill-card__projects-title">Utilizado em</span>
-              <span class="skill-card__project-link">TarefaAgent</span>
+              <span class="skill-card__project-link">Postais da Parnaíba</span>
               <span class="skill-card__project-link">BeckGlobal</span>
               <span class="skill-card__project-link">Postais API</span>
             </div>
           </div>
-
           <div class="skill-card reveal">
             <h3 class="skill-card__title">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
               Engineering
             </h3>
             <ul class="skill-card__list">
@@ -408,7 +577,6 @@
               <span class="skill-card__project-link">Todos os projetos</span>
             </div>
           </div>
-
         </div>
       </div>
     </section>
@@ -425,21 +593,21 @@
           </p>
           <div class="contato__links reveal reveal--delay-3">
             <a href="https://github.com/MartinsSallys" target="_blank" rel="noopener noreferrer" class="button button-secondary">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
               GitHub
             </a>
             <a href="https://www.linkedin.com/in/sallysmartinsdev/" target="_blank" rel="noopener noreferrer" class="button button-secondary">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
               LinkedIn
             </a>
             <a href="mailto:sallys@email.com" class="button button-secondary">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
               Email
             </a>
           </div>
           <div class="contato__cta reveal reveal--delay-4">
             <a href="/curriculo.pdf" class="button button-primary">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
               Download Currículo
             </a>
           </div>
@@ -454,13 +622,13 @@
       <p class="footer__copy">&copy; 2026 Sallys Martins. Todos os direitos reservados.</p>
       <div class="footer__links">
         <a href="https://github.com/MartinsSallys" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
         </a>
         <a href="https://www.linkedin.com/in/sallysmartinsdev/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
         </a>
         <a href="mailto:sallys@email.com" aria-label="Email">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         </a>
       </div>
     </div>

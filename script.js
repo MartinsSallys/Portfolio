@@ -46,65 +46,6 @@
 })();
 
 /* ============================================================
-   TERMINAL — Typing animation (Linux)
-   ============================================================ */
-(function () {
-  const body = document.getElementById('terminal-body');
-  if (!body) return;
-
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const lines = body.querySelectorAll('.terminal__line');
-
-  if (prefersReducedMotion) {
-    lines.forEach(line => line.classList.add('terminal__line--visible'));
-    return;
-  }
-
-  lines.forEach(line => { line.style.opacity = '0'; line.style.transform = 'translateY(4px)'; });
-
-  let started = false;
-
-  function animateTerminal() {
-    if (started) return;
-    started = true;
-
-    const sequence = [
-      { type: 'line', el: lines[0], delay: 200 },
-      { type: 'line', el: lines[1], delay: 400 },
-      { type: 'line', el: lines[2], delay: 300 },
-      { type: 'line', el: lines[3], delay: 400 },
-      { type: 'line', el: lines[4], delay: 300 },
-      { type: 'line', el: lines[5], delay: 400 },
-      { type: 'line', el: lines[6], delay: 300 },
-      { type: 'line', el: lines[7], delay: 500 },
-      { type: 'line', el: lines[8], delay: 200 },
-    ];
-
-    let totalDelay = 0;
-    sequence.forEach(step => {
-      totalDelay += step.delay;
-      setTimeout(() => {
-        step.el.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-        step.el.style.opacity = '1';
-        step.el.style.transform = 'translateY(0)';
-        step.el.classList.add('terminal__line--visible');
-      }, totalDelay);
-    });
-  }
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        animateTerminal();
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.3 });
-
-  observer.observe(body);
-})();
-
-/* ============================================================
    TYPEWRITER — Hero subtitle
    ============================================================ */
 (function () {
@@ -112,7 +53,7 @@
     'Construindo APIs escaláveis...',
     'Arquitetando sistemas distribuídos...',
     'Automatizando processos...',
-    'Python • FastAPI • Docker • PostgreSQL',
+    'Python \u2022 FastAPI \u2022 Docker \u2022 PostgreSQL',
   ];
 
   const el = document.getElementById('typewriter');
@@ -152,19 +93,17 @@
    TERMINAL EXPLORER — Project Data
    ============================================================ */
 const TERMINAL_PROJECTS = {
-  'tarefa-agent': {
-    title: 'TarefaAgent',
-    desc: 'Backend para automação de tarefas/agendamentos com assistente de IA.',
+  'postais-parnaiba': {
+    title: 'Postais da Parnaíba',
+    desc: 'Backend para preservação digital da memória histórica da cidade.',
     stack: ['Python', 'FastAPI', 'SQLAlchemy', 'PostgreSQL', 'Alembic', 'Docker'],
     github: 'https://github.com/MartinsSallys',
     tree: [
       { type: 'dir', name: 'app/' },
       { type: 'dir', name: '  api/', indent: 1 },
-      { type: 'dir', name: '  models/', indent: 1 },
       { type: 'dir', name: '  services/', indent: 1 },
-      { type: 'dir', name: '  core/', indent: 1 },
+      { type: 'dir', name: '  models/', indent: 1 },
       { type: 'dir', name: 'tests/' },
-      { type: 'dir', name: 'frontend/' },
       { type: 'dir', name: 'alembic/' },
       { type: 'file', name: 'Dockerfile' },
       { type: 'file', name: 'docker-compose.yml' },
@@ -279,7 +218,7 @@ function renderTerminalList() {
     html += '<div class="terminal-explorer__item" data-project="' + id + '">';
     html += '<span class="terminal-explorer__item-icon">' + TIcons.folder + '</span>';
     html += '<span class="terminal-explorer__item-name">' + p.title.toLowerCase().replace(/\s+/g, '-') + '/</span>';
-    html += '<span class="terminal-explorer__item-desc">' + p.stack.slice(0, 3).join(' · ') + '</span>';
+    html += '<span class="terminal-explorer__item-desc">' + p.stack.slice(0, 3).join(' \u00b7 ') + '</span>';
     html += '</div>';
   });
 
@@ -419,126 +358,289 @@ function renderTerminalDetail(projectId) {
   const tooltip = document.getElementById('arch-tooltip');
   const tooltipText = document.getElementById('arch-tooltip-text');
   const selector = document.getElementById('arch-selector');
+  const viewMode = document.getElementById('view-mode');
+  const archContent = document.getElementById('arch-content');
+  const videoPanel = document.getElementById('video-panel');
+  const videoIframe = document.getElementById('video-iframe');
+  const videoPlaceholder = document.getElementById('video-placeholder');
+  const videoTitle = document.getElementById('video-title');
+  const videoDesc = document.getElementById('video-desc');
   if (!canvas || !diagram || !selector) return;
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const NS = 'http://www.w3.org/2000/svg';
-  const SVG_W = 960, SVG_H = 620;
+  const SVG_W = 960, SVG_H = 800;
 
-  /* ── SVG Icons ─────────────────────────────────────────── */
+  /* SVG Icons */
   const ICONS = {
-    browser:  '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>',
-    api:      '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
-    lock:     '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>',
-    server:   '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/></svg>',
-    db:       '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>',
-    wrench:   '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
-    docker:   '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>',
-    check:    '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
-    gear:     '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>',
-    shield:   '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
-    database: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>',
+    browser:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>',
+    api:      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
+    lock:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>',
+    server:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/></svg>',
+    db:       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>',
+    wrench:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
+    docker:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>',
+    check:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+    gear:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>',
+    shield:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+    database: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>',
   };
 
-  /* ── Project Architecture Data ──────────────────────────── */
+  /* Layer labels for each project */
+  const LAYERS = {
+    generic: [
+      { y: 30,  label: 'CLIENTE' },
+      { y: 140, label: 'API GATEWAY' },
+      { y: 270, label: 'LOGICA' },
+      { y: 400, label: 'DADOS' },
+      { y: 530, label: 'INFRA' },
+    ],
+    'postais-parnaiba': [
+      { y: 30,  label: 'CLIENTE' },
+      { y: 150, label: 'API GATEWAY' },
+      { y: 280, label: 'ENDPOINTS' },
+      { y: 410, label: 'LOGICA' },
+      { y: 540, label: 'DADOS' },
+      { y: 670, label: 'BANCO' },
+    ],
+    'beck-global': [
+      { y: 30,  label: 'CLIENTE' },
+      { y: 150, label: 'API GATEWAY' },
+      { y: 280, label: 'ENDPOINTS' },
+      { y: 410, label: 'LOGICA' },
+      { y: 540, label: 'DADOS' },
+      { y: 670, label: 'INFRA' },
+    ],
+    'postais-api': [
+      { y: 30,  label: 'CLIENTE' },
+      { y: 150, label: 'API GATEWAY' },
+      { y: 280, label: 'ENDPOINTS' },
+      { y: 410, label: 'LOGICA' },
+      { y: 540, label: 'DADOS' },
+      { y: 670, label: 'BANCO' },
+    ],
+  };
+
+  /* Project Architecture Data — Refactored for clear top-to-bottom flow */
   const PROJECTS = {
     generic: {
       nodes: [
-        { id: 'client',     x: 500, y: 40,  icon: 'browser',  label: 'CLIENT',     tech: 'Browser' },
-        { id: 'fastapi',    x: 500, y: 155, icon: 'api',      label: 'FASTAPI',    tech: 'REST API' },
-        { id: 'auth',       x: 305, y: 275, icon: 'lock',     label: 'AUTH',       tech: 'JWT' },
-        { id: 'services',   x: 580, y: 275, icon: 'server',   label: 'SERVICES',   tech: 'Business Logic' },
-        { id: 'sqlalchemy', x: 580, y: 400, icon: 'db',       label: 'SQLALCHEMY', tech: 'ORM' },
-        { id: 'postgresql', x: 580, y: 520, icon: 'database', label: 'POSTGRESQL', tech: 'Database' },
-        { id: 'alembic',    x: 305, y: 520, icon: 'wrench',   label: 'ALEMBIC',    tech: 'Migrations' },
-        { id: 'docker',     x: 800, y: 275, icon: 'docker',   label: 'DOCKER',     tech: 'Infrastructure' },
-        { id: 'pytest',     x: 800, y: 400, icon: 'check',    label: 'PYTEST',     tech: 'Testing' },
+        { id: 'client',     x: 480, y: 40,  icon: 'browser',  label: 'CLIENTE',     tech: 'Browser / App' },
+        { id: 'fastapi',    x: 480, y: 160, icon: 'api',      label: 'FASTAPI',    tech: 'REST API Gateway' },
+        { id: 'auth',       x: 180, y: 290, icon: 'lock',     label: 'AUTH',       tech: 'JWT Validation' },
+        { id: 'services',   x: 480, y: 290, icon: 'server',   label: 'SERVICES',   tech: 'Business Logic' },
+        { id: 'repository', x: 780, y: 290, icon: 'gear',     label: 'REPOSITORY', tech: 'Data Access' },
+        { id: 'sqlalchemy', x: 480, y: 420, icon: 'db',       label: 'SQLALCHEMY', tech: 'ORM Layer' },
+        { id: 'alembic',    x: 220, y: 420, icon: 'wrench',   label: 'ALEMBIC',    tech: 'Migrations' },
+        { id: 'pytest',     x: 740, y: 420, icon: 'check',    label: 'PYTEST',     tech: 'Testing' },
+        { id: 'docker',     x: 300, y: 550, icon: 'docker',   label: 'DOCKER',     tech: 'Containers' },
+        { id: 'postgresql', x: 600, y: 550, icon: 'database', label: 'POSTGRESQL', tech: 'Database' },
       ],
       connections: [
-        { from: 'client',     to: 'fastapi',    label: 'HTTP / JSON' },
+        { from: 'client',     to: 'fastapi',    label: 'HTTP' },
         { from: 'fastapi',    to: 'auth',       label: 'Validate' },
-        { from: 'fastapi',    to: 'services',   label: 'DI' },
-        { from: 'services',   to: 'sqlalchemy', label: 'ORM' },
+        { from: 'fastapi',    to: 'services',   label: 'Route' },
+        { from: 'services',   to: 'repository', label: 'Query' },
+        { from: 'repository', to: 'sqlalchemy', label: 'ORM' },
         { from: 'sqlalchemy', to: 'postgresql', label: 'SQL' },
         { from: 'alembic',    to: 'postgresql', label: 'Migrate' },
         { from: 'pytest',     to: 'services',   label: 'Test' },
         { from: 'docker',     to: 'fastapi',    label: 'Run' },
+        { from: 'docker',     to: 'postgresql', label: 'Host' },
       ],
     },
 
-    'tarefa-agent': {
+    'postais-parnaiba': {
       nodes: [
-        { id: 'client',     x: 500, y: 40,  icon: 'browser',  label: 'CLIENT',     tech: 'Browser' },
-        { id: 'fastapi',    x: 500, y: 155, icon: 'api',      label: 'FASTAPI',    tech: 'REST API' },
-        { id: 'auth',       x: 305, y: 275, icon: 'shield',   label: 'AUTH',       tech: 'JWT' },
-        { id: 'services',   x: 580, y: 275, icon: 'server',   label: 'SERVICES',   tech: 'Task Scheduling' },
-        { id: 'sqlalchemy', x: 580, y: 400, icon: 'db',       label: 'SQLALCHEMY', tech: 'ORM + asyncpg' },
-        { id: 'postgresql', x: 580, y: 520, icon: 'database', label: 'POSTGRESQL', tech: 'Database' },
-        { id: 'alembic',    x: 305, y: 520, icon: 'wrench',   label: 'ALEMBIC',    tech: 'Migrations' },
-        { id: 'docker',     x: 800, y: 275, icon: 'docker',   label: 'DOCKER',     tech: 'Containers' },
-        { id: 'pytest',     x: 800, y: 400, icon: 'check',    label: 'PYTEST',     tech: 'Testing' },
+        /* Layer 1 — Client */
+        { id: 'client',       x: 180, y: 40,  icon: 'browser',  label: 'USER',        tech: 'Browser' },
+        { id: 'frontend',     x: 480, y: 40,  icon: 'browser',  label: 'FRONTEND',    tech: 'HTML / CSS / JS' },
+        { id: 'design-sys',   x: 780, y: 40,  icon: 'gear',     label: 'DESIGN SYS',  tech: 'UI Components' },
+        /* Layer 2 — API Gateway */
+        { id: 'fastapi',      x: 480, y: 160, icon: 'api',      label: 'FASTAPI',     tech: 'REST API' },
+        /* Layer 3 — API Internals */
+        { id: 'router',       x: 180, y: 290, icon: 'server',   label: 'ROUTER',      tech: 'Endpoints' },
+        { id: 'schema',       x: 480, y: 290, icon: 'lock',     label: 'PYDANTIC',    tech: 'Validation' },
+        { id: 'auth',         x: 780, y: 290, icon: 'shield',   label: 'AUTH',        tech: 'JWT' },
+        /* Layer 4 — Business Logic */
+        { id: 'services',     x: 320, y: 420, icon: 'server',   label: 'SERVICES',    tech: 'Business Logic' },
+        { id: 'repository',   x: 640, y: 420, icon: 'gear',     label: 'REPOSITORY',  tech: 'CRUD' },
+        /* Layer 5 — Data Access */
+        { id: 'sqlalchemy',   x: 320, y: 550, icon: 'db',       label: 'SQLALCHEMY',  tech: 'ORM' },
+        { id: 'alembic',      x: 640, y: 550, icon: 'wrench',   label: 'ALEMBIC',     tech: 'Migrations' },
+        /* Layer 6 — Database */
+        { id: 'postgresql',   x: 480, y: 680, icon: 'database', label: 'POSTGRESQL',  tech: 'Database' },
+        /* Infra */
+        { id: 'docker',       x: 780, y: 550, icon: 'docker',   label: 'DOCKER',      tech: 'Containers' },
       ],
       connections: [
-        { from: 'client',     to: 'fastapi',    label: 'HTTP / JSON' },
-        { from: 'fastapi',    to: 'auth',       label: 'Validate' },
-        { from: 'fastapi',    to: 'services',   label: 'DI' },
-        { from: 'services',   to: 'sqlalchemy', label: 'ORM' },
-        { from: 'sqlalchemy', to: 'postgresql', label: 'SQL' },
-        { from: 'alembic',    to: 'postgresql', label: 'Migrate' },
-        { from: 'pytest',     to: 'services',   label: 'Test' },
-        { from: 'docker',     to: 'fastapi',    label: 'Run' },
+        { from: 'client',      to: 'frontend',    label: 'Visit' },
+        { from: 'frontend',    to: 'design-sys',  label: 'UI Kit' },
+        { from: 'frontend',    to: 'fastapi',     label: 'REST' },
+        { from: 'fastapi',     to: 'router',      label: 'Route' },
+        { from: 'fastapi',     to: 'schema',      label: 'Validate' },
+        { from: 'fastapi',     to: 'auth',        label: 'Protect' },
+        { from: 'router',      to: 'services',    label: 'Dispatch' },
+        { from: 'schema',      to: 'services',    label: 'Typed Data' },
+        { from: 'auth',        to: 'services',    label: 'Verified' },
+        { from: 'services',    to: 'repository',  label: 'Query' },
+        { from: 'repository',  to: 'sqlalchemy',  label: 'ORM' },
+        { from: 'sqlalchemy',  to: 'postgresql',  label: 'SQL' },
+        { from: 'alembic',     to: 'postgresql',  label: 'Migrate' },
+        { from: 'docker',      to: 'fastapi',     label: 'Run' },
+        { from: 'docker',      to: 'postgresql',  label: 'Host' },
       ],
     },
 
     'beck-global': {
       nodes: [
-        { id: 'client',     x: 500, y: 40,  icon: 'browser',  label: 'CLIENT',     tech: 'Browser' },
-        { id: 'fastapi',    x: 500, y: 155, icon: 'api',      label: 'FASTAPI',    tech: 'REST API' },
-        { id: 'services',   x: 500, y: 275, icon: 'gear',     label: 'SERVICES',   tech: 'Reusable Patterns' },
-        { id: 'sqlalchemy', x: 500, y: 400, icon: 'db',       label: 'SQLALCHEMY', tech: 'ORM' },
-        { id: 'postgresql', x: 500, y: 520, icon: 'database', label: 'POSTGRESQL', tech: 'Database' },
-        { id: 'alembic',    x: 305, y: 520, icon: 'wrench',   label: 'ALEMBIC',    tech: 'Migrations' },
-        { id: 'docker',     x: 700, y: 275, icon: 'docker',   label: 'DOCKER',     tech: 'Containers' },
+        /* Layer 1 — Client */
+        { id: 'client',       x: 240, y: 40,  icon: 'browser',  label: 'CLIENTE',      tech: 'Browser / App' },
+        { id: 'frontend',     x: 600, y: 40,  icon: 'browser',  label: 'FRONTEND',    tech: 'React / HTML' },
+        /* Layer 2 — API Gateway */
+        { id: 'fastapi',      x: 480, y: 160, icon: 'api',      label: 'FASTAPI',     tech: 'REST API' },
+        /* Layer 3 — API Internals */
+        { id: 'router',       x: 180, y: 290, icon: 'server',   label: 'ROUTER',      tech: 'Endpoints' },
+        { id: 'schema',       x: 480, y: 290, icon: 'lock',     label: 'PYDANTIC',    tech: 'Validation' },
+        { id: 'jwt',          x: 780, y: 290, icon: 'shield',   label: 'JWT',         tech: 'Auth Tokens' },
+        /* Layer 4 — Business Logic */
+        { id: 'services',     x: 260, y: 420, icon: 'server',   label: 'SERVICES',    tech: 'Business Logic' },
+        { id: 'auth-svc',     x: 540, y: 420, icon: 'shield',   label: 'AUTH SVC',    tech: 'Authentication' },
+        { id: 'repository',   x: 800, y: 420, icon: 'gear',     label: 'REPOSITORY',  tech: 'CRUD' },
+        /* Layer 5 — Data Access */
+        { id: 'sqlalchemy',   x: 400, y: 550, icon: 'db',       label: 'SQLALCHEMY',  tech: 'ORM' },
+        { id: 'alembic',      x: 680, y: 550, icon: 'wrench',   label: 'ALEMBIC',     tech: 'Migrations' },
+        /* Layer 6 — Database + Infra */
+        { id: 'postgresql',   x: 400, y: 680, icon: 'database', label: 'POSTGRESQL',  tech: 'Database' },
+        { id: 'docker',       x: 680, y: 680, icon: 'docker',   label: 'DOCKER',      tech: 'Containers' },
+        { id: 'pytest',       x: 140, y: 550, icon: 'check',    label: 'PYTEST',      tech: 'Testing' },
       ],
       connections: [
-        { from: 'client',     to: 'fastapi',    label: 'HTTP / JSON' },
-        { from: 'fastapi',    to: 'services',   label: 'DI' },
-        { from: 'services',   to: 'sqlalchemy', label: 'ORM' },
-        { from: 'sqlalchemy', to: 'postgresql', label: 'SQL' },
-        { from: 'alembic',    to: 'postgresql', label: 'Migrate' },
-        { from: 'docker',     to: 'fastapi',    label: 'Run' },
+        { from: 'client',      to: 'fastapi',     label: 'HTTP' },
+        { from: 'frontend',    to: 'fastapi',     label: 'REST' },
+        { from: 'fastapi',     to: 'router',      label: 'Route' },
+        { from: 'fastapi',     to: 'schema',      label: 'Validate' },
+        { from: 'fastapi',     to: 'jwt',         label: 'Token' },
+        { from: 'router',      to: 'services',    label: 'Dispatch' },
+        { from: 'schema',      to: 'services',    label: 'Typed Data' },
+        { from: 'jwt',         to: 'auth-svc',    label: 'Verify' },
+        { from: 'auth-svc',    to: 'services',    label: 'Authenticated' },
+        { from: 'services',    to: 'repository',  label: 'Query' },
+        { from: 'repository',  to: 'sqlalchemy',  label: 'ORM' },
+        { from: 'sqlalchemy',  to: 'postgresql',  label: 'SQL' },
+        { from: 'alembic',     to: 'postgresql',  label: 'Migrate' },
+        { from: 'pytest',      to: 'services',    label: 'Test' },
+        { from: 'docker',      to: 'fastapi',     label: 'Run' },
+        { from: 'docker',      to: 'postgresql',  label: 'Host' },
       ],
     },
 
     'postais-api': {
       nodes: [
-        { id: 'client',     x: 500, y: 40,  icon: 'browser',  label: 'CLIENT',     tech: 'Browser' },
-        { id: 'fastapi',    x: 500, y: 155, icon: 'api',      label: 'FASTAPI',    tech: 'REST API' },
-        { id: 'services',   x: 500, y: 275, icon: 'server',   label: 'SERVICES',   tech: 'Business Logic' },
-        { id: 'sqlalchemy', x: 500, y: 400, icon: 'db',       label: 'SQLALCHEMY', tech: 'ORM' },
-        { id: 'postgresql', x: 500, y: 520, icon: 'database', label: 'POSTGRESQL', tech: 'Database' },
-        { id: 'alembic',    x: 305, y: 520, icon: 'wrench',   label: 'ALEMBIC',    tech: 'Migrations' },
-        { id: 'docker',     x: 700, y: 275, icon: 'docker',   label: 'DOCKER',     tech: 'Containers' },
-        { id: 'pytest',     x: 700, y: 400, icon: 'check',    label: 'PYTEST',     tech: 'Testing' },
+        { id: 'client',       x: 240, y: 40,  icon: 'browser',  label: 'CLIENTE',      tech: 'Browser' },
+        { id: 'frontend',     x: 600, y: 40,  icon: 'browser',  label: 'FRONTEND',    tech: 'Postais Web' },
+        { id: 'fastapi',      x: 480, y: 160, icon: 'api',      label: 'FASTAPI',     tech: 'REST API' },
+        { id: 'router',       x: 200, y: 290, icon: 'server',   label: 'ROUTER',      tech: 'Endpoints' },
+        { id: 'schema',       x: 480, y: 290, icon: 'lock',     label: 'PYDANTIC',    tech: 'Validation' },
+        { id: 'services',     x: 340, y: 420, icon: 'server',   label: 'SERVICES',    tech: 'Business Logic' },
+        { id: 'repository',   x: 620, y: 420, icon: 'gear',     label: 'REPOSITORY',  tech: 'CRUD' },
+        { id: 'sqlalchemy',   x: 340, y: 550, icon: 'db',       label: 'SQLALCHEMY',  tech: 'ORM' },
+        { id: 'alembic',      x: 620, y: 550, icon: 'wrench',   label: 'ALEMBIC',     tech: 'Migrations' },
+        { id: 'postgresql',   x: 480, y: 680, icon: 'database', label: 'POSTGRESQL',  tech: 'Database' },
+        { id: 'docker',       x: 780, y: 420, icon: 'docker',   label: 'DOCKER',      tech: 'Containers' },
       ],
       connections: [
-        { from: 'client',     to: 'fastapi',    label: 'HTTP / JSON' },
-        { from: 'fastapi',    to: 'services',   label: 'DI' },
-        { from: 'services',   to: 'sqlalchemy', label: 'ORM' },
-        { from: 'sqlalchemy', to: 'postgresql', label: 'SQL' },
-        { from: 'alembic',    to: 'postgresql', label: 'Migrate' },
-        { from: 'pytest',     to: 'services',   label: 'Test' },
-        { from: 'docker',     to: 'fastapi',    label: 'Run' },
+        { from: 'client',      to: 'fastapi',     label: 'HTTP' },
+        { from: 'frontend',    to: 'fastapi',     label: 'REST' },
+        { from: 'fastapi',     to: 'router',      label: 'Route' },
+        { from: 'fastapi',     to: 'schema',      label: 'Validate' },
+        { from: 'router',      to: 'services',    label: 'Dispatch' },
+        { from: 'schema',      to: 'services',    label: 'Typed Data' },
+        { from: 'services',    to: 'repository',  label: 'Query' },
+        { from: 'repository',  to: 'sqlalchemy',  label: 'ORM' },
+        { from: 'sqlalchemy',  to: 'postgresql',  label: 'SQL' },
+        { from: 'alembic',     to: 'postgresql',  label: 'Migrate' },
+        { from: 'docker',      to: 'fastapi',     label: 'Run' },
+        { from: 'docker',      to: 'postgresql',  label: 'Host' },
       ],
     },
   };
 
-  /* ── State ─────────────────────────────────────────────── */
+  /* Video Data */
+  const VIDEO_DATA = {
+    generic: {
+      title: 'Visão Geral',
+      desc: 'Diagrama completo da arquitetura backend utilisada nos projetos.',
+      url: '',
+    },
+    'postais-parnaiba': {
+      title: 'Postais da Parnaíba',
+      desc: 'Backend para preservação digital da memória histórica da cidade.',
+      url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    },
+    'beck-global': {
+      title: 'BeckGlobal',
+      desc: 'Boilerplate reutilizável para APIs REST com FastAPI e Docker.',
+      url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    },
+    'postais-api': {
+      title: 'Postais da Parnaíba API',
+      desc: 'Backend para preservação digital da memória histórica da cidade.',
+      url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    },
+  };
+
+  /* Design Carousel Data */
+  const DESIGN_DATA = {
+    generic: {
+      title: 'Visão Geral',
+      desc: 'Interfaces e layouts dos projetos.',
+      slides: [
+        { label: 'Dashboard View', color: '#1e293b' },
+        { label: 'API Response', color: '#0f172a' },
+        { label: 'Terminal View', color: '#1a1a2e' },
+      ],
+    },
+    'postais-parnaiba': {
+      title: 'Postais da Parnaíba — Design Web',
+      desc: 'Interface de preservação da memória histórica.',
+      slides: [
+        { label: 'Página Inicial', color: '#1e293b' },
+        { label: 'Galeria de Postais', color: '#0f172a' },
+        { label: 'Detalhe do Postal', color: '#1a1a2e' },
+        { label: 'Mapa Interativo', color: '#162032' },
+        { label: 'Busca Avançada', color: '#1a2332' },
+      ],
+    },
+    'beck-global': {
+      title: 'BeckGlobal — Design Web',
+      desc: 'Boilerplate e estrutura do projeto.',
+      slides: [
+        { label: 'Estrutura do Projeto', color: '#1e293b' },
+        { label: 'API Explorer', color: '#0f172a' },
+      ],
+    },
+    'postais-api': {
+      title: 'Postais API — Design Web',
+      desc: 'Interface de preservação da memória histórica.',
+      slides: [
+        { label: 'Página Inicial', color: '#1e293b' },
+        { label: 'Galeria de Postais', color: '#0f172a' },
+        { label: 'Detalhe do Postal', color: '#1a1a2e' },
+        { label: 'Mapa Interativo', color: '#162032' },
+        { label: 'Busca Avançada', color: '#1a2332' },
+      ],
+    },
+  };
+
+  /* State */
   let currentProject = 'generic';
+  let currentMode = 'both';
   let activeNode = null;
   let zoomLevel = 1;
+  let carouselIndex = 0;
 
-  /* ── SVG Helpers ───────────────────────────────────────── */
+  /* SVG Helpers */
   function createSVG(tag, attrs) {
     const el = document.createElementNS(NS, tag);
     for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
@@ -555,7 +657,7 @@ function renderTerminalDetail(projectId) {
     return `M ${ax} ${ay} C ${ax} ${ay + tension}, ${bx} ${by - tension}, ${bx} ${by}`;
   }
 
-  /* ── Render Diagram ────────────────────────────────────── */
+  /* Render Diagram */
   function renderDiagram(projectId, animate) {
     const project = PROJECTS[projectId];
     if (!project) return;
@@ -567,14 +669,72 @@ function renderTerminalDetail(projectId) {
     const nodeMap = {};
     project.nodes.forEach(n => { nodeMap[n.id] = n; });
 
-    /* SVG */
     const svg = createSVG('svg', {
       class: 'arch-svg',
       viewBox: `0 0 ${SVG_W} ${SVG_H}`,
       preserveAspectRatio: 'xMidYMid meet',
     });
 
-    /* Connections */
+    /* Arrowhead marker */
+    const defs = createSVG('defs', {});
+    const marker = createSVG('marker', {
+      id: 'arrow',
+      viewBox: '0 0 10 7',
+      refX: '10',
+      refY: '3.5',
+      markerWidth: '8',
+      markerHeight: '6',
+      orient: 'auto',
+    });
+    const arrowPath = createSVG('path', {
+      d: 'M 0 0 L 10 3.5 L 0 7 z',
+      fill: 'var(--border)',
+    });
+    marker.appendChild(arrowPath);
+    defs.appendChild(marker);
+
+    /* Active arrowhead marker */
+    const markerActive = createSVG('marker', {
+      id: 'arrow-active',
+      viewBox: '0 0 10 7',
+      refX: '10',
+      refY: '3.5',
+      markerWidth: '8',
+      markerHeight: '6',
+      orient: 'auto',
+    });
+    const arrowPathActive = createSVG('path', {
+      d: 'M 0 0 L 10 3.5 L 0 7 z',
+      fill: 'var(--primary)',
+    });
+    markerActive.appendChild(arrowPathActive);
+    defs.appendChild(markerActive);
+    svg.appendChild(defs);
+
+    /* Layer labels */
+    const layers = LAYERS[projectId] || [];
+    layers.forEach(layer => {
+      const ly = layer.y + 20;
+      const label = createSVG('text', {
+        x: '50',
+        y: ly,
+        'text-anchor': 'middle',
+        class: 'arch-layer-label',
+      });
+      label.textContent = layer.label;
+      svg.appendChild(label);
+
+      /* Horizontal guide line */
+      const line = createSVG('line', {
+        x1: '90',
+        y1: ly + 4,
+        x2: SVG_W - 20,
+        y2: ly + 4,
+        class: 'arch-layer-line',
+      });
+      svg.appendChild(line);
+    });
+
     const pathEls = [];
     const textEls = [];
 
@@ -587,26 +747,55 @@ function renderTerminalDetail(projectId) {
         d: calcPath(fromN, toN),
         'data-from': conn.from,
         'data-to': conn.to,
+        'marker-end': 'url(#arrow)',
       });
       svg.appendChild(path);
       pathEls.push({ el: path, conn });
 
+      /* Position label at midpoint of path with background pill */
       const mx = (fromN.x + toN.x) / 2;
       const my = (fromN.y + 70 + toN.y) / 2;
+
       const text = createSVG('text', {
-        x: mx, y: my - 8,
+        x: mx, y: my,
         'text-anchor': 'middle',
+        'dominant-baseline': 'central',
+        class: 'arch-path-label',
         'data-from': conn.from,
         'data-to': conn.to,
       });
+
+      /* Add background rect for readability */
+      const bg = createSVG('rect', {
+        x: mx - 4,
+        y: my - 8,
+        width: 8,
+        height: 16,
+        rx: 4,
+        class: 'arch-path-label-bg',
+        'data-from': conn.from,
+        'data-to': conn.to,
+      });
+
       text.textContent = conn.label;
+      svg.appendChild(bg);
       svg.appendChild(text);
+
+      /* Size bg rect to text after render */
+      requestAnimationFrame(() => {
+        const bbox = text.getBBox ? text.getBBox() : { x: 0, width: 60 };
+        bg.setAttribute('x', bbox.x - 6);
+        bg.setAttribute('y', bbox.y - 2);
+        bg.setAttribute('width', bbox.width + 12);
+        bg.setAttribute('height', bbox.height + 4);
+      });
+
       textEls.push({ el: text, conn });
+      textEls.push({ el: bg, conn });
     });
 
     diagram.appendChild(svg);
 
-    /* Nodes */
     const nodeEls = [];
     project.nodes.forEach(n => {
       const el = document.createElement('div');
@@ -617,12 +806,13 @@ function renderTerminalDetail(projectId) {
       el.innerHTML =
         '<div class="arch-node__icon">' + (ICONS[n.icon] || ICONS.server) + '</div>' +
         '<span class="arch-node__label">' + n.label + '</span>' +
-        '<span class="arch-node__tech">' + n.tech + '</span>';
+        '<span class="arch-node__tech">' + n.tech + '</span>' +
+        '<span class="arch-node__status"></span>';
       diagram.appendChild(el);
       nodeEls.push({ el, data: n });
     });
 
-    /* ── Adjacency ─────────────────────────────────────── */
+    /* Adjacency */
     const adj = {};
     project.nodes.forEach(n => { adj[n.id] = []; });
     project.connections.forEach(c => {
@@ -630,7 +820,7 @@ function renderTerminalDetail(projectId) {
       if (adj[c.to]) adj[c.to].push(c.from);
     });
 
-    /* ── Hover ─────────────────────────────────────────── */
+    /* Hover */
     function setActive(nodeId) {
       activeNode = nodeId;
       canvas.classList.toggle('is-hovering', !!nodeId);
@@ -642,10 +832,19 @@ function renderTerminalDetail(projectId) {
       });
 
       pathEls.forEach(({ el, conn }) => {
-        el.classList.toggle('arch-path--active', !!nodeId && (conn.from === nodeId || conn.to === nodeId));
+        const isActive = !!nodeId && (conn.from === nodeId || conn.to === nodeId);
+        el.classList.toggle('arch-path--active', isActive);
+        el.setAttribute('marker-end', isActive ? 'url(#arrow-active)' : 'url(#arrow)');
       });
       textEls.forEach(({ el, conn }) => {
-        el.classList.toggle('arch-text--active', !!nodeId && (conn.from === nodeId || conn.to === nodeId));
+        const isActive = !!nodeId && (conn.from === nodeId || conn.to === nodeId);
+        el.classList.toggle('arch-text--active', isActive);
+        if (el.classList.contains('arch-path-label')) {
+          el.classList.toggle('arch-path-label--active', isActive);
+        }
+        if (el.classList.contains('arch-path-label-bg')) {
+          el.classList.toggle('arch-path-label-bg--active', isActive);
+        }
       });
     }
 
@@ -653,8 +852,15 @@ function renderTerminalDetail(projectId) {
       activeNode = null;
       canvas.classList.remove('is-hovering');
       nodeEls.forEach(({ el }) => el.classList.remove('arch-node--active', 'arch-node--related'));
-      pathEls.forEach(({ el }) => el.classList.remove('arch-path--active'));
-      textEls.forEach(({ el }) => el.classList.remove('arch-text--active'));
+      pathEls.forEach(({ el }) => {
+        el.classList.remove('arch-path--active');
+        el.setAttribute('marker-end', 'url(#arrow)');
+      });
+      textEls.forEach(({ el }) => {
+        el.classList.remove('arch-text--active');
+        el.classList.remove('arch-path-label--active');
+        el.classList.remove('arch-path-label-bg--active');
+      });
     }
 
     nodeEls.forEach(({ el, data }) => {
@@ -696,7 +902,7 @@ function renderTerminalDetail(projectId) {
       tooltip.style.top = top + 'px';
     }
 
-    /* ── Entrance Animation ────────────────────────────── */
+    /* Entrance Animation */
     if (animate && !prefersReducedMotion) {
       nodeEls.forEach(({ el }, i) => {
         el.style.opacity = '0';
@@ -721,18 +927,150 @@ function renderTerminalDetail(projectId) {
       });
 
       textEls.forEach(({ el }, i) => {
-        el.style.opacity = '0';
-        setTimeout(() => {
-          el.style.transition = 'opacity 0.3s ease';
-          el.style.opacity = '1';
-        }, 350 + i * 50);
+        if (el.tagName === 'text') {
+          el.style.opacity = '0';
+          setTimeout(() => {
+            el.style.transition = 'opacity 0.3s ease';
+            el.style.opacity = '1';
+          }, 350 + i * 50);
+        } else {
+          el.style.opacity = '0';
+          setTimeout(() => {
+            el.style.transition = 'opacity 0.3s ease';
+            el.style.opacity = '0.85';
+          }, 350 + i * 50);
+        }
       });
     } else {
       nodeEls.forEach(({ el }) => el.classList.add('arch-node--visible'));
     }
   }
 
-  /* ── Tab Switching ─────────────────────────────────────── */
+  /* Update Video */
+  function updateVideo(projectId) {
+    const data = VIDEO_DATA[projectId];
+    if (!data || !videoPanel) return;
+
+    videoTitle.textContent = data.title;
+    videoDesc.textContent = data.desc;
+
+    if (data.url) {
+      videoIframe.src = data.url;
+      videoIframe.classList.add('video-panel__iframe--active');
+      videoPlaceholder.classList.add('video-panel__placeholder--hidden');
+    } else {
+      videoIframe.src = '';
+      videoIframe.classList.remove('video-panel__iframe--active');
+      videoPlaceholder.classList.remove('video-panel__placeholder--hidden');
+    }
+  }
+
+  /* Design Carousel */
+  const carouselEl = document.getElementById('design-carousel');
+  const carouselTrack = document.getElementById('design-carousel-track');
+  const carouselDots = document.getElementById('design-carousel-dots');
+  const carouselPrev = document.getElementById('design-carousel-prev');
+  const carouselNext = document.getElementById('design-carousel-next');
+  const carouselTitle = document.getElementById('design-carousel-title');
+  const carouselDesc = document.getElementById('design-carousel-desc');
+
+  function renderCarousel(projectId) {
+    const data = DESIGN_DATA[projectId];
+    if (!data || !carouselTrack) return;
+
+    carouselIndex = 0;
+    carouselTitle.textContent = data.title;
+    carouselDesc.textContent = data.desc;
+
+    var html = '';
+    data.slides.forEach(function (slide, i) {
+      html += '<div class="design-carousel__slide' + (i === 0 ? ' design-carousel__slide--active' : '') + '">';
+      html += '<div class="design-carousel__placeholder" style="background:' + slide.color + '">';
+      html += '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>';
+      html += '<span>' + slide.label + '</span>';
+      html += '</div>';
+      html += '</div>';
+    });
+    carouselTrack.innerHTML = html;
+
+    var dotsHtml = '';
+    data.slides.forEach(function (_, i) {
+      dotsHtml += '<button class="design-carousel__dot' + (i === 0 ? ' design-carousel__dot--active' : '') + '" data-index="' + i + '" aria-label="Slide ' + (i + 1) + '"></button>';
+    });
+    carouselDots.innerHTML = dotsHtml;
+
+    updateCarouselButtons(data.slides.length);
+    startCarouselTimer();
+  }
+
+  function updateCarousel(total) {
+    var slides = carouselTrack.querySelectorAll('.design-carousel__slide');
+    var dots = carouselDots.querySelectorAll('.design-carousel__dot');
+    slides.forEach(function (s, i) { s.classList.toggle('design-carousel__slide--active', i === carouselIndex); });
+    dots.forEach(function (d, i) { d.classList.toggle('design-carousel__dot--active', i === carouselIndex); });
+    updateCarouselButtons(total);
+  }
+
+  function updateCarouselButtons(total) {
+    if (carouselPrev) carouselPrev.disabled = carouselIndex <= 0;
+    if (carouselNext) carouselNext.disabled = carouselIndex >= total - 1;
+  }
+
+  if (carouselPrev) {
+    carouselPrev.addEventListener('click', function () {
+      var total = carouselTrack.querySelectorAll('.design-carousel__slide').length;
+      if (carouselIndex > 0) { carouselIndex--; updateCarousel(total); }
+      resetCarouselTimer();
+    });
+  }
+
+  if (carouselNext) {
+    carouselNext.addEventListener('click', function () {
+      var total = carouselTrack.querySelectorAll('.design-carousel__slide').length;
+      if (carouselIndex < total - 1) { carouselIndex++; updateCarousel(total); }
+      resetCarouselTimer();
+    });
+  }
+
+  if (carouselDots) {
+    carouselDots.addEventListener('click', function (e) {
+      var dot = e.target.closest('.design-carousel__dot');
+      if (!dot) return;
+      carouselIndex = parseInt(dot.dataset.index);
+      var total = carouselTrack.querySelectorAll('.design-carousel__slide').length;
+      updateCarousel(total);
+      resetCarouselTimer();
+    });
+  }
+
+  /* Carousel Auto-play */
+  var carouselTimer = null;
+
+  function startCarouselTimer() {
+    stopCarouselTimer();
+    carouselTimer = setInterval(function () {
+      var total = carouselTrack.querySelectorAll('.design-carousel__slide').length;
+      if (total <= 1) return;
+      carouselIndex = (carouselIndex + 1) % total;
+      updateCarousel(total);
+    }, 4000);
+  }
+
+  function stopCarouselTimer() {
+    if (carouselTimer) { clearInterval(carouselTimer); carouselTimer = null; }
+  }
+
+  function resetCarouselTimer() {
+    stopCarouselTimer();
+    startCarouselTimer();
+  }
+
+  if (carouselEl) {
+    carouselEl.addEventListener('mouseenter', stopCarouselTimer);
+    carouselEl.addEventListener('mouseleave', startCarouselTimer);
+  }
+
+  /* Tab Switching */
   selector.addEventListener('click', (e) => {
     const tab = e.target.closest('.arch-selector__tab');
     if (!tab) return;
@@ -746,10 +1084,62 @@ function renderTerminalDetail(projectId) {
       zoomLevel = 1;
       applyZoom();
       renderDiagram(projectId, true);
+      updateVideo(projectId);
+      renderCarousel(projectId);
     }
   });
 
-  /* ── Zoom ──────────────────────────────────────────────── */
+  /* View Mode Switching */
+  const designToggle = document.getElementById('view-design-toggle');
+  const designDropdown = document.getElementById('view-design-dropdown');
+
+  if (viewMode) {
+    viewMode.addEventListener('click', (e) => {
+      const tab = e.target.closest('.view-mode__tab');
+      if (!tab) return;
+
+      /* Toggle design dropdown */
+      if (tab === designToggle) {
+        e.stopPropagation();
+        const isOpen = designDropdown.classList.contains('view-mode__dropdown--open');
+        designDropdown.classList.toggle('view-mode__dropdown--open', !isOpen);
+        designToggle.classList.toggle('view-mode__parent--open', !isOpen);
+        return;
+      }
+
+      /* Close dropdown on any selection */
+      if (designDropdown) {
+        designDropdown.classList.remove('view-mode__dropdown--open');
+        designToggle.classList.remove('view-mode__parent--open');
+      }
+
+      /* Deactivate all tabs */
+      viewMode.querySelectorAll('.view-mode__tab').forEach(t => t.classList.remove('view-mode__tab--active'));
+      viewMode.querySelectorAll('.view-mode__dropdown .view-mode__tab').forEach(t => t.classList.remove('view-mode__tab--active'));
+      tab.classList.add('view-mode__tab--active');
+
+      /* Also highlight parent if dropdown item selected */
+      const mode = tab.dataset.mode;
+      if (mode === 'design-web' || mode === 'design-system') {
+        designToggle.classList.add('view-mode__tab--active');
+      }
+
+      if (mode !== currentMode) {
+        currentMode = mode;
+        archContent.setAttribute('data-mode', mode);
+      }
+    });
+
+    /* Close dropdown when clicking outside */
+    document.addEventListener('click', (e) => {
+      if (!viewMode.contains(e.target)) {
+        if (designDropdown) designDropdown.classList.remove('view-mode__dropdown--open');
+        if (designToggle) designToggle.classList.remove('view-mode__parent--open');
+      }
+    });
+  }
+
+  /* Zoom */
   const zoomIn = document.getElementById('arch-zoom-in');
   const zoomOut = document.getElementById('arch-zoom-out');
   const zoomReset = document.getElementById('arch-zoom-reset');
@@ -763,36 +1153,151 @@ function renderTerminalDetail(projectId) {
   if (zoomOut) zoomOut.addEventListener('click', () => { zoomLevel = Math.max(0.5, zoomLevel - 0.15); applyZoom(); });
   if (zoomReset) zoomReset.addEventListener('click', () => { zoomLevel = 1; applyZoom(); });
 
-  /* ── Initial Render ────────────────────────────────────── */
+  /* Initial Render */
+  if (archContent) {
+    archContent.setAttribute('data-mode', currentMode);
+  }
   renderDiagram('generic', true);
+  updateVideo('generic');
+  renderCarousel('generic');
+
+  /* ============================================================
+     System Running Animation — Particles + Hover
+     ============================================================ */
+  let particleFrame = null;
+  let particles = [];
+
+  function createParticle(pathEl) {
+    const p = document.createElement('div');
+    p.className = 'arch-particle';
+    canvas.appendChild(p);
+    return { el: p, path: pathEl, offset: Math.random(), speed: 0.003 + Math.random() * 0.004 };
+  }
+
+  function animateParticles() {
+    const dRect = diagram.getBoundingClientRect();
+    particles.forEach(p => {
+      p.offset = (p.offset + p.speed) % 1;
+      const len = p.path.getTotalLength ? p.path.getTotalLength() : 100;
+      const pt = p.path.getPointAtLength(p.offset * len);
+      const scaleX = dRect.width / SVG_W;
+      const scaleY = dRect.height / SVG_H;
+      p.el.style.left = (pt.x * scaleX) + 'px';
+      p.el.style.top = (pt.y * scaleY) + 'px';
+      p.el.style.opacity = '0.9';
+    });
+    particleFrame = requestAnimationFrame(animateParticles);
+  }
+
+  function startRunning() {
+    if (prefersReducedMotion) return;
+    canvas.classList.add('is-running');
+    /* Create particles on active paths */
+    const activePaths = diagram.querySelectorAll('.arch-svg path');
+    particles.forEach(p => p.el.remove());
+    particles = [];
+    activePaths.forEach(path => {
+      for (let i = 0; i < 2; i++) {
+        particles.push(createParticle(path));
+      }
+    });
+    animateParticles();
+  }
+
+  function stopRunning() {
+    canvas.classList.remove('is-running');
+    if (particleFrame) { cancelAnimationFrame(particleFrame); particleFrame = null; }
+    particles.forEach(p => p.el.remove());
+    particles = [];
+  }
+
+  canvas.addEventListener('mouseenter', startRunning);
+  canvas.addEventListener('mouseleave', stopRunning);
+
+  /* Also stop running when hovering a specific node */
+  const origSetActive = (function() {
+    let _active = null;
+    return {
+      get: () => _active,
+      set: (v) => { _active = v; }
+    };
+  })();
 })();
 
 /* ============================================================
-   EVOLUTION — Staircase animation
+   TIMELINE — Horizontal scroll + expand/collapse
    ============================================================ */
 (function () {
-  const steps = document.querySelectorAll('.staircase__step');
-  if (!steps.length) return;
+  const track = document.getElementById('timeline-track');
+  const leftBtn = document.getElementById('timeline-left');
+  const rightBtn = document.getElementById('timeline-right');
+  if (!track) return;
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* Arrow scroll */
+  const scrollAmount = 260;
+
+  function updateArrows() {
+    if (leftBtn) leftBtn.disabled = track.scrollLeft <= 0;
+    if (rightBtn) rightBtn.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+  }
+
+  if (leftBtn) {
+    leftBtn.addEventListener('click', () => {
+      track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    });
+  }
+
+  if (rightBtn) {
+    rightBtn.addEventListener('click', () => {
+      track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    });
+  }
+
+  track.addEventListener('scroll', updateArrows, { passive: true });
+  updateArrows();
+
+  /* Expand/collapse cards */
+  const items = document.querySelectorAll('.timeline__item');
+  items.forEach(item => {
+    const expandBtn = item.querySelector('.timeline__expand');
+    if (!expandBtn) return;
+
+    expandBtn.addEventListener('click', () => {
+      const isExpanded = item.classList.contains('timeline__item--expanded');
+      items.forEach(i => i.classList.remove('timeline__item--expanded'));
+      if (!isExpanded) {
+        item.classList.add('timeline__item--expanded');
+      }
+    });
+  });
+
+  /* Entrance animation */
   if (prefersReducedMotion) {
-    steps.forEach(step => step.classList.add('staircase__step--visible'));
+    items.forEach(item => {
+      const card = item.querySelector('.timeline__card');
+      if (card) card.classList.add('timeline__card--visible');
+    });
     return;
   }
 
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        setTimeout(() => {
-          entry.target.classList.add('staircase__step--visible');
-        }, i * 100);
+        const card = entry.target.querySelector('.timeline__card');
+        if (card) {
+          const idx = Array.from(items).indexOf(entry.target);
+          setTimeout(() => {
+            card.classList.add('timeline__card--visible');
+          }, idx * 80);
+        }
         observer.unobserve(entry.target);
       }
     });
   }, { threshold: 0.2 });
 
-  steps.forEach(step => observer.observe(step));
+  items.forEach(item => observer.observe(item));
 })();
 
 /* ============================================================
@@ -834,5 +1339,24 @@ function renderTerminalDetail(projectId) {
         window.scrollTo({ top: position, behavior: 'smooth' });
       }
     });
+  });
+})();
+
+/* ============================================================
+   THEME TOGGLE — Dark / Light
+   ============================================================ */
+(function () {
+  const toggle = document.getElementById('theme-toggle');
+  const html = document.documentElement;
+  if (!toggle) return;
+
+  const saved = localStorage.getItem('theme');
+  if (saved) html.setAttribute('data-theme', saved);
+
+  toggle.addEventListener('click', () => {
+    const current = html.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
   });
 })();
