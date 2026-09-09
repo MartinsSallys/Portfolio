@@ -1222,8 +1222,8 @@ function renderTerminalDetail(projectId) {
   const zoomOut = document.getElementById('arch-zoom-out');
   const zoomReset = document.getElementById('arch-zoom-reset');
 
-  if (zoomIn) zoomIn.addEventListener('click', () => { if (pz) pz.zoomTo(1.2, { animate: true }); });
-  if (zoomOut) zoomOut.addEventListener('click', () => { if (pz) pz.zoomTo(0.8, { animate: true }); });
+  if (zoomIn) zoomIn.addEventListener('click', () => { if (pz) pz.zoomTo(pz.getZoom() * 1.2, { animate: true }); });
+  if (zoomOut) zoomOut.addEventListener('click', () => { if (pz) pz.zoomTo(pz.getZoom() * 0.8, { animate: true }); });
   if (zoomReset) zoomReset.addEventListener('click', () => { if (pz) pz.reset({ animate: true }); });
 })();
 

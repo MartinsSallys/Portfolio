@@ -1718,7 +1718,7 @@ p { color: var(--text-secondary); line-height: 1.7; }
   .footer__inner { flex-direction:column; gap:12px; text-align:center; }
 
   /* Architecture Controls — Tablet */
-  .arch-controls-row { flex-wrap: wrap; gap: 8px; }
+  .arch-controls-row { flex-wrap: wrap; gap: 10px; }
 
   /* Architecture Diagram — Tablet */
   .arch-diagram { aspect-ratio: 960 / 800; touch-action: none; }
@@ -1728,7 +1728,7 @@ p { color: var(--text-secondary); line-height: 1.7; }
   .arch-selector { flex-wrap: wrap; }
   .arch-selector__tab { flex-shrink: 0; }
 
-  /* View Mode — Mobile */
+  /* View Mode — Tablet */
   .view-mode { flex-wrap: wrap; width: 100%; }
   .view-mode__tab { flex: 1; justify-content: center; font-size: 0.6875rem; padding: 6px 10px; flex-shrink: 0; }
 
@@ -1769,7 +1769,7 @@ p { color: var(--text-secondary); line-height: 1.7; }
   .arch-controls-row {
     flex-direction: column;
     align-items: stretch;
-    gap: 8px;
+    gap: 10px;
   }
   .arch-selector {
     width: 100%;
@@ -1777,40 +1777,42 @@ p { color: var(--text-secondary); line-height: 1.7; }
     scrollbar-width: none;
     -ms-overflow-style: none;
     justify-content: flex-start;
+    padding: 4px;
   }
   .arch-selector::-webkit-scrollbar { display: none; }
-  .arch-selector__tab { font-size: 0.6875rem; padding: 6px 12px; flex-shrink: 0; }
+  .arch-selector__tab { font-size: 0.75rem; padding: 8px 14px; flex-shrink: 0; }
 
   .arch-diagram {
     aspect-ratio: 960 / 800;
     touch-action: none;
+    max-height: 70vh;
   }
-  .arch-node { --node-width: 90px; --node-icon-size: 22px; }
+  .arch-node { --node-width: 80px; --node-icon-size: 20px; --node-pad-y: 8px; }
   .arch-node__label { font-size: 0.5rem; }
-  .arch-node__tech { font-size: 0.375rem; }
-  .arch-controls { display: flex; }
-  .arch-legend { justify-content: center; gap: 16px; }
+  .arch-node__tech { font-size: 0.375rem; display: none; }
+  .arch-controls { display: flex; gap: 6px; }
+  .arch-controls__btn { width: 36px; height: 36px; }
+  .arch-controls__btn svg { width: 16px; height: 16px; }
+  .arch-legend { justify-content: center; gap: 20px; font-size: 0.75rem; }
   .arch-canvas::before { background-size: 100% 100%, 30px 30px, 30px 30px; }
 
-  /* View Mode — Small Mobile */
+  /* View Mode — Mobile */
   .view-mode {
     width: 100%;
     overflow-x: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
     flex-wrap: nowrap;
+    padding: 4px;
   }
   .view-mode::-webkit-scrollbar { display: none; }
   .view-mode__tab {
-    font-size: 0.625rem;
-    padding: 5px 8px;
-    gap: 4px;
+    font-size: 0.6875rem;
+    padding: 7px 12px;
+    gap: 5px;
     flex-shrink: 0;
   }
-  .view-mode__tab svg {
-    width: 12px;
-    height: 12px;
-  }
+  .view-mode__tab svg { width: 14px; height: 14px; }
   .view-mode__dropdown {
     position: fixed;
     left: var(--container-padding);
