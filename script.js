@@ -369,7 +369,7 @@ function renderTerminalDetail(projectId) {
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const NS = 'http://www.w3.org/2000/svg';
-  const SVG_W = 960, SVG_H = 800;
+  const SVG_W = 960, SVG_H = 950;
 
   /* SVG Icons */
   const ICONS = {
@@ -388,253 +388,202 @@ function renderTerminalDetail(projectId) {
 
   /* Layer labels for each project */
   const LAYERS = {
-    generic: [
-      { y: 30,  label: 'CLIENTE' },
-      { y: 140, label: 'API GATEWAY' },
-      { y: 270, label: 'LOGICA' },
-      { y: 400, label: 'DADOS' },
-      { y: 530, label: 'INFRA' },
-    ],
     'postais-parnaiba': [
-      { y: 30,  label: 'CLIENTE' },
-      { y: 150, label: 'API GATEWAY' },
-      { y: 280, label: 'ENDPOINTS' },
-      { y: 410, label: 'LOGICA' },
-      { y: 540, label: 'DADOS' },
-      { y: 670, label: 'BANCO' },
+      { y: 30,  label: 'USUARIO' },
+      { y: 180, label: 'API' },
+      { y: 330, label: 'ENDPOINTS' },
+      { y: 480, label: 'LOGICA' },
+      { y: 630, label: 'DADOS' },
+      { y: 780, label: 'BANCO' },
     ],
     'beck-global': [
-      { y: 30,  label: 'CLIENTE' },
-      { y: 150, label: 'API GATEWAY' },
-      { y: 280, label: 'ENDPOINTS' },
-      { y: 410, label: 'LOGICA' },
-      { y: 540, label: 'DADOS' },
-      { y: 670, label: 'INFRA' },
+      { y: 30,  label: 'USUARIO' },
+      { y: 180, label: 'API' },
+      { y: 330, label: 'ENDPOINTS' },
+      { y: 480, label: 'LOGICA' },
+      { y: 630, label: 'DADOS' },
+      { y: 780, label: 'INFRA' },
     ],
     'postais-api': [
-      { y: 30,  label: 'CLIENTE' },
-      { y: 150, label: 'API GATEWAY' },
-      { y: 280, label: 'ENDPOINTS' },
-      { y: 410, label: 'LOGICA' },
-      { y: 540, label: 'DADOS' },
-      { y: 670, label: 'BANCO' },
+      { y: 30,  label: 'USUARIO' },
+      { y: 180, label: 'API' },
+      { y: 330, label: 'ENDPOINTS' },
+      { y: 480, label: 'LOGICA' },
+      { y: 630, label: 'DADOS' },
+      { y: 780, label: 'BANCO' },
     ],
   };
 
-  /* Project Architecture Data — Refactored for clear top-to-bottom flow */
+  /* Project Architecture Data — Clear top-to-bottom flow with descriptive labels */
   const PROJECTS = {
-    generic: {
-      nodes: [
-        { id: 'client',     x: 480, y: 40,  icon: 'browser',  label: 'CLIENTE',     tech: 'Browser / App' },
-        { id: 'fastapi',    x: 480, y: 160, icon: 'api',      label: 'FASTAPI',    tech: 'REST API Gateway' },
-        { id: 'auth',       x: 180, y: 290, icon: 'lock',     label: 'AUTH',       tech: 'JWT Validation' },
-        { id: 'services',   x: 480, y: 290, icon: 'server',   label: 'SERVICES',   tech: 'Business Logic' },
-        { id: 'repository', x: 780, y: 290, icon: 'gear',     label: 'REPOSITORY', tech: 'Data Access' },
-        { id: 'sqlalchemy', x: 480, y: 420, icon: 'db',       label: 'SQLALCHEMY', tech: 'ORM Layer' },
-        { id: 'alembic',    x: 220, y: 420, icon: 'wrench',   label: 'ALEMBIC',    tech: 'Migrations' },
-        { id: 'pytest',     x: 740, y: 420, icon: 'check',    label: 'PYTEST',     tech: 'Testing' },
-        { id: 'docker',     x: 300, y: 550, icon: 'docker',   label: 'DOCKER',     tech: 'Containers' },
-        { id: 'postgresql', x: 600, y: 550, icon: 'database', label: 'POSTGRESQL', tech: 'Database' },
-      ],
-      connections: [
-        { from: 'client',     to: 'fastapi',    label: 'HTTP' },
-        { from: 'fastapi',    to: 'auth',       label: 'Validate' },
-        { from: 'fastapi',    to: 'services',   label: 'Route' },
-        { from: 'services',   to: 'repository', label: 'Query' },
-        { from: 'repository', to: 'sqlalchemy', label: 'ORM' },
-        { from: 'sqlalchemy', to: 'postgresql', label: 'SQL' },
-        { from: 'alembic',    to: 'postgresql', label: 'Migrate' },
-        { from: 'pytest',     to: 'services',   label: 'Test' },
-        { from: 'docker',     to: 'fastapi',    label: 'Run' },
-        { from: 'docker',     to: 'postgresql', label: 'Host' },
-      ],
-    },
-
     'postais-parnaiba': {
       nodes: [
-        /* Layer 1 — Client */
-        { id: 'client',       x: 180, y: 40,  icon: 'browser',  label: 'USER',        tech: 'Browser' },
-        { id: 'frontend',     x: 480, y: 40,  icon: 'browser',  label: 'FRONTEND',    tech: 'HTML / CSS / JS' },
-        { id: 'design-sys',   x: 780, y: 40,  icon: 'gear',     label: 'DESIGN SYS',  tech: 'UI Components' },
-        /* Layer 2 — API Gateway */
-        { id: 'fastapi',      x: 480, y: 160, icon: 'api',      label: 'FASTAPI',     tech: 'REST API' },
-        /* Layer 3 — API Internals */
-        { id: 'router',       x: 180, y: 290, icon: 'server',   label: 'ROUTER',      tech: 'Endpoints' },
-        { id: 'schema',       x: 480, y: 290, icon: 'lock',     label: 'PYDANTIC',    tech: 'Validation' },
-        { id: 'auth',         x: 780, y: 290, icon: 'shield',   label: 'AUTH',        tech: 'JWT' },
-        /* Layer 4 — Business Logic */
-        { id: 'services',     x: 320, y: 420, icon: 'server',   label: 'SERVICES',    tech: 'Business Logic' },
-        { id: 'repository',   x: 640, y: 420, icon: 'gear',     label: 'REPOSITORY',  tech: 'CRUD' },
-        /* Layer 5 — Data Access */
-        { id: 'sqlalchemy',   x: 320, y: 550, icon: 'db',       label: 'SQLALCHEMY',  tech: 'ORM' },
-        { id: 'alembic',      x: 640, y: 550, icon: 'wrench',   label: 'ALEMBIC',     tech: 'Migrations' },
+        /* Layer 1 — User */
+        { id: 'client',       x: 180, y: 40,  icon: 'browser',  label: 'USUARIO',      tech: 'Abre o navegador' },
+        { id: 'frontend',     x: 480, y: 40,  icon: 'browser',  label: 'FRONTEND',    tech: 'Pagina web' },
+        { id: 'design-sys',   x: 780, y: 40,  icon: 'gear',     label: 'DESIGN SYS',  tech: 'Componentes UI' },
+        /* Layer 2 — API */
+        { id: 'fastapi',      x: 480, y: 180, icon: 'api',      label: 'FASTAPI',     tech: 'Recebe a requisicao' },
+        /* Layer 3 — Endpoints */
+        { id: 'router',       x: 180, y: 330, icon: 'server',   label: 'ROUTER',      tech: 'Direciona para rota certa' },
+        { id: 'schema',       x: 480, y: 330, icon: 'lock',     label: 'PYDANTIC',    tech: 'Valida os dados' },
+        { id: 'auth',         x: 780, y: 330, icon: 'shield',   label: 'AUTH',        tech: 'Verifica login' },
+        /* Layer 4 — Logic */
+        { id: 'services',     x: 320, y: 480, icon: 'server',   label: 'SERVICES',    tech: 'Regras de negocio' },
+        { id: 'repository',   x: 640, y: 480, icon: 'gear',     label: 'REPOSITORY',  tech: 'Acessa os dados' },
+        /* Layer 5 — Data */
+        { id: 'sqlalchemy',   x: 320, y: 630, icon: 'db',       label: 'SQLALCHEMY',  tech: 'Traduz para SQL' },
+        { id: 'alembic',      x: 640, y: 630, icon: 'wrench',   label: 'ALEMBIC',     tech: 'Atualiza tabelas' },
         /* Layer 6 — Database */
-        { id: 'postgresql',   x: 480, y: 680, icon: 'database', label: 'POSTGRESQL',  tech: 'Database' },
+        { id: 'postgresql',   x: 480, y: 780, icon: 'database', label: 'POSTGRESQL',  tech: 'Armazena dados' },
         /* Infra */
-        { id: 'docker',       x: 780, y: 550, icon: 'docker',   label: 'DOCKER',      tech: 'Containers' },
+        { id: 'docker',       x: 780, y: 630, icon: 'docker',   label: 'DOCKER',      tech: 'Rodar tudo junto' },
       ],
       connections: [
-        { from: 'client',      to: 'frontend',    label: 'Visit' },
-        { from: 'frontend',    to: 'design-sys',  label: 'UI Kit' },
-        { from: 'frontend',    to: 'fastapi',     label: 'REST' },
-        { from: 'fastapi',     to: 'router',      label: 'Route' },
-        { from: 'fastapi',     to: 'schema',      label: 'Validate' },
-        { from: 'fastapi',     to: 'auth',        label: 'Protect' },
-        { from: 'router',      to: 'services',    label: 'Dispatch' },
-        { from: 'schema',      to: 'services',    label: 'Typed Data' },
-        { from: 'auth',        to: 'services',    label: 'Verified' },
-        { from: 'services',    to: 'repository',  label: 'Query' },
-        { from: 'repository',  to: 'sqlalchemy',  label: 'ORM' },
-        { from: 'sqlalchemy',  to: 'postgresql',  label: 'SQL' },
-        { from: 'alembic',     to: 'postgresql',  label: 'Migrate' },
-        { from: 'docker',      to: 'fastapi',     label: 'Run' },
-        { from: 'docker',      to: 'postgresql',  label: 'Host' },
+        { from: 'client',      to: 'frontend',    label: 'Acessa site' },
+        { from: 'frontend',    to: 'design-sys',  label: 'Usa componentes' },
+        { from: 'frontend',    to: 'fastapi',     label: 'Faz requisicao' },
+        { from: 'fastapi',     to: 'router',      label: 'Encontra rota' },
+        { from: 'fastapi',     to: 'schema',      label: 'Valida dados' },
+        { from: 'fastapi',     to: 'auth',        label: 'Checa token' },
+        { from: 'router',      to: 'services',    label: 'Chama servico' },
+        { from: 'schema',      to: 'services',    label: 'Dados validados' },
+        { from: 'auth',        to: 'services',    label: 'Usuario ok' },
+        { from: 'services',    to: 'repository',  label: 'Busca dados' },
+        { from: 'repository',  to: 'sqlalchemy',  label: 'Via ORM' },
+        { from: 'sqlalchemy',  to: 'postgresql',  label: 'Executa SQL' },
+        { from: 'alembic',     to: 'postgresql',  label: 'Atualiza schema' },
+        { from: 'docker',      to: 'fastapi',     label: 'Rodar API' },
+        { from: 'docker',      to: 'postgresql',  label: 'Rodar DB' },
       ],
     },
 
     'beck-global': {
       nodes: [
-        /* Layer 1 — Client */
-        { id: 'client',       x: 240, y: 40,  icon: 'browser',  label: 'CLIENTE',      tech: 'Browser / App' },
+        { id: 'client',       x: 240, y: 40,  icon: 'browser',  label: 'CLIENTE',      tech: 'Navegador' },
         { id: 'frontend',     x: 600, y: 40,  icon: 'browser',  label: 'FRONTEND',    tech: 'React / HTML' },
-        /* Layer 2 — API Gateway */
-        { id: 'fastapi',      x: 480, y: 160, icon: 'api',      label: 'FASTAPI',     tech: 'REST API' },
-        /* Layer 3 — API Internals */
-        { id: 'router',       x: 180, y: 290, icon: 'server',   label: 'ROUTER',      tech: 'Endpoints' },
-        { id: 'schema',       x: 480, y: 290, icon: 'lock',     label: 'PYDANTIC',    tech: 'Validation' },
-        { id: 'jwt',          x: 780, y: 290, icon: 'shield',   label: 'JWT',         tech: 'Auth Tokens' },
-        /* Layer 4 — Business Logic */
-        { id: 'services',     x: 260, y: 420, icon: 'server',   label: 'SERVICES',    tech: 'Business Logic' },
-        { id: 'auth-svc',     x: 540, y: 420, icon: 'shield',   label: 'AUTH SVC',    tech: 'Authentication' },
-        { id: 'repository',   x: 800, y: 420, icon: 'gear',     label: 'REPOSITORY',  tech: 'CRUD' },
-        /* Layer 5 — Data Access */
-        { id: 'sqlalchemy',   x: 400, y: 550, icon: 'db',       label: 'SQLALCHEMY',  tech: 'ORM' },
-        { id: 'alembic',      x: 680, y: 550, icon: 'wrench',   label: 'ALEMBIC',     tech: 'Migrations' },
-        /* Layer 6 — Database + Infra */
-        { id: 'postgresql',   x: 400, y: 680, icon: 'database', label: 'POSTGRESQL',  tech: 'Database' },
-        { id: 'docker',       x: 680, y: 680, icon: 'docker',   label: 'DOCKER',      tech: 'Containers' },
-        { id: 'pytest',       x: 140, y: 550, icon: 'check',    label: 'PYTEST',      tech: 'Testing' },
+        { id: 'fastapi',      x: 480, y: 180, icon: 'api',      label: 'FASTAPI',     tech: 'Recebe requisicao' },
+        { id: 'router',       x: 180, y: 330, icon: 'server',   label: 'ROUTER',      tech: 'Encontra rota' },
+        { id: 'schema',       x: 480, y: 330, icon: 'lock',     label: 'PYDANTIC',    tech: 'Valida dados' },
+        { id: 'jwt',          x: 780, y: 330, icon: 'shield',   label: 'JWT',         tech: 'Token de acesso' },
+        { id: 'services',     x: 260, y: 480, icon: 'server',   label: 'SERVICES',    tech: 'Regras de negocio' },
+        { id: 'auth-svc',     x: 540, y: 480, icon: 'shield',   label: 'AUTH SVC',    tech: 'Gerencia login' },
+        { id: 'repository',   x: 800, y: 480, icon: 'gear',     label: 'REPOSITORY',  tech: 'CRUD dados' },
+        { id: 'sqlalchemy',   x: 400, y: 630, icon: 'db',       label: 'SQLALCHEMY',  tech: 'Traduz para SQL' },
+        { id: 'alembic',      x: 680, y: 630, icon: 'wrench',   label: 'ALEMBIC',     tech: 'Atualiza tabelas' },
+        { id: 'postgresql',   x: 400, y: 780, icon: 'database', label: 'POSTGRESQL',  tech: 'Armazena dados' },
+        { id: 'docker',       x: 680, y: 780, icon: 'docker',   label: 'DOCKER',      tech: 'Rodar tudo junto' },
+        { id: 'pytest',       x: 140, y: 630, icon: 'check',    label: 'PYTEST',      tech: 'Testa o codigo' },
       ],
       connections: [
-        { from: 'client',      to: 'fastapi',     label: 'HTTP' },
-        { from: 'frontend',    to: 'fastapi',     label: 'REST' },
-        { from: 'fastapi',     to: 'router',      label: 'Route' },
-        { from: 'fastapi',     to: 'schema',      label: 'Validate' },
-        { from: 'fastapi',     to: 'jwt',         label: 'Token' },
-        { from: 'router',      to: 'services',    label: 'Dispatch' },
-        { from: 'schema',      to: 'services',    label: 'Typed Data' },
-        { from: 'jwt',         to: 'auth-svc',    label: 'Verify' },
-        { from: 'auth-svc',    to: 'services',    label: 'Authenticated' },
-        { from: 'services',    to: 'repository',  label: 'Query' },
-        { from: 'repository',  to: 'sqlalchemy',  label: 'ORM' },
-        { from: 'sqlalchemy',  to: 'postgresql',  label: 'SQL' },
-        { from: 'alembic',     to: 'postgresql',  label: 'Migrate' },
-        { from: 'pytest',      to: 'services',    label: 'Test' },
-        { from: 'docker',      to: 'fastapi',     label: 'Run' },
-        { from: 'docker',      to: 'postgresql',  label: 'Host' },
+        { from: 'client',      to: 'fastapi',     label: 'Faz requisicao' },
+        { from: 'frontend',    to: 'fastapi',     label: 'Faz requisicao' },
+        { from: 'fastapi',     to: 'router',      label: 'Encontra rota' },
+        { from: 'fastapi',     to: 'schema',      label: 'Valida dados' },
+        { from: 'fastapi',     to: 'jwt',         label: 'Gera token' },
+        { from: 'router',      to: 'services',    label: 'Chama servico' },
+        { from: 'schema',      to: 'services',    label: 'Dados validados' },
+        { from: 'jwt',         to: 'auth-svc',    label: 'Verifica acesso' },
+        { from: 'auth-svc',    to: 'services',    label: 'Usuario autorizado' },
+        { from: 'services',    to: 'repository',  label: 'Busca dados' },
+        { from: 'repository',  to: 'sqlalchemy',  label: 'Via ORM' },
+        { from: 'sqlalchemy',  to: 'postgresql',  label: 'Executa SQL' },
+        { from: 'alembic',     to: 'postgresql',  label: 'Atualiza schema' },
+        { from: 'pytest',      to: 'services',    label: 'Testa servico' },
+        { from: 'docker',      to: 'fastapi',     label: 'Rodar API' },
+        { from: 'docker',      to: 'postgresql',  label: 'Rodar DB' },
       ],
     },
 
     'postais-api': {
       nodes: [
-        { id: 'client',       x: 240, y: 40,  icon: 'browser',  label: 'CLIENTE',      tech: 'Browser' },
+        { id: 'client',       x: 240, y: 40,  icon: 'browser',  label: 'CLIENTE',      tech: 'Navegador' },
         { id: 'frontend',     x: 600, y: 40,  icon: 'browser',  label: 'FRONTEND',    tech: 'Postais Web' },
-        { id: 'fastapi',      x: 480, y: 160, icon: 'api',      label: 'FASTAPI',     tech: 'REST API' },
-        { id: 'router',       x: 200, y: 290, icon: 'server',   label: 'ROUTER',      tech: 'Endpoints' },
-        { id: 'schema',       x: 480, y: 290, icon: 'lock',     label: 'PYDANTIC',    tech: 'Validation' },
-        { id: 'services',     x: 340, y: 420, icon: 'server',   label: 'SERVICES',    tech: 'Business Logic' },
-        { id: 'repository',   x: 620, y: 420, icon: 'gear',     label: 'REPOSITORY',  tech: 'CRUD' },
-        { id: 'sqlalchemy',   x: 340, y: 550, icon: 'db',       label: 'SQLALCHEMY',  tech: 'ORM' },
-        { id: 'alembic',      x: 620, y: 550, icon: 'wrench',   label: 'ALEMBIC',     tech: 'Migrations' },
-        { id: 'postgresql',   x: 480, y: 680, icon: 'database', label: 'POSTGRESQL',  tech: 'Database' },
-        { id: 'docker',       x: 780, y: 420, icon: 'docker',   label: 'DOCKER',      tech: 'Containers' },
+        { id: 'fastapi',      x: 480, y: 180, icon: 'api',      label: 'FASTAPI',     tech: 'Recebe requisicao' },
+        { id: 'router',       x: 200, y: 330, icon: 'server',   label: 'ROUTER',      tech: 'Encontra rota' },
+        { id: 'schema',       x: 480, y: 330, icon: 'lock',     label: 'PYDANTIC',    tech: 'Valida dados' },
+        { id: 'services',     x: 340, y: 480, icon: 'server',   label: 'SERVICES',    tech: 'Regras de negocio' },
+        { id: 'repository',   x: 620, y: 480, icon: 'gear',     label: 'REPOSITORY',  tech: 'CRUD dados' },
+        { id: 'sqlalchemy',   x: 340, y: 630, icon: 'db',       label: 'SQLALCHEMY',  tech: 'Traduz para SQL' },
+        { id: 'alembic',      x: 620, y: 630, icon: 'wrench',   label: 'ALEMBIC',     tech: 'Atualiza tabelas' },
+        { id: 'postgresql',   x: 480, y: 780, icon: 'database', label: 'POSTGRESQL',  tech: 'Armazena dados' },
+        { id: 'docker',       x: 780, y: 480, icon: 'docker',   label: 'DOCKER',      tech: 'Rodar tudo junto' },
       ],
       connections: [
-        { from: 'client',      to: 'fastapi',     label: 'HTTP' },
-        { from: 'frontend',    to: 'fastapi',     label: 'REST' },
-        { from: 'fastapi',     to: 'router',      label: 'Route' },
-        { from: 'fastapi',     to: 'schema',      label: 'Validate' },
-        { from: 'router',      to: 'services',    label: 'Dispatch' },
-        { from: 'schema',      to: 'services',    label: 'Typed Data' },
-        { from: 'services',    to: 'repository',  label: 'Query' },
-        { from: 'repository',  to: 'sqlalchemy',  label: 'ORM' },
-        { from: 'sqlalchemy',  to: 'postgresql',  label: 'SQL' },
-        { from: 'alembic',     to: 'postgresql',  label: 'Migrate' },
-        { from: 'docker',      to: 'fastapi',     label: 'Run' },
-        { from: 'docker',      to: 'postgresql',  label: 'Host' },
+        { from: 'client',      to: 'fastapi',     label: 'Faz requisicao' },
+        { from: 'frontend',    to: 'fastapi',     label: 'Faz requisicao' },
+        { from: 'fastapi',     to: 'router',      label: 'Encontra rota' },
+        { from: 'fastapi',     to: 'schema',      label: 'Valida dados' },
+        { from: 'router',      to: 'services',    label: 'Chama servico' },
+        { from: 'schema',      to: 'services',    label: 'Dados validados' },
+        { from: 'services',    to: 'repository',  label: 'Busca dados' },
+        { from: 'repository',  to: 'sqlalchemy',  label: 'Via ORM' },
+        { from: 'sqlalchemy',  to: 'postgresql',  label: 'Executa SQL' },
+        { from: 'alembic',     to: 'postgresql',  label: 'Atualiza schema' },
+        { from: 'docker',      to: 'fastapi',     label: 'Rodar API' },
+        { from: 'docker',      to: 'postgresql',  label: 'Rodar DB' },
       ],
     },
   };
 
   /* Video Data */
   const VIDEO_DATA = {
-    generic: {
-      title: 'Visão Geral',
-      desc: 'Diagrama completo da arquitetura backend utilisada nos projetos.',
-      url: '',
-    },
     'postais-parnaiba': {
       title: 'Postais da Parnaíba',
       desc: 'Backend para preservação digital da memória histórica da cidade.',
-      url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+      url: '',
     },
     'beck-global': {
       title: 'BeckGlobal',
       desc: 'Boilerplate reutilizável para APIs REST com FastAPI e Docker.',
-      url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+      url: '',
     },
     'postais-api': {
       title: 'Postais da Parnaíba API',
       desc: 'Backend para preservação digital da memória histórica da cidade.',
-      url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+      url: '',
     },
   };
 
   /* Design Carousel Data */
   const DESIGN_DATA = {
-    generic: {
-      title: 'Visão Geral',
-      desc: 'Interfaces e layouts dos projetos.',
-      slides: [
-        { label: 'Dashboard View', color: '#1e293b' },
-        { label: 'API Response', color: '#0f172a' },
-        { label: 'Terminal View', color: '#1a1a2e' },
-      ],
-    },
     'postais-parnaiba': {
       title: 'Postais da Parnaíba — Design Web',
       desc: 'Interface de preservação da memória histórica.',
       slides: [
-        { label: 'Página Inicial', color: '#1e293b' },
-        { label: 'Galeria de Postais', color: '#0f172a' },
-        { label: 'Detalhe do Postal', color: '#1a1a2e' },
-        { label: 'Mapa Interativo', color: '#162032' },
-        { label: 'Busca Avançada', color: '#1a2332' },
+        { label: 'Página Inicial', image: 'assets/images/inicio.png' },
+        { label: 'Galeria de Postais', image: 'assets/images/galeria.png' },
+        { label: 'Detalhe do Postal', image: 'assets/images/livro.png' },
+        { label: 'Mapa Interativo', image: 'assets/images/galeria1.png' },
+        { label: 'Busca Avançada', image: 'assets/images/blog.png' },
+        { label: 'Painel Admin', image: 'assets/images/Paineladm.png' },
+        { label: 'Tela de Login', image: 'assets/images/tela%20de%20login.png' },
+        { label: 'Novo Post', image: 'assets/images/novopost.png' },
+        { label: 'Conteúdo Editorial', image: 'assets/images/conteudoeditorial.png' },
+        { label: 'Novo Postal', image: 'assets/images/novopostal' },
       ],
     },
     'beck-global': {
       title: 'BeckGlobal — Design Web',
       desc: 'Boilerplate e estrutura do projeto.',
       slides: [
-        { label: 'Estrutura do Projeto', color: '#1e293b' },
-        { label: 'API Explorer', color: '#0f172a' },
+        { label: 'Estrutura do Projeto', image: 'assets/images/hero.png' },
+        { label: 'API Explorer', image: 'assets/images/inicio1.png' },
       ],
     },
     'postais-api': {
       title: 'Postais API — Design Web',
       desc: 'Interface de preservação da memória histórica.',
       slides: [
-        { label: 'Página Inicial', color: '#1e293b' },
-        { label: 'Galeria de Postais', color: '#0f172a' },
-        { label: 'Detalhe do Postal', color: '#1a1a2e' },
-        { label: 'Mapa Interativo', color: '#162032' },
-        { label: 'Busca Avançada', color: '#1a2332' },
+        { label: 'Página Inicial', image: 'assets/images/inicio.png' },
+        { label: 'Galeria de Postais', image: 'assets/images/galeria.png' },
+        { label: 'Detalhe do Postal', image: 'assets/images/livro.png' },
       ],
     },
   };
 
   /* State */
-  let currentProject = 'generic';
+  let currentProject = 'postais-parnaiba';
   let currentMode = 'both';
   let activeNode = null;
   let zoomLevel = 1;
@@ -985,10 +934,7 @@ function renderTerminalDetail(projectId) {
     var html = '';
     data.slides.forEach(function (slide, i) {
       html += '<div class="design-carousel__slide' + (i === 0 ? ' design-carousel__slide--active' : '') + '">';
-      html += '<div class="design-carousel__placeholder" style="background:' + slide.color + '">';
-      html += '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>';
-      html += '<span>' + slide.label + '</span>';
-      html += '</div>';
+      html += '<img src="' + slide.image + '" alt="' + slide.label + '">';
       html += '</div>';
     });
     carouselTrack.innerHTML = html;
@@ -1157,9 +1103,9 @@ function renderTerminalDetail(projectId) {
   if (archContent) {
     archContent.setAttribute('data-mode', currentMode);
   }
-  renderDiagram('generic', true);
-  updateVideo('generic');
-  renderCarousel('generic');
+  renderDiagram('postais-parnaiba', true);
+  updateVideo('postais-parnaiba');
+  renderCarousel('postais-parnaiba');
 
   /* ============================================================
      System Running Animation — Particles + Hover
@@ -1359,4 +1305,48 @@ function renderTerminalDetail(projectId) {
     html.setAttribute('data-theme', next);
     localStorage.setItem('theme', next);
   });
+})();
+
+/* ============================================================
+   HERO — Mouse Parallax on Tech Icons
+   ============================================================ */
+(function () {
+  const hero = document.getElementById('hero');
+  const icons = document.querySelectorAll('.hero__tech');
+  if (!hero || !icons.length) return;
+
+  let mouseX = 0, mouseY = 0;
+  let currentX = [], currentY = [];
+  let targetsX = [], targetsY = [];
+
+  icons.forEach((_, i) => {
+    currentX[i] = 0;
+    currentY[i] = 0;
+    targetsX[i] = 0;
+    targetsY[i] = 0;
+  });
+
+  hero.addEventListener('mousemove', (e) => {
+    const rect = hero.getBoundingClientRect();
+    mouseX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+    mouseY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+  });
+
+  hero.addEventListener('mouseleave', () => {
+    mouseX = 0;
+    mouseY = 0;
+  });
+
+  function animate() {
+    icons.forEach((icon, i) => {
+      const depth = 20 + (i * 12);
+      targetsX[i] = mouseX * depth;
+      targetsY[i] = mouseY * depth;
+      currentX[i] += (targetsX[i] - currentX[i]) * 0.08;
+      currentY[i] += (targetsY[i] - currentY[i]) * 0.08;
+      icon.style.transform = `translate(${currentX[i]}px, ${currentY[i]}px)`;
+    });
+    requestAnimationFrame(animate);
+  }
+  animate();
 })();
