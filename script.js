@@ -567,17 +567,14 @@ function renderTerminalDetail(projectId) {
       title: 'BeckGlobal — Design Web',
       desc: 'Boilerplate e estrutura do projeto.',
       slides: [
-        { label: 'Estrutura do Projeto', image: 'assets/images/hero.png' },
-        { label: 'API Explorer', image: 'assets/images/inicio1.png' },
+        { label: 'Em breve', coming: true },
       ],
     },
     'postais-api': {
       title: 'Postais API — Design Web',
       desc: 'Interface de preservação da memória histórica.',
       slides: [
-        { label: 'Página Inicial', image: 'assets/images/inicio.png' },
-        { label: 'Galeria de Postais', image: 'assets/images/galeria.png' },
-        { label: 'Detalhe do Postal', image: 'assets/images/livro.png' },
+        { label: 'Em breve', coming: true },
       ],
     },
   };
@@ -934,7 +931,14 @@ function renderTerminalDetail(projectId) {
     var html = '';
     data.slides.forEach(function (slide, i) {
       html += '<div class="design-carousel__slide' + (i === 0 ? ' design-carousel__slide--active' : '') + '">';
-      html += '<img src="' + slide.image + '" alt="' + slide.label + '">';
+      if (slide.coming) {
+        html += '<div class="design-carousel__coming-soon">';
+        html += '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>';
+        html += '<span>' + slide.label + '</span>';
+        html += '</div>';
+      } else {
+        html += '<img src="' + slide.image + '" alt="' + slide.label + '">';
+      }
       html += '</div>';
     });
     carouselTrack.innerHTML = html;
@@ -1095,9 +1099,18 @@ function renderTerminalDetail(projectId) {
     diagram.style.transformOrigin = 'center top';
   }
 
-  if (zoomIn) zoomIn.addEventListener('click', () => { zoomLevel = Math.min(1.8, zoomLevel + 0.15); applyZoom(); });
-  if (zoomOut) zoomOut.addEventListener('click', () => { zoomLevel = Math.max(0.5, zoomLevel - 0.15); applyZoom(); });
-  if (zoomReset) zoomReset.addEventListener('click', () => { zoomLevel = 1; applyZoom(); });
+  if (zoomIn) zoomIn.addEventListener('click', () => {
+    if (typeof panzoom !== 'undefined') return;
+    zoomLevel = Math.min(1.8, zoomLevel + 0.15); applyZoom();
+  });
+  if (zoomOut) zoomOut.addEventListener('click', () => {
+    if (typeof panzoom !== 'undefined') return;
+    zoomLevel = Math.max(0.5, zoomLevel - 0.15); applyZoom();
+  });
+  if (zoomReset) zoomReset.addEventListener('click', () => {
+    if (typeof panzoom !== 'undefined') return;
+    zoomLevel = 1; applyZoom();
+  });
 
   /* Initial Render */
   if (archContent) {
@@ -1168,6 +1181,50 @@ function renderTerminalDetail(projectId) {
       set: (v) => { _active = v; }
     };
   })();
+})();
+
+/* ============================================================
+   PANZOOM — Touch zoom/pan on architecture diagram
+   ============================================================ */
+(function () {
+  const diagram = document.getElementById('arch-diagram');
+  const canvas = document.getElementById('arch-canvas');
+  if (!diagram || !canvas) return;
+
+  if (typeof panzoom === 'undefined') return;
+
+  let pz = null;
+
+  function initPanzoom() {
+    if (pz) pz.destroy();
+    pz = panzoom(diagram, {
+      maxZoom: 2,
+      minZoom: 0.5,
+      bounds: true,
+      boundsPadding: 0.1,
+      touch: true,
+      zoomDoubleClickSpeed: 1,
+    });
+  }
+
+  const observer = new MutationObserver(() => {
+    if (diagram.querySelector('.arch-svg')) {
+      initPanzoom();
+    }
+  });
+  observer.observe(diagram, { childList: true });
+
+  if (diagram.querySelector('.arch-svg')) {
+    initPanzoom();
+  }
+
+  const zoomIn = document.getElementById('arch-zoom-in');
+  const zoomOut = document.getElementById('arch-zoom-out');
+  const zoomReset = document.getElementById('arch-zoom-reset');
+
+  if (zoomIn) zoomIn.addEventListener('click', () => { if (pz) pz.zoomTo(1.2, { animate: true }); });
+  if (zoomOut) zoomOut.addEventListener('click', () => { if (pz) pz.zoomTo(0.8, { animate: true }); });
+  if (zoomReset) zoomReset.addEventListener('click', () => { if (pz) pz.reset({ animate: true }); });
 })();
 
 /* ============================================================
