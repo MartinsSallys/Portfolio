@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Sallys Martins — Desenvolvedor Backend Python. APIs escaláveis com FastAPI, SQLAlchemy, PostgreSQL e Docker.">
-  <title>Sallys Martins — Backend Developer</title>
+  <meta name="description" content="Portfólio técnico de Sallys Martins: APIs Python, interfaces orientadas a dados e ferramentas Linux apresentadas pelo código realmente implementado.">
+  <title>Sallys Martins — Backend, APIs e Sistemas</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -15,12 +15,14 @@
   <!-- ========== NAVBAR ========== -->
   <header class="navbar" id="navbar">
     <div class="container navbar__inner">
-      <nav class="navbar__links" id="nav-links">
-        <a href="#sobre" class="navbar__link" data-section="sobre">Sobre</a>
-        <a href="#stack" class="navbar__link" data-section="stack">Stack</a>
+      <a href="#hero" class="navbar__logo" aria-label="Sallys Martins, início">
+        <span class="navbar__logo-mark">SM</span>
+        <span class="navbar__logo-label">systems</span>
+      </a>
+      <nav class="navbar__links" id="nav-links" aria-label="Navegação principal">
         <a href="#projetos" class="navbar__link" data-section="projetos">Projetos</a>
-        <a href="#evolucao" class="navbar__link" data-section="evolucao">Evolução</a>
-        <a href="#skills" class="navbar__link" data-section="skills">Skills</a>
+        <a href="#arquitetura" class="navbar__link" data-section="arquitetura">Arquitetura</a>
+        <a href="#sobre" class="navbar__link" data-section="sobre">Sobre</a>
         <a href="#contato" class="navbar__link" data-section="contato">Contato</a>
       </nav>
       <div class="navbar__actions">
@@ -33,7 +35,7 @@
           GitHub
         </a>
       </div>
-      <button class="navbar__toggle" id="nav-toggle" aria-label="Abrir menu">
+      <button class="navbar__toggle" id="nav-toggle" aria-label="Abrir menu" aria-controls="nav-links" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -41,8 +43,87 @@
 
   <main>
 
-    <!-- ========== HERO ========== -->
-    <section class="hero" id="hero">
+    <!-- ========== HERO ORIENTADO AOS SISTEMAS ========== -->
+    <section class="hero hero--systems" id="hero" aria-labelledby="hero-title">
+      <div class="hero__bg" aria-hidden="true">
+        <div class="hero__grid"></div>
+        <div class="hero__glow"></div>
+      </div>
+
+      <div class="container hero__inner">
+        <div class="hero__content">
+          <p class="hero__label">
+            <span class="hero__status-dot" aria-hidden="true"></span>
+            Sallys Martins / Backend &amp; Systems
+          </p>
+          <h1 class="hero__title" id="hero-title">
+            Sistemas, APIs e ferramentas
+            <span>com a arquitetura à vista.</span>
+          </h1>
+          <p class="hero__description">
+            Projetos em Python e JavaScript apresentados pelo fluxo real, pelas decisões técnicas e pelo que está implementado no código.
+          </p>
+          <div class="hero__actions">
+            <a href="#projetos" class="button button-primary">
+              Explorar projetos
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+            <a href="https://github.com/MartinsSallys" target="_blank" rel="noopener noreferrer" class="button button-secondary">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              Ver GitHub
+            </a>
+          </div>
+          <ul class="hero__evidence" aria-label="Áreas demonstradas nos projetos">
+            <li>Python / FastAPI</li>
+            <li>JavaScript / HTTP</li>
+            <li>Linux / Docker</li>
+          </ul>
+        </div>
+
+        <aside class="hero__systems" aria-label="Índice dos sistemas em destaque">
+          <div class="hero__systems-header">
+            <span>work.index</span>
+            <span class="hero__systems-state"><span aria-hidden="true"></span> auditado</span>
+          </div>
+          <ol class="hero__systems-list">
+            <li>
+              <a href="#postais-parnaiba">
+                <span class="hero__systems-number">01</span>
+                <span class="hero__systems-copy">
+                  <strong>Postais da Parnaíba</strong>
+                  <small>frontend editorial + contrato de API</small>
+                </span>
+                <span class="hero__systems-tag">principal</span>
+              </a>
+            </li>
+            <li>
+              <a href="#beck-global">
+                <span class="hero__systems-number">02</span>
+                <span class="hero__systems-copy">
+                  <strong>BeckGlobal</strong>
+                  <small>FastAPI + SQLAlchemy</small>
+                </span>
+                <span class="hero__systems-tag hero__systems-tag--building">protótipo</span>
+              </a>
+            </li>
+            <li>
+              <a href="#outros-projetos">
+                <span class="hero__systems-number">03</span>
+                <span class="hero__systems-copy">
+                  <strong>sysmgr-cli</strong>
+                  <small>Linux + /proc</small>
+                </span>
+                <span class="hero__systems-tag hero__systems-tag--mvp">MVP</span>
+              </a>
+            </li>
+          </ol>
+          <p class="hero__systems-footer"><span>status:</span> somente componentes confirmados no código</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ========== HERO LEGADO (REAPROVEITAMENTO FUTURO) ========== -->
+    <section class="hero" id="hero-legado" hidden>
       <div class="hero__bg">
         <div class="hero__grid"></div>
         <div class="hero__glow"></div>
@@ -107,9 +188,6 @@
         </div>
       </div>
 
-
-      </div>
-
       <div class="container hero__inner">
         <div class="hero__content">
           <p class="hero__label">
@@ -146,6 +224,262 @@
       </div>
     </section>
 
+    <!-- ========== PROJETOS EM DESTAQUE ========== -->
+    <section class="section projects-overview" id="projetos" aria-labelledby="projects-title">
+      <div class="container">
+        <div class="projects-overview__intro reveal">
+          <div>
+            <p class="section__label">Projetos principais</p>
+            <h2 class="section__title" id="projects-title">O trabalho vem antes da stack.</h2>
+          </div>
+          <p class="section__description">Dois recortes diferentes do que construí: um produto editorial conectado a uma API e uma base backend em evolução.</p>
+        </div>
+
+        <div class="featured-projects">
+          <article class="project-card project-card--visual reveal" id="postais-parnaiba">
+            <div class="project-gallery" role="group" aria-label="Telas implementadas em Postais da Parnaíba">
+              <figure class="project-gallery__item project-gallery__item--main">
+                <img src="assets/images/inicio.png" alt="Página inicial do projeto Postais da Parnaíba" loading="lazy">
+                <figcaption>Home editorial</figcaption>
+              </figure>
+              <div class="project-gallery__rail">
+                <figure class="project-gallery__item">
+                  <img src="assets/images/galeria.png" alt="Galeria do projeto Postais da Parnaíba" loading="lazy">
+                  <figcaption>Galeria</figcaption>
+                </figure>
+                <figure class="project-gallery__item">
+                  <img src="assets/images/Paineladm.png" alt="Painel administrativo do projeto Postais da Parnaíba" loading="lazy">
+                  <figcaption>Admin</figcaption>
+                </figure>
+              </div>
+            </div>
+            <div class="project-card__body">
+              <div class="project-card__meta">
+                <span>CASE 01</span>
+                <span class="project-status project-status--alpha">Alpha de integração</span>
+              </div>
+              <h3>Postais da Parnaíba</h3>
+              <p class="project-card__problem">Uma experiência editorial para preservar e apresentar a memória histórica de Parnaíba.</p>
+
+              <dl class="project-card__facts">
+                <div><dt>Escopo autoral</dt><dd>Frontend público, interações e cliente administrativo</dd></div>
+                <div><dt>Fontes de dados</dt><dd>Conteúdo local + API externa esperada</dd></div>
+              </dl>
+
+              <section class="project-card__section" aria-labelledby="postais-implemented">
+                <h4 id="postais-implemented">O que implementei</h4>
+                <ul class="project-card__evidence">
+                  <li>Site multipágina com conteúdo editorial e acervo visual</li>
+                  <li>Slider com navegação por teclado e comparador antes/depois</li>
+                  <li>Galeria, timeline e crônicas consumindo contrato HTTP</li>
+                  <li>Painel cliente para CRUD de conteúdo e upload de imagens</li>
+                </ul>
+              </section>
+
+              <div class="project-card__notes">
+                <div>
+                  <span>Decisão técnica</span>
+                  <p>HTML estático para o conteúdo editorial e JavaScript separado para coleções dinâmicas, sem etapa de build.</p>
+                </div>
+                <div class="project-card__note project-card__note--limit">
+                  <span>Limite atual</span>
+                  <p>A API não está neste repositório e usa localhost por padrão; o formulário administrativo ainda precisa de ajuste de validação.</p>
+                </div>
+              </div>
+
+              <ul class="project-card__techs" aria-label="Tecnologias usadas">
+                <li>HTML</li><li>CSS</li><li>JavaScript</li><li>Fetch API</li>
+              </ul>
+              <div class="project-card__footer">
+                <span class="project-card__scope">Entrega demonstrável: frontend + contrato de integração</span>
+                <a href="https://github.com/MartinsSallys/Postais-da-Parnaiba" target="_blank" rel="noopener noreferrer">Ver repositório <span aria-hidden="true">↗</span></a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card project-card--backend reveal reveal--delay-1" id="beck-global">
+            <div class="project-card__body">
+              <div class="project-card__meta">
+                <span>CASE 02</span>
+                <span class="project-status project-status--prototype">Protótipo backend</span>
+              </div>
+              <h3>BeckGlobal</h3>
+              <p class="project-card__problem">Um boilerplate para estruturar APIs REST com persistência, configuração e ambiente containerizado.</p>
+
+              <dl class="project-card__facts">
+                <div><dt>Escopo autoral</dt><dd>Setup da API, CRUD, modelo, sessão e configuração</dd></div>
+                <div><dt>Persistência</dt><dd>SQLite atual + PostgreSQL declarado no Compose</dd></div>
+              </dl>
+
+              <section class="project-routes" aria-labelledby="beck-routes-title">
+                <div class="project-routes__header"><span id="beck-routes-title">Superfície HTTP</span><small>6 endpoints da aplicação</small></div>
+                <div><span class="http-method http-method--get">GET</span><code>/health</code><small>health check</small></div>
+                <div><span class="http-method http-method--post">POST</span><code>/users/</code><small>criar usuário</small></div>
+                <div><span class="http-method http-method--get">GET</span><code>/users/</code><small>listar usuários</small></div>
+                <div><span class="http-method http-method--get">GET</span><code>/users/{user_id}</code><small>consultar usuário</small></div>
+                <div><span class="http-method http-method--put">PUT</span><code>/users/{user_id}</code><small>atualizar usuário</small></div>
+                <div><span class="http-method http-method--delete">DELETE</span><code>/users/{user_id}</code><small>excluir usuário</small></div>
+              </section>
+
+              <section class="project-card__section" aria-labelledby="beck-implemented">
+                <h4 id="beck-implemented">O que implementei</h4>
+                <ul class="project-card__evidence">
+                  <li>FastAPI, schemas Pydantic e CRUD de usuários</li>
+                  <li>Modelo e sessão SQLAlchemy com respostas sem senha</li>
+                  <li>Hash bcrypt e primitivas para emissão e leitura de JWT</li>
+                  <li>Dockerfile e Compose declarando API e PostgreSQL</li>
+                </ul>
+              </section>
+
+              <div class="project-card__notes">
+                <div>
+                  <span>Decisão técnica</span>
+                  <p>Separação entre API, core, database e models. As rotas acessam o ORM diretamente, sem services ou repositories.</p>
+                </div>
+                <div class="project-card__note project-card__note--limit">
+                  <span>Limite atual</span>
+                  <p>A migração inicial está vazia, o JWT não protege rotas e ainda não existem testes automatizados ou CI.</p>
+                </div>
+              </div>
+
+              <ul class="project-card__techs" aria-label="Tecnologias usadas">
+                <li>Python</li><li>FastAPI</li><li>Pydantic</li><li>SQLAlchemy</li><li>Alembic</li><li>Docker</li>
+              </ul>
+              <div class="project-card__footer">
+                <span class="project-card__scope">Entrega atual: fundação de API em estágio de protótipo</span>
+                <a href="https://github.com/MartinsSallys/BeckGlobal" target="_blank" rel="noopener noreferrer">Ver repositório <span aria-hidden="true">↗</span></a>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="supporting-projects reveal" id="outros-projetos">
+          <div class="supporting-projects__heading">
+            <span>Projetos secundários</span>
+            <small>menor escopo, fluxo principal executável</small>
+          </div>
+          <div class="supporting-projects__grid">
+            <article class="supporting-card">
+              <div class="supporting-card__meta"><span>Frontend modular</span><span class="project-status project-status--demo">Demo navegável</span></div>
+              <h3>Flora Tropical</h3>
+              <p>Catálogo institucional multipágina organizado para alternar entre mocks locais e uma futura API.</p>
+              <ul class="supporting-card__evidence">
+                <li>Controllers por página, service layer e renderizadores</li>
+                <li>Busca, filtros, paginação e validação de formulário</li>
+              </ul>
+              <p class="supporting-card__limit"><strong>Limite:</strong> o carrinho é um stub; checkout e backend não estão implementados; mocks estão ativos.</p>
+              <div class="supporting-card__footer"><span>HTML · CSS · JavaScript</span><a href="https://github.com/MartinsSallys/Flora_Tropical" target="_blank" rel="noopener noreferrer">Repositório <span aria-hidden="true">↗</span></a></div>
+            </article>
+            <article class="supporting-card">
+              <div class="supporting-card__meta"><span>Ferramenta de sistema</span><span class="project-status project-status--mvp">MVP funcional</span></div>
+              <h3>sysmgr-cli</h3>
+              <p>CLI instalável em Python para inspecionar informações reais de uma máquina Linux.</p>
+              <ul class="supporting-card__evidence">
+                <li>Subcomando <code>status</code> com argparse</li>
+                <li>Leitura de uptime e memória em <code>/proc</code></li>
+              </ul>
+              <p class="supporting-card__limit"><strong>Limite:</strong> sem testes e sem leitura de limites de memória por cgroups.</p>
+              <div class="supporting-card__footer"><span>Python · /proc · argparse</span><a href="https://github.com/MartinsSallys/sysmgr-cli" target="_blank" rel="noopener noreferrer">Repositório <span aria-hidden="true">↗</span></a></div>
+            </article>
+          </div>
+        </div>
+
+        <section class="lab-projects reveal" aria-labelledby="lab-title">
+          <div class="supporting-projects__heading">
+            <span id="lab-title">Laboratório e estudos</span>
+            <small>experimentos preservados com o estado atual explícito</small>
+          </div>
+          <div class="lab-projects__grid">
+            <article class="lab-card">
+              <div class="lab-card__meta"><span>API study / 01</span><span class="project-status project-status--study">Estudo funcional</span></div>
+              <h3>backendGLobal</h3>
+              <p>CRUD FastAPI em memória usado para praticar schemas, status HTTP e testes com TestClient.</p>
+              <div class="lab-card__signal"><span>Implementado</span><p>5 operações CRUD, validação de email e 7 testes básicos.</p></div>
+              <div class="lab-card__signal lab-card__signal--limit"><span>Limite</span><p>Estado volátil, IDs instáveis, senhas sem hash e testes dependentes de ordem.</p></div>
+              <a href="https://github.com/MartinsSallys/backendGLobal" target="_blank" rel="noopener noreferrer">Abrir estudo <span aria-hidden="true">↗</span></a>
+            </article>
+            <article class="lab-card lab-card--paused">
+              <div class="lab-card__meta"><span>Security POC / 02</span><span class="project-status project-status--paused">POC interrompida</span></div>
+              <h3>MagicScan</h3>
+              <p>Experimento de scanner offline com feed de hashes, inspeção de cabeçalho PE e relatório JSON.</p>
+              <div class="lab-card__signal"><span>Estrutura presente</span><p>CLI, travessia de arquivos, carregamento do feed e geração de relatório.</p></div>
+              <div class="lab-card__signal lab-card__signal--limit"><span>Bloqueio</span><p>O cálculo de hash não foi implementado e erros podem resultar em relatório vazio. Não está operacional.</p></div>
+              <a href="https://github.com/MartinsSallys/MagicScan" target="_blank" rel="noopener noreferrer">Abrir POC <span aria-hidden="true">↗</span></a>
+            </article>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- ========== ARQUITETURA REAL ========== -->
+    <section class="section architecture-section" id="arquitetura" aria-labelledby="architecture-title">
+      <div class="container">
+        <div class="architecture-section__intro reveal">
+          <div>
+            <p class="section__label">System Design</p>
+            <h2 class="section__title" id="architecture-title">Arquitetura baseada no código.</h2>
+          </div>
+          <p class="section__description">Cada fluxo abaixo representa apenas componentes encontrados nos repositórios. Linhas tracejadas deixam claro o que é externo, configurado ou ainda incompleto.</p>
+        </div>
+
+        <div class="system-design reveal reveal--delay-1">
+          <div class="system-design__toolbar">
+            <div class="system-tabs" role="tablist" aria-label="Selecionar arquitetura">
+              <button class="system-tab system-tab--active" id="system-tab-postais" role="tab" aria-selected="true" aria-controls="system-panel" tabindex="0" data-system="postais">Postais</button>
+              <button class="system-tab" id="system-tab-beck" role="tab" aria-selected="false" aria-controls="system-panel" tabindex="-1" data-system="beck">BeckGlobal</button>
+              <button class="system-tab" id="system-tab-flora" role="tab" aria-selected="false" aria-controls="system-panel" tabindex="-1" data-system="flora">Flora Tropical</button>
+              <button class="system-tab" id="system-tab-sysmgr" role="tab" aria-selected="false" aria-controls="system-panel" tabindex="-1" data-system="sysmgr">sysmgr-cli</button>
+            </div>
+            <div class="system-legend" role="list" aria-label="Legenda dos componentes">
+              <span role="listitem"><i class="system-legend__dot system-legend__dot--implemented"></i>Implementado</span>
+              <span role="listitem"><i class="system-legend__dot system-legend__dot--configured"></i>Configurado</span>
+              <span role="listitem"><i class="system-legend__dot system-legend__dot--external"></i>Externo</span>
+              <span role="listitem"><i class="system-legend__dot system-legend__dot--incomplete"></i>Incompleto</span>
+              <span role="listitem"><i class="system-legend__dot system-legend__dot--boundary"></i>Fronteira</span>
+            </div>
+          </div>
+
+          <div class="system-design__panel" id="system-panel" role="tabpanel" aria-labelledby="system-tab-postais">
+            <div class="system-design__workspace">
+              <section class="system-canvas" aria-labelledby="system-project-title">
+                <header class="system-canvas__header">
+                  <div>
+                    <span class="system-canvas__eyebrow" id="system-project-type">Frontend editorial</span>
+                    <h3 id="system-project-title">Postais da Parnaíba</h3>
+                  </div>
+                  <a id="system-project-repo" href="https://github.com/MartinsSallys/Postais-da-Parnaiba" target="_blank" rel="noopener noreferrer">Repositório <span aria-hidden="true">↗</span></a>
+                </header>
+                <div class="system-map" id="system-map" role="group" aria-label="Fluxo arquitetural de Postais da Parnaíba">
+                  <p class="system-map__loading">Carregando componentes verificados...</p>
+                </div>
+                <p class="system-canvas__hint">Passe o cursor, use Tab ou selecione um componente para inspecionar suas conexões.</p>
+              </section>
+
+              <aside class="system-inspector" id="system-inspector" aria-live="polite" aria-atomic="true">
+                <div class="system-inspector__header">
+                  <span class="system-state system-state--implemented" id="system-inspector-state">Implementado</span>
+                  <span class="system-inspector__index" id="system-inspector-index">01 / 07</span>
+                </div>
+                <span class="system-inspector__tech" id="system-inspector-tech">HTML + CSS</span>
+                <h3 id="system-inspector-title">Site editorial</h3>
+                <p id="system-inspector-description">Páginas públicas com conteúdo histórico, navegação e apresentação do acervo.</p>
+                <dl class="system-inspector__details">
+                  <div><dt>Responsabilidade</dt><dd id="system-inspector-responsibility">Renderizar o conteúdo editorial e servir como entrada para as interações.</dd></div>
+                  <div><dt>Conexões</dt><dd id="system-inspector-connections">Recebe navegação do visitante e carrega os scripts da interface.</dd></div>
+                  <div><dt>Evidência</dt><dd><code id="system-inspector-evidence">index.html · pages/ · css/</code></dd></div>
+                </dl>
+              </aside>
+            </div>
+
+            <footer class="system-design__summary">
+              <span>Leitura do sistema</span>
+              <p id="system-summary">Duas interfaces no navegador, conteúdo local e uma API esperada que não está presente no repositório.</p>
+            </footer>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ========== SOBRE ========== -->
     <section class="section" id="sobre">
       <div class="container">
@@ -165,33 +499,20 @@
           </div>
           <div class="about__text reveal reveal--delay-3">
             <p>
-              Sou Sallys Martins, desenvolvedor focado em backend e construção de APIs e sistemas.
-              Atualmente trabalho principalmente com Python, FastAPI, SQLAlchemy, PostgreSQL e Docker.
+              Sou Sallys Martins, desenvolvedor com foco em backend, APIs e construção de sistemas.
+              Meus projetos atuais combinam APIs FastAPI, interfaces que consomem contratos HTTP e ferramentas para Linux.
             </p>
             <p>
-              Meu foco é evoluir cada vez mais em arquitetura, backend e engenharia de software.
-              Acredito que código bom é código que outros desenvolvedores conseguem ler, manter e estender.
+              Uso cada projeto para aprofundar arquitetura, persistência, testes e infraestrutura, registrando também o que ainda está em evolução.
+              Acredito que código bom precisa ser compreensível, verificável e honesto sobre seus limites.
             </p>
             <div class="about__tech">
               <span class="badge">Python</span>
               <span class="badge">FastAPI</span>
+              <span class="badge">JavaScript</span>
               <span class="badge">SQLAlchemy</span>
-              <span class="badge">PostgreSQL</span>
-              <span class="badge">Docker</span>
-            </div>
-            <div class="about__stats">
-              <div class="stat">
-                <span class="stat__number">5+</span>
-                <span class="stat__label">Projetos construídos</span>
-              </div>
-              <div class="stat">
-                <span class="stat__number">94%</span>
-                <span class="stat__label">Cobertura de testes</span>
-              </div>
-              <div class="stat">
-                <span class="stat__number">8</span>
-                <span class="stat__label">Tecnologias na stack</span>
-              </div>
+              <span class="badge">Docker Compose</span>
+              <span class="badge">Linux</span>
             </div>
           </div>
         </div>
@@ -199,7 +520,7 @@
     </section>
 
     <!-- ========== TECH STACK ========== -->
-    <section class="section section--alt" id="stack">
+    <section class="section section--alt" id="stack" hidden>
       <div class="container">
         <p class="section__label reveal">System Architecture</p>
         <h2 class="section__title reveal reveal--delay-1">Arquitetura dos meus sistemas</h2>
@@ -293,7 +614,7 @@
                 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                 <span>Em breve</span>
               </div>
-              <iframe class="video-panel__iframe" id="video-iframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              <iframe class="video-panel__iframe" id="video-iframe" title="Vídeo de apresentação do projeto" loading="lazy"></iframe>
             </div>
             <div class="video-panel__info" id="video-info">
               <h3 class="video-panel__title" id="video-title">Visão Geral</h3>
@@ -305,7 +626,7 @@
     </section>
 
     <!-- ========== PROJETOS ========== -->
-    <section class="section arch-section" id="projetos">
+    <section class="section arch-section" id="projetos-legado" hidden>
       <div class="container">
         <p class="section__label reveal">~/projects</p>
         <h2 class="section__title reveal reveal--delay-1">Sistemas que construí</h2>
@@ -331,7 +652,7 @@
     </section>
 
     <!-- ========== EVOLUÇÃO ========== -->
-    <section class="section section--alt" id="evolucao">
+    <section class="section section--alt" id="evolucao" hidden>
       <div class="container">
         <p class="section__label reveal">Evolução técnica</p>
         <h2 class="section__title reveal reveal--delay-1">Minha jornada</h2>
@@ -440,7 +761,7 @@
     </section>
 
     <!-- ========== SKILLS ========== -->
-    <section class="section" id="skills">
+    <section class="section" id="skills" hidden>
       <div class="container">
         <p class="section__label reveal">Skills</p>
         <h2 class="section__title reveal reveal--delay-1">O que sei fazer</h2>
@@ -567,12 +888,6 @@
               Email
             </a>
           </div>
-          <div class="contato__cta reveal reveal--delay-4">
-            <a href="/curriculo.pdf" class="button button-primary">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Download Currículo
-            </a>
-          </div>
         </div>
       </div>
     </section>
@@ -596,7 +911,6 @@
     </div>
   </footer>
 
-  <script src="https://unpkg.com/panzoom@9.4.0/dist/panzoom.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

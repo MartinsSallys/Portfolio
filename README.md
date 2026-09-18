@@ -4,15 +4,16 @@
 ![CSS](https://img.shields.io/badge/CSS-1572B6?style=flat&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
 
-Portfolio profissional de Backend Python Developer com visualização interativa de arquiteturas de software.
+Portfólio técnico orientado a projetos, com conteúdo auditado diretamente nos repositórios apresentados.
 
 ---
 
 ## Visão Geral
 
-- **Diagramas de Arquitetura** — Visualização interativa com nós SVG, arestas animadas, categorias por camada e simulação de requisições
-- **Design Web** — Carrossel com screenshots dos projetos
-- **Hero Interativo** — Ícones de tecnologias com parallax que acompanha o mouse
+- **Projetos como protagonistas** — Os trabalhos principais aparecem antes de stack, trajetória e apresentação pessoal
+- **Escopo verificável** — Cada card diferencia implementação real, integração externa e partes ainda em evolução
+- **Hierarquia técnica** — Projetos principais, trabalhos secundários e estudos possuem pesos visuais diferentes
+- **Links diretos** — Cada projeto leva ao repositório correspondente
 - **Tema Escuro/Claro** — Toggle com persistência no localStorage
 - **Responsivo** — Layout adaptável para desktop e mobile
 
@@ -25,7 +26,7 @@ Portfolio profissional de Backend Python Developer com visualização interativa
 | **Estrutura** | HTML5 |
 | **Estilização** | CSS3 (Custom Properties, Flexbox, Grid) |
 | **Interatividade** | JavaScript Vanilla |
-| **Ícones** | SVG inline (Python, FastAPI, Docker, PostgreSQL, Git) |
+| **Ícones** | SVG inline |
 
 ---
 
@@ -35,7 +36,7 @@ Portfolio profissional de Backend Python Developer com visualização interativa
 portfolio/
 ├── index.html              # Página principal
 ├── style.css               # Estilos globais
-├── script.js               # Lógica (diagramas, carrossel, parallax, temas)
+├── script.js               # Navegação, temas e componentes interativos
 ├── assets/
 │   └── images/             # Imagens dos projetos
 └── public/
@@ -74,57 +75,41 @@ git add . && git commit -m "feat: atualização do portfolio" && git push
 
 ## Funcionalidades
 
-### Diagramas de Arquitetura
-- Nós posicionados por camada (Cliente → API → Endpoints → Lógica → Dados → Banco)
-- SVG com setas animadas e labels descritivos em português
-- Hover nos nós destaca conexões relacionadas
-- Animação de fluxo com pontos percorrendo as arestas
+### Hero orientado aos sistemas
+- Posicionamento baseado no trabalho realmente encontrado nos repositórios
+- Índice direto para Postais da Parnaíba, BeckGlobal e sysmgr-cli
+- Sem métricas de cobertura ou escalabilidade não comprovadas
 
-### Carrossel Design Web
-- Navegação manual (setas) e automática (autoplay)
-- Indicadores de posição (dots)
-- Transições suaves entre slides
+### Vitrine de projetos
+- Dois cases principais com escopo, entrega, decisões, evidências, limitações e maturidade
+- Galeria com telas reais de Postais da Parnaíba
+- Superfície completa das seis rotas de aplicação do BeckGlobal
+- Flora Tropical e sysmgr-cli separados como projetos secundários
+- backendGLobal e MagicScan apresentados como estudos, com bloqueios explícitos
 
-### Hero Parallax
-- 5 ícones de tecnologias (Python, FastAPI, Docker, PostgreSQL, Git)
-- Efeito parallax 3D que acompanha o mouse com profundidades variadas
-- Desabilitado em `prefers-reduced-motion`
+### Navegação e acessibilidade
+- Menu móvel com `aria-expanded` e fechamento pela tecla Escape
+- Suporte a `prefers-reduced-motion`
+- Tema claro/escuro persistido localmente
 
 ---
 
-## Como Adicionar Novos Diagramas
+## Refatoração incremental
 
-1. Crie um arquivo JSON em `public/architectures/<id>.json`:
+1. [x] Estrutura, hierarquia e conteúdo factual
+2. [x] Cases detalhados dos projetos principais
+3. Diagramas baseados na arquitetura real
+4. Expansão e navegação profunda dos cases
+5. Identidade visual e stack contextual
+6. Responsividade, acessibilidade e refinamentos
 
-```json
-{
-  "id": "meu-projeto",
-  "nodes": [
-    {
-      "id": "client",
-      "title": "Cliente",
-      "icon": "FiGlobe",
-      "category": "client",
-      "desc": "Descrição do componente",
-      "technologies": ["HTML", "CSS"]
-    }
-  ],
-  "edges": [
-    { "from": "client", "to": "api", "label": "Requisição HTTP" }
-  ]
-}
-```
-
-2. Adicione o projeto no objeto `PROJECTS` em `script.js`
-3. Adicione os slides no `DESIGN_DATA` se necessário
+Os componentes antigos de diagramas e exploração permanecem no código durante a transição, mas estão ocultos até que seus dados sejam substituídos por representações verificadas.
 
 ---
 
 ## Melhorias Futuras
 
-- [ ] Internacionalização (pt-BR / en)
-- [ ] Modo claro com toggle
-- [ ] Blog com artigos técnicos
-- [ ] Testes unitários
-- [ ] PWA com cache offline
-- [ ] Analytics com Plausible
+- [ ] Diagramas reais e acessíveis
+- [ ] Stack relacionada a evidências por projeto
+- [ ] Testes automatizados da interface
+- [ ] Internacionalização pt-BR/en

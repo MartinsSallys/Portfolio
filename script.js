@@ -12,6 +12,10 @@
     if (!ticking) {
       requestAnimationFrame(() => {
         navbar.classList.toggle('navbar--scrolled', window.scrollY > 50);
+        const atPageEnd = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+        if (atPageEnd) {
+          navLinkEls.forEach(link => link.classList.toggle('navbar__link--active', link.dataset.section === 'contato'));
+        }
         ticking = false;
       });
       ticking = true;
@@ -21,20 +25,36 @@
   navToggle.addEventListener('click', () => {
     navToggle.classList.toggle('navbar__toggle--active');
     navLinks.classList.toggle('navbar__links--open');
+    const isOpen = navLinks.classList.contains('navbar__links--open');
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+    navToggle.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+    if (isOpen) requestAnimationFrame(() => navLinkEls[0]?.focus());
   });
 
   navLinkEls.forEach(link => {
     link.addEventListener('click', () => {
       navToggle.classList.remove('navbar__toggle--active');
       navLinks.classList.remove('navbar__links--open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      navToggle.setAttribute('aria-label', 'Abrir menu');
     });
   });
 
-  const sections = document.querySelectorAll('section[id]');
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape' || !navLinks.classList.contains('navbar__links--open')) return;
+    navToggle.classList.remove('navbar__toggle--active');
+    navLinks.classList.remove('navbar__links--open');
+    navToggle.setAttribute('aria-expanded', 'false');
+    navToggle.setAttribute('aria-label', 'Abrir menu');
+    navToggle.focus();
+  });
+
+  const sections = Array.from(document.querySelectorAll('section[id]')).filter(section => !section.closest('[hidden]'));
   const sectionObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        const id = entry.target.getAttribute('id');
+        const atPageEnd = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+        const id = atPageEnd ? 'contato' : entry.target.getAttribute('id');
         navLinkEls.forEach(link => {
           link.classList.toggle('navbar__link--active', link.getAttribute('data-section') === id);
         });
@@ -50,14 +70,14 @@
    ============================================================ */
 (function () {
   const phrases = [
-    'Construindo APIs escaláveis...',
-    'Arquitetando sistemas distribuídos...',
-    'Automatizando processos...',
-    'Python \u2022 FastAPI \u2022 Docker \u2022 PostgreSQL',
+    'Construindo APIs REST...',
+    'Explorando arquitetura de sistemas...',
+    'Criando ferramentas para Linux...',
+    'Python \u2022 FastAPI \u2022 JavaScript \u2022 Linux',
   ];
 
   const el = document.getElementById('typewriter');
-  if (!el) return;
+  if (!el || el.closest('[hidden]')) return;
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (prefersReducedMotion) {
@@ -87,6 +107,541 @@
   }
 
   tick();
+})();
+
+/* ============================================================
+   VERIFIED SYSTEM DESIGN — Project data + accessible renderer
+   ============================================================ */
+const SYSTEM_ARCHITECTURES = {
+  postais: {
+    title: 'Postais da Parnaíba',
+    type: 'Frontend editorial + integração HTTP',
+    repo: 'https://github.com/MartinsSallys/Postais-da-Parnaiba',
+    summary: 'Duas interfaces no navegador, conteúdo local e uma API esperada que não está presente no repositório.',
+    defaultNode: 'site',
+    nodes: [
+      {
+        id: 'visitor', title: 'Visitante', tech: 'Browser', state: 'boundary', x: 90, y: 105, mobileOrder: 1,
+        description: 'Pessoa que navega pelo acervo, pelas páginas editoriais e pelos comparadores de imagens.',
+        responsibility: 'Iniciar a navegação pública e as interações no site.',
+        evidence: 'index.html · pages/',
+      },
+      {
+        id: 'site', title: 'Site editorial', tech: 'HTML + CSS', state: 'implemented', x: 300, y: 105, mobileOrder: 2,
+        description: 'Páginas públicas com conteúdo histórico, navegação e apresentação do acervo.',
+        responsibility: 'Renderizar o conteúdo editorial e servir como entrada para as interações.',
+        evidence: 'index.html · pages/ · css/',
+      },
+      {
+        id: 'scripts', title: 'Scripts de interface', tech: 'JavaScript', state: 'implemented', x: 525, y: 105, mobileOrder: 3,
+        description: 'Controla slider, comparador antes/depois e carregamento das coleções dinâmicas.',
+        responsibility: 'Adicionar comportamento à interface e chamar os endpoints esperados.',
+        evidence: 'js/slider.js · js/antes-depois.js · js/galeria.js',
+      },
+      {
+        id: 'local-content', title: 'Acervo local', tech: 'HTML + images/', state: 'implemented', x: 525, y: 345, mobileOrder: 4,
+        description: 'Conteúdo editorial e imagens versionados junto ao frontend.',
+        responsibility: 'Fornecer páginas, textos e imagens que funcionam sem uma API.',
+        evidence: 'pages/ · images/',
+      },
+      {
+        id: 'admin', title: 'Painel Admin', tech: 'HTML + JavaScript', state: 'implemented', x: 90, y: 430, mobileOrder: 5,
+        description: 'Interface cliente para listar, criar, editar e excluir conteúdo.',
+        responsibility: 'Montar formulários e requisições CRUD para a API esperada.',
+        evidence: 'admin/index.html · admin/app.js',
+      },
+      {
+        id: 'token', title: 'Token no navegador', tech: 'localStorage', state: 'implemented', x: 300, y: 430, mobileOrder: 6,
+        description: 'O cliente armazena um token, lê o campo exp e envia o valor como Bearer.',
+        responsibility: 'Anexar a credencial do navegador às requisições administrativas.',
+        evidence: 'admin/app.js:5-77',
+      },
+      {
+        id: 'external-api', title: 'API esperada', tech: 'HTTP localhost:8001', state: 'external', x: 800, y: 265, mobileOrder: 7,
+        description: 'Contrato HTTP consumido pela galeria e pelo painel, mas sem implementação neste repositório.',
+        responsibility: 'Fornecer coleções, autenticação, CRUD e upload quando existir externamente.',
+        evidence: 'js/galeria.js:1-99 · admin/app.js:1-688',
+      },
+    ],
+    connections: [
+      { from: 'visitor', to: 'site', label: 'navega', state: 'implemented' },
+      { from: 'site', to: 'scripts', label: 'carrega scripts', state: 'implemented' },
+      { from: 'site', to: 'local-content', label: 'renderiza conteúdo', state: 'implemented' },
+      { from: 'scripts', to: 'external-api', label: 'GET coleções', state: 'external' },
+      { from: 'admin', to: 'token', label: 'lê credencial', state: 'implemented' },
+      { from: 'token', to: 'external-api', label: 'Bearer + CRUD', state: 'external', via: [{ x: 650, y: 505 }, { x: 820, y: 405 }] },
+    ],
+  },
+  beck: {
+    title: 'BeckGlobal',
+    type: 'Protótipo de API REST',
+    repo: 'https://github.com/MartinsSallys/BeckGlobal',
+    summary: 'O código define um fluxo CRUD síncrono e aponta para SQLite, mas o checkout não possui a tabela users e ainda não executa esse caminho de ponta a ponta.',
+    defaultNode: 'fastapi',
+    nodes: [
+      {
+        id: 'client', title: 'Cliente HTTP', tech: 'JSON / OpenAPI', state: 'boundary', x: 80, y: 100, mobileOrder: 1,
+        description: 'Consumidor externo da documentação, do health check e do CRUD de usuários.',
+        responsibility: 'Enviar requisições HTTP e receber respostas JSON.',
+        evidence: 'app/main.py · app/api/router.py',
+      },
+      {
+        id: 'fastapi', title: 'FastAPI app', tech: 'FastAPI', state: 'implemented', x: 245, y: 100, mobileOrder: 2,
+        description: 'Aplicação principal com CORS, tratamento global de erros e inclusão do roteador.',
+        responsibility: 'Receber requisições e compor os recursos HTTP da aplicação.',
+        evidence: 'app/main.py',
+      },
+      {
+        id: 'router', title: 'Router', tech: '/health + /users', state: 'implemented', x: 415, y: 100, mobileOrder: 3,
+        description: 'Agrupa o health check e os cinco endpoints de CRUD de usuários.',
+        responsibility: 'Associar métodos e caminhos HTTP aos handlers.',
+        evidence: 'app/api/router.py · app/api/routes/',
+      },
+      {
+        id: 'schemas', title: 'Schemas', tech: 'Pydantic', state: 'implemented', x: 590, y: 100, mobileOrder: 4,
+        description: 'Valida criação e atualização e filtra a senha das respostas públicas.',
+        responsibility: 'Definir os contratos de entrada e saída da API.',
+        evidence: 'app/api/schemas.py',
+      },
+      {
+        id: 'handlers', title: 'CRUD handlers', tech: 'Python', state: 'implemented', x: 590, y: 270, mobileOrder: 5,
+        description: 'Executa criação, listagem, consulta, atualização e exclusão diretamente sobre o ORM.',
+        responsibility: 'Aplicar o fluxo CRUD e converter ausências em respostas HTTP.',
+        evidence: 'app/api/routes/users.py',
+      },
+      {
+        id: 'bcrypt', title: 'Hash de senha', tech: 'bcrypt', state: 'implemented', x: 410, y: 360, mobileOrder: 6,
+        description: 'Aplica bcrypt antes de persistir senhas em criação e atualização.',
+        responsibility: 'Evitar a persistência direta da senha recebida.',
+        evidence: 'app/core/security.py · app/api/routes/users.py',
+      },
+      {
+        id: 'session', title: 'DB Session', tech: 'SQLAlchemy', state: 'implemented', x: 760, y: 270, mobileOrder: 7,
+        description: 'Fornece uma sessão síncrona por requisição aos handlers.',
+        responsibility: 'Executar queries, commits, refresh e fechamento de sessão.',
+        evidence: 'app/database/session.py · app/database/connection.py',
+      },
+      {
+        id: 'sqlite', title: 'SQLite selecionado', tech: 'dev.db sem users', state: 'incomplete', x: 920, y: 270, mobileOrder: 8,
+        description: 'Banco selecionado pela configuração rastreada no checkout atual.',
+        responsibility: 'Persistir a revisão Alembic; a tabela users ainda não existe.',
+        evidence: '.env · dev.db',
+      },
+      {
+        id: 'jwt', title: 'JWT helper', tech: 'PyJWT', state: 'incomplete', x: 410, y: 515, mobileOrder: 9,
+        description: 'Funções para criar e ler tokens existem, mas nenhuma rota emite token ou exige autenticação.',
+        responsibility: 'Base de segurança ainda desconectada do fluxo HTTP.',
+        evidence: 'app/core/security.py · app/api/dependencies.py',
+      },
+      {
+        id: 'alembic', title: 'Migration scaffold', tech: 'Alembic', state: 'incomplete', x: 590, y: 515, mobileOrder: 10,
+        description: 'A infraestrutura de migração existe, porém a única revisão possui upgrade e downgrade vazios.',
+        responsibility: 'Versionar o schema quando uma migração real for criada.',
+        evidence: 'alembic/versions/67fc2ff5aaf2_initial.py',
+      },
+      {
+        id: 'compose', title: 'Infra declarada', tech: 'Docker Compose', state: 'configured', x: 760, y: 515, mobileOrder: 11,
+        description: 'Dockerfile e Compose declaram os serviços de API e PostgreSQL.',
+        responsibility: 'Descrever o ambiente containerizado pretendido.',
+        evidence: 'Dockerfile · docker-compose.yml',
+      },
+      {
+        id: 'postgres', title: 'PostgreSQL alvo', tech: 'PostgreSQL 16', state: 'configured', x: 920, y: 515, mobileOrder: 12,
+        description: 'Serviço provisionado pelo Compose, mas não usado pela configuração atual da aplicação.',
+        responsibility: 'Persistência relacional planejada para o ambiente containerizado.',
+        evidence: 'docker-compose.yml · .env.example',
+      },
+    ],
+    connections: [
+      { from: 'client', to: 'fastapi', label: 'HTTP', state: 'implemented' },
+      { from: 'fastapi', to: 'router', label: 'despacha', state: 'implemented' },
+      { from: 'router', to: 'schemas', label: 'valida contrato', state: 'implemented' },
+      { from: 'schemas', to: 'handlers', label: 'dados validados', state: 'implemented' },
+      { from: 'handlers', to: 'bcrypt', label: 'hash password', state: 'implemented' },
+      { from: 'handlers', to: 'session', label: 'query + commit', state: 'implemented' },
+      { from: 'session', to: 'sqlite', label: 'schema ausente', state: 'incomplete' },
+      { from: 'alembic', to: 'sqlite', label: 'revisão vazia', state: 'incomplete' },
+      { from: 'compose', to: 'fastapi', label: 'container API', state: 'configured', via: [{ x: 150, y: 565 }, { x: 150, y: 205 }] },
+      { from: 'compose', to: 'postgres', label: 'provisiona serviço', state: 'configured' },
+    ],
+  },
+  flora: {
+    title: 'Flora Tropical',
+    type: 'Frontend modular com mocks',
+    repo: 'https://github.com/MartinsSallys/Flora_Tropical',
+    summary: 'Os controllers consomem o ApiService e passam os dados aos renderizadores; a fonte ativa é local e o backend HTTP continua ausente.',
+    defaultNode: 'service',
+    nodes: [
+      {
+        id: 'visitor', title: 'Visitante', tech: 'Browser', state: 'boundary', x: 90, y: 120, mobileOrder: 1,
+        description: 'Navega pelo catálogo, categorias, unidades e conteúdo medicinal.',
+        responsibility: 'Iniciar buscas, filtros, navegação e envio de formulários.',
+        evidence: 'index.html · produtos.html · contato.html',
+      },
+      {
+        id: 'pages', title: 'Páginas estáticas', tech: 'HTML + CSS', state: 'implemented', x: 285, y: 120, mobileOrder: 2,
+        description: 'Sete páginas HTML compartilham a identidade e carregam scripts em ordem explícita.',
+        responsibility: 'Fornecer estrutura, navegação e pontos de montagem do conteúdo.',
+        evidence: '*.html · style.css',
+      },
+      {
+        id: 'controllers', title: 'Page controllers', tech: 'JavaScript', state: 'implemented', x: 485, y: 120, mobileOrder: 3,
+        description: 'Coordena busca, filtros, formulários e renderização específica de cada página.',
+        responsibility: 'Transformar eventos da interface em chamadas ao serviço e atualizações do DOM.',
+        evidence: 'js/pages/ · script.js',
+      },
+      {
+        id: 'service', title: 'ApiService', tech: 'fetch + AbortController', state: 'implemented', x: 685, y: 120, mobileOrder: 4,
+        description: 'Abstrai acesso a dados, timeout e alternância entre mocks e HTTP.',
+        responsibility: 'Entregar coleções aos controllers por uma interface única.',
+        evidence: 'js/services.js · js/config.js',
+      },
+      {
+        id: 'mocks', title: 'Mock data ativo', tech: 'JavaScript objects', state: 'implemented', x: 890, y: 120, mobileOrder: 5,
+        description: 'Produtos, categorias, unidades, benefícios e FAQ usados pelo site atual.',
+        responsibility: 'Permitir navegação demonstrável sem backend.',
+        evidence: 'js/mock-data.js · CONFIG.MOCK_DATA=true',
+      },
+      {
+        id: 'renderers', title: 'Renderizadores', tech: 'Template strings', state: 'implemented', x: 485, y: 380, mobileOrder: 6,
+        description: 'Funções reutilizáveis montam cards, estados de loading, erros, FAQ e paginação.',
+        responsibility: 'Converter os dados recebidos em componentes de interface.',
+        evidence: 'js/components.js',
+      },
+      {
+        id: 'dom', title: 'Interface renderizada', tech: 'DOM', state: 'implemented', x: 685, y: 380, mobileOrder: 7,
+        description: 'Catálogo e conteúdo final apresentados no navegador.',
+        responsibility: 'Exibir resultados, estados vazios e feedback de formulário.',
+        evidence: 'js/pages/ · js/components.js',
+      },
+      {
+        id: 'future-api', title: 'API futura', tech: 'HTTP localhost:8000/api', state: 'external', x: 890, y: 380, mobileOrder: 8,
+        description: 'Endpoint base configurado, mas sem servidor implementado e com divergências no contrato documentado.',
+        responsibility: 'Substituir os mocks quando existir uma implementação compatível.',
+        evidence: 'js/config.js · FASTAPI_INTEGRATION.md',
+      },
+    ],
+    connections: [
+      { from: 'visitor', to: 'pages', label: 'navega', state: 'implemented' },
+      { from: 'pages', to: 'controllers', label: 'carrega', state: 'implemented' },
+      { from: 'controllers', to: 'service', label: 'solicita dados', state: 'implemented' },
+      { from: 'service', to: 'mocks', label: 'fonte ativa', state: 'implemented' },
+      { from: 'controllers', to: 'renderers', label: 'renderiza', state: 'implemented' },
+      { from: 'renderers', to: 'dom', label: 'innerHTML', state: 'implemented' },
+      { from: 'service', to: 'future-api', label: 'modo futuro', state: 'external' },
+    ],
+  },
+  sysmgr: {
+    title: 'sysmgr-cli',
+    type: 'CLI de inspeção Linux',
+    repo: 'https://github.com/MartinsSallys/sysmgr-cli',
+    summary: 'Fluxo local e somente leitura: argumentos entram pela CLI, os dados vêm de procfs e da biblioteca padrão, e o snapshot agregado retorna ao terminal.',
+    defaultNode: 'cli',
+    nodes: [
+      {
+        id: 'user', title: 'Usuário no shell', tech: 'Terminal', state: 'boundary', x: 90, y: 270, mobileOrder: 1,
+        description: 'Executa o pacote pelo console script ou com python -m sysmgr.',
+        responsibility: 'Invocar o comando status e consumir a saída textual.',
+        evidence: 'pyproject.toml · sysmgr/__main__.py',
+      },
+      {
+        id: 'cli', title: 'CLI parser', tech: 'argparse', state: 'implemented', x: 285, y: 270, mobileOrder: 2,
+        description: 'Registra --help, --version e o subcomando obrigatório status.',
+        responsibility: 'Validar argumentos, acionar a coleta e formatar erros.',
+        evidence: 'sysmgr/cli.py',
+      },
+      {
+        id: 'status', title: 'get_status', tech: 'Python', state: 'implemented', x: 480, y: 270, mobileOrder: 3,
+        description: 'Agrega hostname, usuário, uptime e memória em uma única estrutura.',
+        responsibility: 'Orquestrar os leitores do sistema operacional.',
+        evidence: 'sysmgr/system.py:31-39',
+      },
+      {
+        id: 'uptime', title: '/proc/uptime', tech: 'Linux procfs', state: 'implemented', x: 680, y: 95, mobileOrder: 4,
+        description: 'Fonte do tempo desde a inicialização, convertido para horas e minutos.',
+        responsibility: 'Fornecer o uptime do kernel.',
+        evidence: 'sysmgr/system.py:5-12',
+      },
+      {
+        id: 'memory', title: '/proc/meminfo', tech: 'Linux procfs', state: 'implemented', x: 680, y: 270, mobileOrder: 5,
+        description: 'Fonte de MemTotal, MemAvailable e MemFree.',
+        responsibility: 'Fornecer os valores de memória usados na saída.',
+        evidence: 'sysmgr/system.py:14-30',
+      },
+      {
+        id: 'identity', title: 'Identidade do host', tech: 'os.uname + getpass', state: 'implemented', x: 680, y: 445, mobileOrder: 6,
+        description: 'APIs da biblioteca padrão usadas para hostname e usuário.',
+        responsibility: 'Completar o snapshot com identidade do sistema.',
+        evidence: 'sysmgr/system.py:31-39',
+      },
+      {
+        id: 'output', title: 'CLI output', tech: 'cli.py + stdout', state: 'implemented', x: 900, y: 270, mobileOrder: 7,
+        description: 'Texto final com status do sistema apresentado no terminal.',
+        responsibility: 'Receber o snapshot agregado, formatá-lo e imprimir uma leitura humana.',
+        evidence: 'sysmgr/cli.py:43-50',
+      },
+    ],
+    connections: [
+      { from: 'user', to: 'cli', label: 'sysmgr status', state: 'implemented' },
+      { from: 'cli', to: 'status', label: 'executa', state: 'implemented' },
+      { from: 'status', to: 'uptime', label: 'lê', state: 'implemented' },
+      { from: 'status', to: 'memory', label: 'lê', state: 'implemented' },
+      { from: 'status', to: 'identity', label: 'consulta', state: 'implemented' },
+      { from: 'status', to: 'output', label: 'snapshot agregado', state: 'implemented', via: [{ x: 515, y: 565 }, { x: 865, y: 565 }] },
+    ],
+  },
+};
+
+(function () {
+  const tabs = Array.from(document.querySelectorAll('.system-tab'));
+  const panel = document.getElementById('system-panel');
+  const map = document.getElementById('system-map');
+  const projectType = document.getElementById('system-project-type');
+  const projectTitle = document.getElementById('system-project-title');
+  const projectRepo = document.getElementById('system-project-repo');
+  const summary = document.getElementById('system-summary');
+  const inspector = {
+    state: document.getElementById('system-inspector-state'),
+    index: document.getElementById('system-inspector-index'),
+    tech: document.getElementById('system-inspector-tech'),
+    title: document.getElementById('system-inspector-title'),
+    description: document.getElementById('system-inspector-description'),
+    responsibility: document.getElementById('system-inspector-responsibility'),
+    connections: document.getElementById('system-inspector-connections'),
+    evidence: document.getElementById('system-inspector-evidence'),
+  };
+  if (!tabs.length || !panel || !map || Object.values(inspector).some(value => !value)) return;
+
+  const NS = 'http://www.w3.org/2000/svg';
+  const MAP_WIDTH = 1000;
+  const MAP_HEIGHT = 610;
+  const NODE_HALF_WIDTH = 76;
+  const NODE_HALF_HEIGHT = 46;
+  const stateLabels = {
+    implemented: 'Implementado',
+    configured: 'Configurado',
+    external: 'Dependência externa',
+    incomplete: 'Incompleto',
+    boundary: 'Fronteira do sistema',
+  };
+  let currentSystem = 'postais';
+  let pinnedNode = null;
+  let nodeElements = [];
+  let edgeElements = [];
+
+  function svgElement(tag, attributes) {
+    const element = document.createElementNS(NS, tag);
+    Object.entries(attributes).forEach(([name, value]) => element.setAttribute(name, value));
+    return element;
+  }
+
+  function nodeBoundary(origin, target) {
+    const dx = target.x - origin.x;
+    const dy = target.y - origin.y;
+    const scale = 1 / Math.max(Math.abs(dx) / NODE_HALF_WIDTH, Math.abs(dy) / NODE_HALF_HEIGHT);
+    return { x: origin.x + dx * scale, y: origin.y + dy * scale };
+  }
+
+  function connectionPath(from, to, via) {
+    if (via && via.length) {
+      const start = nodeBoundary(from, via[0]);
+      const end = nodeBoundary(to, via[via.length - 1]);
+      const points = via.map(point => `L ${point.x} ${point.y}`).join(' ');
+      return `M ${start.x} ${start.y} ${points} L ${end.x} ${end.y}`;
+    }
+    const start = nodeBoundary(from, to);
+    const end = nodeBoundary(to, from);
+    const dx = end.x - start.x;
+    const dy = end.y - start.y;
+    if (Math.abs(dx) >= Math.abs(dy)) {
+      const bend = Math.max(50, Math.abs(dx) * 0.45);
+      const direction = dx >= 0 ? 1 : -1;
+      return `M ${start.x} ${start.y} C ${start.x + bend * direction} ${start.y}, ${end.x - bend * direction} ${end.y}, ${end.x} ${end.y}`;
+    }
+    const bend = Math.max(45, Math.abs(dy) * 0.42);
+    const direction = dy >= 0 ? 1 : -1;
+    return `M ${start.x} ${start.y} C ${start.x} ${start.y + bend * direction}, ${end.x} ${end.y - bend * direction}, ${end.x} ${end.y}`;
+  }
+
+  function updateInspector(node, project) {
+    const orderedNodes = [...project.nodes].sort((a, b) => a.mobileOrder - b.mobileOrder);
+    const index = orderedNodes.findIndex(item => item.id === node.id) + 1;
+    inspector.state.className = `system-state system-state--${node.state}`;
+    inspector.state.textContent = stateLabels[node.state] || node.state;
+    inspector.index.textContent = `${String(index).padStart(2, '0')} / ${String(project.nodes.length).padStart(2, '0')}`;
+    inspector.tech.textContent = node.tech;
+    inspector.title.textContent = node.title;
+    inspector.description.textContent = node.description;
+    inspector.responsibility.textContent = node.responsibility;
+    const relations = project.connections
+      .filter(connection => connection.from === node.id || connection.to === node.id)
+      .map(connection => {
+        const otherId = connection.from === node.id ? connection.to : connection.from;
+        const other = project.nodes.find(item => item.id === otherId);
+        const direction = connection.from === node.id ? 'Envia para' : 'Recebe de';
+        return `${direction} ${other ? other.title : otherId}: ${connection.label} (${stateLabels[connection.state]})`;
+      });
+    inspector.connections.textContent = relations.length ? relations.join(' · ') : 'Componente lateral, ainda sem conexão com o fluxo principal.';
+    inspector.evidence.textContent = node.evidence;
+  }
+
+  function setActiveNode(nodeId, persist) {
+    const project = SYSTEM_ARCHITECTURES[currentSystem];
+    const node = project.nodes.find(item => item.id === nodeId);
+    if (!node) return;
+    if (persist) pinnedNode = nodeId;
+
+    const related = new Set([nodeId]);
+    project.connections.forEach(connection => {
+      if (connection.from === nodeId) related.add(connection.to);
+      if (connection.to === nodeId) related.add(connection.from);
+    });
+
+    nodeElements.forEach(({ element, node: item }) => {
+      element.classList.toggle('system-node--active', item.id === nodeId);
+      element.classList.toggle('system-node--related', item.id !== nodeId && related.has(item.id));
+      element.classList.toggle('system-node--muted', !related.has(item.id));
+      element.setAttribute('aria-pressed', String(item.id === pinnedNode));
+    });
+
+    edgeElements.forEach(({ path, connection }) => {
+      const active = connection.from === nodeId || connection.to === nodeId;
+      path.classList.toggle('system-edge--active', active);
+      path.classList.toggle('system-edge--muted', !active);
+    });
+
+    updateInspector(node, project);
+  }
+
+  function renderSystem(systemId) {
+    const project = SYSTEM_ARCHITECTURES[systemId];
+    if (!project) return;
+    currentSystem = systemId;
+    pinnedNode = project.defaultNode || project.nodes[0].id;
+    nodeElements = [];
+    edgeElements = [];
+    map.innerHTML = '';
+
+    projectType.textContent = project.type;
+    projectTitle.textContent = project.title;
+    projectRepo.href = project.repo;
+    summary.textContent = project.summary;
+    map.setAttribute('aria-label', `Fluxo arquitetural de ${project.title}`);
+
+    const nodeById = Object.fromEntries(project.nodes.map(node => [node.id, node]));
+    const svg = svgElement('svg', {
+      class: 'system-map__svg',
+      viewBox: `0 0 ${MAP_WIDTH} ${MAP_HEIGHT}`,
+      'aria-hidden': 'true',
+      preserveAspectRatio: 'none',
+    });
+    const defs = svgElement('defs', {});
+    ['implemented', 'configured', 'external', 'incomplete'].forEach(state => {
+      const marker = svgElement('marker', {
+        id: `system-arrow-${state}`,
+        viewBox: '0 0 10 8',
+        refX: '9',
+        refY: '4',
+        markerWidth: '7',
+        markerHeight: '6',
+        orient: 'auto',
+      });
+      marker.appendChild(svgElement('path', { d: 'M 0 0 L 10 4 L 0 8 z', class: `system-arrow system-arrow--${state}` }));
+      defs.appendChild(marker);
+    });
+    svg.appendChild(defs);
+
+    project.connections.forEach(connection => {
+      const from = nodeById[connection.from];
+      const to = nodeById[connection.to];
+      if (!from || !to) return;
+      const path = svgElement('path', {
+        d: connectionPath(from, to, connection.via),
+        class: `system-edge system-edge--${connection.state}`,
+        'marker-end': `url(#system-arrow-${connection.state})`,
+      });
+      svg.appendChild(path);
+      edgeElements.push({ path, connection });
+    });
+    map.appendChild(svg);
+
+    [...project.nodes]
+      .sort((a, b) => a.mobileOrder - b.mobileOrder)
+      .forEach(node => {
+        const relations = project.connections
+          .filter(connection => connection.from === node.id || connection.to === node.id)
+          .map(connection => `${connection.from === node.id ? '→' : '←'} ${connection.label} · ${stateLabels[connection.state]}`);
+        const relationSummary = relations.length ? relations.join(' · ') : 'componente lateral';
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = `system-node system-node--${node.state}`;
+        button.dataset.node = node.id;
+        button.style.left = `${node.x / MAP_WIDTH * 100}%`;
+        button.style.top = `${node.y / MAP_HEIGHT * 100}%`;
+        button.style.setProperty('--mobile-order', node.mobileOrder);
+        button.setAttribute('aria-label', `${node.title}. ${stateLabels[node.state]}. ${node.tech}. Conexões: ${relationSummary}`);
+        button.setAttribute('aria-pressed', 'false');
+        button.innerHTML =
+          `<span class="system-node__state" aria-hidden="true"></span>` +
+          `<strong>${node.title}</strong>` +
+          `<small>${node.tech}</small>` +
+          `<span class="system-node__mobile-flow">${relationSummary}</span>`;
+        button.addEventListener('mouseenter', () => setActiveNode(node.id, false));
+        button.addEventListener('mouseleave', () => setActiveNode(pinnedNode, false));
+        button.addEventListener('focus', () => setActiveNode(node.id, false));
+        button.addEventListener('blur', () => setActiveNode(pinnedNode, false));
+        button.addEventListener('click', () => setActiveNode(node.id, true));
+        map.appendChild(button);
+        nodeElements.push({ element: button, node });
+      });
+
+    const connections = document.createElement('section');
+    connections.className = 'system-connections';
+    connections.setAttribute('aria-label', `Conexões de ${project.title}`);
+    const connectionsTitle = document.createElement('h4');
+    connectionsTitle.textContent = 'Conexões do fluxo';
+    const connectionsList = document.createElement('ol');
+    project.connections.forEach(connection => {
+      const from = nodeById[connection.from];
+      const to = nodeById[connection.to];
+      if (!from || !to) return;
+      const item = document.createElement('li');
+      item.innerHTML = `<strong>${from.title}</strong><span aria-hidden="true">→</span><strong>${to.title}</strong><em>${connection.label}</em><span class="system-connection-state system-connection-state--${connection.state}">${stateLabels[connection.state]}</span>`;
+      connectionsList.appendChild(item);
+    });
+    connections.append(connectionsTitle, connectionsList);
+    map.appendChild(connections);
+
+    setActiveNode(pinnedNode, true);
+  }
+
+  function selectTab(tab, moveFocus) {
+    tabs.forEach(item => {
+      const selected = item === tab;
+      item.classList.toggle('system-tab--active', selected);
+      item.setAttribute('aria-selected', String(selected));
+      item.tabIndex = selected ? 0 : -1;
+    });
+    panel.setAttribute('aria-labelledby', tab.id);
+    renderSystem(tab.dataset.system);
+    if (moveFocus) tab.focus();
+  }
+
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => selectTab(tab, false));
+    tab.addEventListener('keydown', event => {
+      let nextIndex = null;
+      if (event.key === 'ArrowRight') nextIndex = (index + 1) % tabs.length;
+      if (event.key === 'ArrowLeft') nextIndex = (index - 1 + tabs.length) % tabs.length;
+      if (event.key === 'Home') nextIndex = 0;
+      if (event.key === 'End') nextIndex = tabs.length - 1;
+      if (nextIndex === null) return;
+      event.preventDefault();
+      selectTab(tabs[nextIndex], true);
+    });
+  });
+
+  renderSystem(currentSystem);
 })();
 
 /* ============================================================
@@ -189,7 +744,7 @@ let terminalProject = null;
 
 (function () {
   const body = document.getElementById('explorer-body');
-  if (!body) return;
+  if (!body || body.closest('[hidden]')) return;
   renderTerminalList();
 })();
 
@@ -365,7 +920,7 @@ function renderTerminalDetail(projectId) {
   const videoPlaceholder = document.getElementById('video-placeholder');
   const videoTitle = document.getElementById('video-title');
   const videoDesc = document.getElementById('video-desc');
-  if (!canvas || !diagram || !selector) return;
+  if (!canvas || !diagram || !selector || canvas.closest('[hidden]')) return;
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const NS = 'http://www.w3.org/2000/svg';
@@ -1234,7 +1789,7 @@ function renderTerminalDetail(projectId) {
   const track = document.getElementById('timeline-track');
   const leftBtn = document.getElementById('timeline-left');
   const rightBtn = document.getElementById('timeline-right');
-  if (!track) return;
+  if (!track || track.closest('[hidden]')) return;
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -1323,7 +1878,9 @@ function renderTerminalDetail(projectId) {
     });
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  document.querySelectorAll('.reveal').forEach(el => {
+    if (!el.closest('[hidden]')) observer.observe(el);
+  });
 })();
 
 /* ============================================================
@@ -1339,7 +1896,15 @@ function renderTerminalDetail(projectId) {
       if (target) {
         const offset = 72;
         const position = target.getBoundingClientRect().top + window.scrollY - offset;
-        window.scrollTo({ top: position, behavior: 'smooth' });
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const hadTabIndex = target.hasAttribute('tabindex');
+        if (!hadTabIndex) target.setAttribute('tabindex', '-1');
+        target.focus({ preventScroll: true });
+        window.scrollTo({ top: position, behavior: reduceMotion ? 'auto' : 'smooth' });
+        if (window.location.hash !== href) window.history.pushState(null, '', href);
+        if (!hadTabIndex) {
+          target.addEventListener('blur', () => target.removeAttribute('tabindex'), { once: true });
+        }
       }
     });
   });
@@ -1369,7 +1934,7 @@ function renderTerminalDetail(projectId) {
    ============================================================ */
 (function () {
   const hero = document.getElementById('hero');
-  const icons = document.querySelectorAll('.hero__tech');
+  const icons = hero ? hero.querySelectorAll('.hero__tech') : [];
   if (!hero || !icons.length) return;
 
   let mouseX = 0, mouseY = 0;
