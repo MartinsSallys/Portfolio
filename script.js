@@ -1913,6 +1913,63 @@ function renderTerminalDetail(projectId) {
 })();
 
 /* ============================================================
+   SECONDARY PROJECT CAROUSEL
+   ============================================================ */
+(function () {
+  const carousel = document.getElementById('supporting-projects-carousel');
+  if (!carousel) return;
+
+  const cards = Array.from(carousel.querySelectorAll('.supporting-card'));
+  const previous = document.querySelector('[data-carousel-direction="-1"]');
+  const next = document.querySelector('[data-carousel-direction="1"]');
+  const current = document.getElementById('supporting-project-current');
+  if (!cards.length || !previous || !next || !current) return;
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function activeIndex() {
+    const center = carousel.scrollLeft + carousel.clientWidth / 2;
+    return cards.reduce((best, card, index) => {
+      const distance = Math.abs(card.offsetLeft + card.offsetWidth / 2 - center);
+      return distance < best.distance ? { index, distance } : best;
+    }, { index: 0, distance: Infinity }).index;
+  }
+
+  function update() {
+    const index = activeIndex();
+    current.textContent = String(index + 1).padStart(2, '0');
+    previous.disabled = index === 0;
+    next.disabled = index === cards.length - 1;
+    cards.forEach((card, cardIndex) => {
+      card.classList.toggle('is-active', cardIndex === index);
+      card.classList.toggle('is-before', cardIndex < index);
+      card.classList.toggle('is-after', cardIndex > index);
+    });
+  }
+
+  function move(direction) {
+    const index = Math.max(0, Math.min(cards.length - 1, activeIndex() + direction));
+    const card = cards[index];
+    const left = card.offsetLeft + card.offsetWidth / 2 - carousel.clientWidth / 2;
+    carousel.scrollTo({
+      left,
+      behavior: reducedMotion.matches ? 'instant' : 'smooth'
+    });
+  }
+
+  previous.addEventListener('click', () => move(-1));
+  next.addEventListener('click', () => move(1));
+  carousel.addEventListener('keydown', event => {
+    if (event.target !== carousel || !['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+    event.preventDefault();
+    move(event.key === 'ArrowRight' ? 1 : -1);
+  });
+  carousel.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+})();
+
+/* ============================================================
    PHOTOSWIPE LIGHTBOX — Zoom nas imagens da galeria de projetos
    ============================================================ */
 (function () {

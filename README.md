@@ -83,8 +83,7 @@ git add . && git commit -m "feat: atualização do portfolio" && git push
 - Dois cases principais com escopo, entrega, decisões, evidências, limitações e maturidade
 - Galeria com telas reais de Postais da Parnaíba
 - Superfície completa das seis rotas de aplicação do BeckGlobal
-- Flora Tropical e sysmgr-cli separados como projetos secundários
-- backendGLobal e MagicScan apresentados como estudos, com bloqueios explícitos
+- Flora Tropical, sysmgr-cli, backendGLobal e MagicScan reunidos em um carrossel 3D, com estados e limites explícitos
 - Expansão inline dos cases com problema, solução, fluxo, stack contextual, decisões e evidências
 - Deep links e sincronização entre cada case e seu diagrama arquitetural
 
@@ -93,10 +92,9 @@ git add . && git commit -m "feat: atualização do portfolio" && git push
 - Suporte a `prefers-reduced-motion`
 - Tema claro/escuro persistido localmente
 
-### Evidências e trajetória
-- Stack contextual ligada a projetos, responsabilidades e caminhos verificáveis
-- Estados distintos para tecnologia implementada, configurada, parcial ou em estudo
-- Trajetória cronológica baseada na evolução registrada nos repositórios
+### Perfis e certificados
+- Acesso direto ao LinkedIn e GitHub
+- Três certificados apresentados com links para o LinkedIn
 
 ---
 
@@ -106,7 +104,7 @@ git add . && git commit -m "feat: atualização do portfolio" && git push
 2. [x] Cases detalhados dos projetos principais
 3. [x] Diagramas baseados na arquitetura real
 4. [x] Expansão e navegação profunda dos cases
-5. [x] Identidade visual, stack contextual e trajetória por projetos
+5. [x] Identidade visual, projetos em carrossel, perfis e certificados
 6. [ ] Limpeza final de legado, responsividade e refinamentos
 
 Os dados JSON antigos dos diagramas foram removidos. Componentes HTML e JavaScript da interface anterior continuam isolados por `hidden` durante a última etapa de limpeza.
