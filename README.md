@@ -39,8 +39,7 @@ portfolio/
 ├── script.js               # Navegação, temas e componentes interativos
 ├── assets/
 │   └── images/             # Imagens dos projetos
-└── public/
-    └── architectures/      # JSONs dos diagramas
+└── README.md               # Escopo e documentação
 ```
 
 ---
@@ -86,11 +85,18 @@ git add . && git commit -m "feat: atualização do portfolio" && git push
 - Superfície completa das seis rotas de aplicação do BeckGlobal
 - Flora Tropical e sysmgr-cli separados como projetos secundários
 - backendGLobal e MagicScan apresentados como estudos, com bloqueios explícitos
+- Expansão inline dos cases com problema, solução, fluxo, stack contextual, decisões e evidências
+- Deep links e sincronização entre cada case e seu diagrama arquitetural
 
 ### Navegação e acessibilidade
 - Menu móvel com `aria-expanded` e fechamento pela tecla Escape
 - Suporte a `prefers-reduced-motion`
 - Tema claro/escuro persistido localmente
+
+### Evidências e trajetória
+- Stack contextual ligada a projetos, responsabilidades e caminhos verificáveis
+- Estados distintos para tecnologia implementada, configurada, parcial ou em estudo
+- Trajetória cronológica baseada na evolução registrada nos repositórios
 
 ---
 
@@ -98,18 +104,18 @@ git add . && git commit -m "feat: atualização do portfolio" && git push
 
 1. [x] Estrutura, hierarquia e conteúdo factual
 2. [x] Cases detalhados dos projetos principais
-3. Diagramas baseados na arquitetura real
-4. Expansão e navegação profunda dos cases
-5. Identidade visual e stack contextual
-6. Responsividade, acessibilidade e refinamentos
+3. [x] Diagramas baseados na arquitetura real
+4. [x] Expansão e navegação profunda dos cases
+5. [x] Identidade visual, stack contextual e trajetória por projetos
+6. [ ] Limpeza final de legado, responsividade e refinamentos
 
-Os componentes antigos de diagramas e exploração permanecem no código durante a transição, mas estão ocultos até que seus dados sejam substituídos por representações verificadas.
+Os dados JSON antigos dos diagramas foram removidos. Componentes HTML e JavaScript da interface anterior continuam isolados por `hidden` durante a última etapa de limpeza.
 
 ---
 
 ## Melhorias Futuras
 
-- [ ] Diagramas reais e acessíveis
-- [ ] Stack relacionada a evidências por projeto
+- [x] Diagramas reais e acessíveis
+- [x] Stack relacionada a evidências por projeto
 - [ ] Testes automatizados da interface
 - [ ] Internacionalização pt-BR/en

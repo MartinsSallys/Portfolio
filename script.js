@@ -66,50 +66,6 @@
 })();
 
 /* ============================================================
-   TYPEWRITER — Hero subtitle
-   ============================================================ */
-(function () {
-  const phrases = [
-    'Construindo APIs REST...',
-    'Explorando arquitetura de sistemas...',
-    'Criando ferramentas para Linux...',
-    'Python \u2022 FastAPI \u2022 JavaScript \u2022 Linux',
-  ];
-
-  const el = document.getElementById('typewriter');
-  if (!el || el.closest('[hidden]')) return;
-
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (prefersReducedMotion) {
-    el.textContent = phrases[phrases.length - 1];
-    return;
-  }
-
-  let phraseIndex = 0;
-  let charIndex = 0;
-  let isDeleting = false;
-
-  function tick() {
-    const current = phrases[phraseIndex];
-    if (isDeleting) {
-      el.textContent = current.substring(0, charIndex - 1);
-      charIndex--;
-    } else {
-      el.textContent = current.substring(0, charIndex + 1);
-      charIndex++;
-    }
-
-    let speed = isDeleting ? 25 : 55;
-    if (!isDeleting && charIndex === current.length) { speed = 2200; isDeleting = true; }
-    else if (isDeleting && charIndex === 0) { isDeleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; speed = 350; }
-
-    setTimeout(tick, speed);
-  }
-
-  tick();
-})();
-
-/* ============================================================
    VERIFIED SYSTEM DESIGN — Project data + accessible renderer
    ============================================================ */
 const SYSTEM_ARCHITECTURES = {
@@ -261,7 +217,7 @@ const SYSTEM_ARCHITECTURES = {
       { from: 'handlers', to: 'session', label: 'query + commit', state: 'implemented' },
       { from: 'session', to: 'sqlite', label: 'schema ausente', state: 'incomplete' },
       { from: 'alembic', to: 'sqlite', label: 'revisão vazia', state: 'incomplete' },
-      { from: 'compose', to: 'fastapi', label: 'container API', state: 'configured', via: [{ x: 150, y: 565 }, { x: 150, y: 205 }] },
+      { from: 'compose', to: 'fastapi', label: 'container API', state: 'configured', via: [{ x: 760, y: 585 }, { x: 150, y: 585 }, { x: 150, y: 205 }] },
       { from: 'compose', to: 'postgres', label: 'provisiona serviço', state: 'configured' },
     ],
   },
@@ -641,7 +597,111 @@ const SYSTEM_ARCHITECTURES = {
     });
   });
 
+  document.querySelectorAll('[data-system-target]').forEach(link => {
+    link.addEventListener('click', () => {
+      const targetTab = tabs.find(tab => tab.dataset.system === link.dataset.systemTarget);
+      if (targetTab) selectTab(targetTab, false);
+    });
+  });
+
   renderSystem(currentSystem);
+})();
+
+/* ============================================================
+   PROJECT CASES — Inline expansion + deep links
+   ============================================================ */
+(function () {
+  const caseIds = ['postais', 'beck'];
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const motionLib = window.Motion && typeof window.Motion.animate === 'function' ? window.Motion : null;
+  const cases = Object.fromEntries(caseIds.map(id => {
+    const details = document.getElementById(`case-${id}`);
+    const card = document.getElementById(id === 'postais' ? 'postais-parnaiba' : 'beck-global');
+    const title = document.getElementById(`case-${id}-title`);
+    const primaryToggle = document.querySelector(`.case-toggle[data-case-toggle="${id}"]`);
+    const toggles = Array.from(document.querySelectorAll(`[data-case-toggle="${id}"]`));
+    return [id, { details, card, title, primaryToggle, toggles }];
+  }));
+
+  if (Object.values(cases).some(item => !item.details || !item.card || !item.title || !item.primaryToggle)) return;
+
+  function setCaseState(id, open) {
+    const item = cases[id];
+    const wasHidden = item.details.hidden;
+    const animateOpening = open && wasHidden && Boolean(motionLib) && !prefersReducedMotion;
+
+    if (animateOpening) item.details.classList.add('case-details--motion');
+
+    item.details.hidden = !open;
+    item.card.classList.toggle('project-card--case-open', open);
+    item.primaryToggle.setAttribute('aria-expanded', String(open));
+
+    if (animateOpening) {
+      motionLib.animate(
+        item.details,
+        { opacity: [0, 1], transform: ['translateY(-8px)', 'translateY(0px)'] },
+        { duration: 0.28, ease: [0.4, 0, 0.2, 1] }
+      );
+    }
+  }
+
+  function openCase(id, options = {}) {
+    if (!cases[id]) return;
+    caseIds.forEach(caseId => setCaseState(caseId, caseId === id));
+
+    const item = cases[id];
+    if (options.updateHistory !== false) {
+      const hash = id === 'postais' ? '#postais-parnaiba' : '#beck-global';
+      if (window.location.hash !== hash) window.history.pushState({ case: id }, '', hash);
+    }
+    if (options.focus) requestAnimationFrame(() => item.title.focus({ preventScroll: true }));
+    if (options.scroll) requestAnimationFrame(() => item.card.scrollIntoView({ behavior: options.reduceMotion ? 'auto' : 'smooth', block: 'start' }));
+  }
+
+  function closeCase(id, returnFocus) {
+    if (!cases[id]) return;
+    setCaseState(id, false);
+    if (window.location.hash === '#postais-parnaiba' || window.location.hash === '#beck-global') {
+      window.history.pushState(null, '', '#projetos');
+    }
+    if (returnFocus) cases[id].primaryToggle.focus();
+  }
+
+  caseIds.forEach(id => {
+    cases[id].toggles.forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        const isOpen = !cases[id].details.hidden;
+        if (isOpen) closeCase(id, toggle.classList.contains('case-close'));
+        else openCase(id, { focus: true });
+      });
+    });
+  });
+
+  document.querySelectorAll('a[href="#postais-parnaiba"], a[href="#beck-global"]').forEach(link => {
+    link.addEventListener('click', () => {
+      openCase(link.getAttribute('href') === '#postais-parnaiba' ? 'postais' : 'beck', { updateHistory: false });
+    });
+  });
+
+  function syncCaseFromHash(scroll) {
+    const id = window.location.hash === '#postais-parnaiba' || window.location.hash === '#case-postais'
+      ? 'postais'
+      : window.location.hash === '#beck-global' || window.location.hash === '#case-beck'
+        ? 'beck'
+        : null;
+    if (!id) {
+      caseIds.forEach(caseId => setCaseState(caseId, false));
+      return;
+    }
+    openCase(id, {
+      updateHistory: false,
+      scroll,
+      reduceMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+    });
+  }
+
+  window.addEventListener('popstate', () => syncCaseFromHash(true));
+  syncCaseFromHash(false);
 })();
 
 /* ============================================================
@@ -883,26 +943,6 @@ function renderTerminalDetail(projectId) {
     });
   }
 }
-
-/* ============================================================
-   SKILL BARS — Animate on scroll
-   ============================================================ */
-(function () {
-  const fills = document.querySelectorAll('.skill-row__fill');
-  if (!fills.length) return;
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const width = entry.target.getAttribute('data-width');
-        entry.target.style.width = width + '%';
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.3 });
-
-  fills.forEach(fill => observer.observe(fill));
-})();
 
 /* ============================================================
    ARCHITECTURE DIAGRAM — Interactive Canvas
@@ -1783,96 +1823,39 @@ function renderTerminalDetail(projectId) {
 })();
 
 /* ============================================================
-   TIMELINE — Horizontal scroll + expand/collapse
-   ============================================================ */
-(function () {
-  const track = document.getElementById('timeline-track');
-  const leftBtn = document.getElementById('timeline-left');
-  const rightBtn = document.getElementById('timeline-right');
-  if (!track || track.closest('[hidden]')) return;
-
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* Arrow scroll */
-  const scrollAmount = 260;
-
-  function updateArrows() {
-    if (leftBtn) leftBtn.disabled = track.scrollLeft <= 0;
-    if (rightBtn) rightBtn.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
-  }
-
-  if (leftBtn) {
-    leftBtn.addEventListener('click', () => {
-      track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-    });
-  }
-
-  if (rightBtn) {
-    rightBtn.addEventListener('click', () => {
-      track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    });
-  }
-
-  track.addEventListener('scroll', updateArrows, { passive: true });
-  updateArrows();
-
-  /* Expand/collapse cards */
-  const items = document.querySelectorAll('.timeline__item');
-  items.forEach(item => {
-    const expandBtn = item.querySelector('.timeline__expand');
-    if (!expandBtn) return;
-
-    expandBtn.addEventListener('click', () => {
-      const isExpanded = item.classList.contains('timeline__item--expanded');
-      items.forEach(i => i.classList.remove('timeline__item--expanded'));
-      if (!isExpanded) {
-        item.classList.add('timeline__item--expanded');
-      }
-    });
-  });
-
-  /* Entrance animation */
-  if (prefersReducedMotion) {
-    items.forEach(item => {
-      const card = item.querySelector('.timeline__card');
-      if (card) card.classList.add('timeline__card--visible');
-    });
-    return;
-  }
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const card = entry.target.querySelector('.timeline__card');
-        if (card) {
-          const idx = Array.from(items).indexOf(entry.target);
-          setTimeout(() => {
-            card.classList.add('timeline__card--visible');
-          }, idx * 80);
-        }
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.2 });
-
-  items.forEach(item => observer.observe(item));
-})();
-
-/* ============================================================
    SCROLL REVEAL
    ============================================================ */
 (function () {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const motionLib = window.Motion && typeof window.Motion.animate === 'function' ? window.Motion : null;
+  const motionCards = '.project-card, .skill-card';
 
   if (prefersReducedMotion) {
     document.querySelectorAll('.reveal').forEach(el => el.classList.add('reveal--visible'));
     return;
   }
 
+  function revealWithMotion(el) {
+    const delayClass = Array.from(el.classList).find(name => /^reveal--delay-\d$/.test(name));
+    const delay = delayClass ? Number(delayClass.slice(-1)) * 0.08 : 0;
+
+    el.classList.add('reveal--motion');
+    motionLib.animate(
+      el,
+      { opacity: [0, 1], transform: ['translateY(20px)', 'translateY(0px)'] },
+      { duration: 0.5, delay, ease: [0.4, 0, 0.2, 1] }
+    );
+    el.classList.add('reveal--visible');
+  }
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('reveal--visible');
+        if (motionLib && entry.target.matches(motionCards)) {
+          revealWithMotion(entry.target);
+        } else {
+          entry.target.classList.add('reveal--visible');
+        }
         observer.unobserve(entry.target);
       }
     });
@@ -1930,45 +1913,18 @@ function renderTerminalDetail(projectId) {
 })();
 
 /* ============================================================
-   HERO — Mouse Parallax on Tech Icons
+   PHOTOSWIPE LIGHTBOX — Zoom nas imagens da galeria de projetos
    ============================================================ */
 (function () {
-  const hero = document.getElementById('hero');
-  const icons = hero ? hero.querySelectorAll('.hero__tech') : [];
-  if (!hero || !icons.length) return;
+  if (typeof window.PhotoSwipeLightbox !== 'function' || typeof window.PhotoSwipe !== 'function') return;
+  if (!document.querySelector('.project-gallery')) return;
 
-  let mouseX = 0, mouseY = 0;
-  let currentX = [], currentY = [];
-  let targetsX = [], targetsY = [];
-
-  icons.forEach((_, i) => {
-    currentX[i] = 0;
-    currentY[i] = 0;
-    targetsX[i] = 0;
-    targetsY[i] = 0;
+  const lightbox = new window.PhotoSwipeLightbox({
+    gallery: '.project-gallery',
+    children: 'a[href][data-pswp-width]',
+    pswpModule: window.PhotoSwipe,
+    history: false
   });
 
-  hero.addEventListener('mousemove', (e) => {
-    const rect = hero.getBoundingClientRect();
-    mouseX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-    mouseY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
-  });
-
-  hero.addEventListener('mouseleave', () => {
-    mouseX = 0;
-    mouseY = 0;
-  });
-
-  function animate() {
-    icons.forEach((icon, i) => {
-      const depth = 20 + (i * 12);
-      targetsX[i] = mouseX * depth;
-      targetsY[i] = mouseY * depth;
-      currentX[i] += (targetsX[i] - currentX[i]) * 0.08;
-      currentY[i] += (targetsY[i] - currentY[i]) * 0.08;
-      icon.style.transform = `translate(${currentX[i]}px, ${currentY[i]}px)`;
-    });
-    requestAnimationFrame(animate);
-  }
-  animate();
+  lightbox.init();
 })();
