@@ -4046,6 +4046,17 @@ div[id] { scroll-margin-top: 72px; }
 
 .certificate-card:hover { border-color: var(--border-primary); transform: translateY(-3px); }
 .certificate-card:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+.certificate-card__preview {
+  display: grid;
+  width: 100%;
+  aspect-ratio: 1.55;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: #fff;
+}
+.certificate-card__preview img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .certificate-card__number { color: var(--primary); font-family: var(--font-mono); font-size: 0.625rem; }
 .certificate-card strong { font-size: 0.9375rem; }
 .certificate-card > span:last-child { margin-top: auto; color: var(--primary); font-family: var(--font-mono); font-size: 0.6875rem; }
