@@ -97,6 +97,7 @@ git add . && git commit -m "feat: atualização do portfolio" && git push
 
 ### Perfis e certificados
 - Acesso direto ao LinkedIn e GitHub
+- Painel de atividades públicas recentes carregado pela API do GitHub, com mensagem de contingência quando indisponível
 - Três certificados apresentados com links para o LinkedIn
 
 ---

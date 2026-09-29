@@ -2124,6 +2124,102 @@ function renderTerminalDetail(projectId) {
 })();
 
 /* ============================================================
+   GITHUB PUBLIC ACTIVITY
+   ============================================================ */
+(function () {
+  const list = document.getElementById('github-activity-list');
+  if (!list) return;
+
+  const profileUrl = 'https://github.com/MartinsSallys';
+  const eventLabels = {
+    PushEvent: 'Enviou código',
+    CreateEvent: 'Criou repositório ou branch',
+    PullRequestEvent: 'Trabalhou em pull request',
+    IssuesEvent: 'Atualizou uma issue',
+    ReleaseEvent: 'Publicou uma versão',
+    ForkEvent: 'Criou um fork',
+    PublicEvent: 'Publicou um repositório',
+    WatchEvent: 'Favoritou um repositório',
+  };
+  const dateFormat = new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' });
+
+  function showMessage(message) {
+    const item = document.createElement('li');
+    item.className = 'github-activity__message';
+    item.textContent = message;
+    list.replaceChildren(item);
+    list.setAttribute('aria-busy', 'false');
+  }
+
+  function addEvent(event) {
+    const item = document.createElement('li');
+    item.className = 'github-activity__item';
+    const content = document.createElement('div');
+    const title = document.createElement('strong');
+    const action = event.payload?.action;
+    title.textContent = event.type === 'IssuesEvent' && action === 'opened' ? 'Abriu uma issue'
+      : event.type === 'IssuesEvent' && action === 'closed' ? 'Concluiu uma issue'
+      : event.type === 'PullRequestEvent' && action === 'opened' ? 'Abriu um pull request'
+      : event.type === 'PullRequestEvent' && action === 'closed' ? 'Concluiu um pull request'
+      : eventLabels[event.type];
+    const repo = document.createElement('a');
+    const repoName = typeof event.repo?.name === 'string' ? event.repo.name : '';
+    const safeRepo = /^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(repoName);
+    repo.href = safeRepo ? `https://github.com/${repoName}` : profileUrl;
+    repo.target = '_blank';
+    repo.rel = 'noopener noreferrer';
+    repo.textContent = safeRepo ? repoName : 'Ver no GitHub';
+    const detailText = event.type === 'IssuesEvent' ? event.payload?.issue?.title
+      : event.type === 'PullRequestEvent' ? event.payload?.pull_request?.title
+      : null;
+    const detail = document.createElement('span');
+    detail.className = 'github-activity__detail';
+    detail.textContent = typeof detailText === 'string' ? detailText : '';
+    const date = document.createElement('time');
+    const parsedDate = new Date(event.created_at);
+    if (!Number.isNaN(parsedDate.getTime())) {
+      date.dateTime = parsedDate.toISOString();
+      date.textContent = dateFormat.format(parsedDate);
+    }
+    content.append(title, repo);
+    if (detail.textContent) content.appendChild(detail);
+    content.appendChild(date);
+    item.appendChild(content);
+    list.appendChild(item);
+  }
+
+  fetch('https://api.github.com/users/MartinsSallys/events/public?per_page=30', {
+    headers: { Accept: 'application/vnd.github+json' },
+  })
+    .then(response => {
+      if (!response.ok) throw new Error(`GitHub API: ${response.status}`);
+      return response.json();
+    })
+    .then(events => {
+      if (!Array.isArray(events)) throw new Error('Unexpected GitHub response');
+      const seen = new Set();
+      const visibleEvents = events.filter(event => {
+        if (!event || !eventLabels[event.type]) return false;
+        const subjectId = event.type === 'IssuesEvent' ? event.payload?.issue?.id
+          : event.type === 'PullRequestEvent' ? event.payload?.pull_request?.id
+          : null;
+        const key = subjectId ? `${event.type}:${subjectId}` : event.id;
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      }).slice(0, 4);
+      if (!visibleEvents.length) {
+        showMessage('Nenhuma atividade pública recente encontrada. Acesse o perfil para ver os projetos.');
+        return;
+      }
+      list.replaceChildren();
+      visibleEvents.forEach(addEvent);
+      list.setAttribute('aria-busy', 'false');
+    })
+    .catch(() => showMessage('Atividades indisponíveis agora. Você pode acompanhar os projetos pelo perfil no GitHub.'));
+})();
+
+/* ============================================================
    PHOTOSWIPE LIGHTBOX — Zoom nas imagens da galeria de projetos
    ============================================================ */
 (function () {
