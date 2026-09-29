@@ -86,11 +86,14 @@ git add . && git commit -m "feat: atualização do portfolio" && git push
 - Flora Tropical, sysmgr-cli, backendGLobal e MagicScan reunidos em um carrossel 3D, com estados e limites explícitos
 - Expansão inline dos cases com problema, solução, fluxo, stack contextual, decisões e evidências
 - Deep links e sincronização entre cada case e seu diagrama arquitetural
+- Diagramas de Postais, BeckGlobal, FUNDEC/RS, Flora Tropical e sysmgr-cli com componentes, conexões, estados e evidências por tecnologia
+- O case e o diagrama de Postais usam como referência o frontend e o backend da pasta local `POSTAISCOMPLETO`
 
 ### Navegação e acessibilidade
 - Menu móvel com `aria-expanded` e fechamento pela tecla Escape
 - Suporte a `prefers-reduced-motion`
 - Tema claro/escuro persistido localmente
+- Layout mobile com menu de toque, galerias horizontais, cards compactos e conexões da arquitetura expansíveis
 
 ### Perfis e certificados
 - Acesso direto ao LinkedIn e GitHub

@@ -71,61 +71,107 @@
 const SYSTEM_ARCHITECTURES = {
   postais: {
     title: 'Postais da Parnaíba',
-    type: 'Frontend editorial + integração HTTP',
+    type: 'Museu digital com frontend, API e persistência',
     repo: 'https://github.com/MartinsSallys/Postais-da-Parnaiba',
-    summary: 'Duas interfaces no navegador, conteúdo local e uma API esperada que não está presente no repositório.',
-    defaultNode: 'site',
+    repoLabel: 'Frontend no GitHub ',
+    summary: 'Em POSTAISCOMPLETO, o site público e o painel consomem a API FastAPI por /api. O backend define autenticação JWT, rotas de conteúdo, upload e persistência PostgreSQL; Nginx e Compose descrevem a integração.',
+    defaultNode: 'fastapi',
     nodes: [
       {
-        id: 'visitor', title: 'Visitante', tech: 'Browser', state: 'boundary', x: 90, y: 105, mobileOrder: 1,
-        description: 'Pessoa que navega pelo acervo, pelas páginas editoriais e pelos comparadores de imagens.',
-        responsibility: 'Iniciar a navegação pública e as interações no site.',
-        evidence: 'index.html · pages/',
+        id: 'visitor', title: 'Visitante', tech: 'Navegador', state: 'boundary', x: 90, y: 105, mobileOrder: 1,
+        description: 'Acessa páginas editoriais, galeria e narrativas do museu digital.',
+        responsibility: 'Iniciar a navegação pública e as consultas ao acervo.',
+        evidence: 'Postais-da-Parnaiba/index.html · pages/',
       },
       {
-        id: 'site', title: 'Site editorial', tech: 'HTML + CSS', state: 'implemented', x: 300, y: 105, mobileOrder: 2,
-        description: 'Páginas públicas com conteúdo histórico, navegação e apresentação do acervo.',
-        responsibility: 'Renderizar o conteúdo editorial e servir como entrada para as interações.',
-        evidence: 'index.html · pages/ · css/',
+        id: 'nginx', title: 'Entrada HTTP', tech: 'Nginx', state: 'configured', x: 275, y: 105, mobileOrder: 2,
+        description: 'A configuração serve arquivos do site, encaminha /api/ para FastAPI e expõe imagens em /static/.',
+        responsibility: 'Unir frontend e backend na mesma origem no ambiente definido pelo Compose.',
+        evidence: 'Backend-Postais_da_Parnaiba/nginx.dev.conf · nginx.prod.conf',
       },
       {
-        id: 'scripts', title: 'Scripts de interface', tech: 'JavaScript', state: 'implemented', x: 525, y: 105, mobileOrder: 3,
-        description: 'Controla slider, comparador antes/depois e carregamento das coleções dinâmicas.',
-        responsibility: 'Adicionar comportamento à interface e chamar os endpoints esperados.',
-        evidence: 'js/slider.js · js/antes-depois.js · js/galeria.js',
+        id: 'site', title: 'Site editorial', tech: 'HTML + CSS', state: 'implemented', x: 465, y: 105, mobileOrder: 3,
+        description: 'Páginas multipágina com textos históricos, galeria e conteúdo editorial local.',
+        responsibility: 'Renderizar a experiência pública e carregar os scripts de interação.',
+        evidence: 'Postais-da-Parnaiba/index.html · pages/ · css/',
       },
       {
-        id: 'local-content', title: 'Acervo local', tech: 'HTML + images/', state: 'implemented', x: 525, y: 345, mobileOrder: 4,
-        description: 'Conteúdo editorial e imagens versionados junto ao frontend.',
-        responsibility: 'Fornecer páginas, textos e imagens que funcionam sem uma API.',
-        evidence: 'pages/ · images/',
+        id: 'scripts', title: 'Interações públicas', tech: 'JavaScript + Fetch', state: 'implemented', x: 650, y: 105, mobileOrder: 4,
+        description: 'Slider, comparador visual e clientes HTTP para postais, posts e eventos da timeline.',
+        responsibility: 'Montar conteúdo dinâmico e consultar as rotas públicas da API.',
+        evidence: 'Postais-da-Parnaiba/js/galeria.js · js/public.js · js/antes-depois.js',
       },
       {
-        id: 'admin', title: 'Painel Admin', tech: 'HTML + JavaScript', state: 'implemented', x: 90, y: 430, mobileOrder: 5,
-        description: 'Interface cliente para listar, criar, editar e excluir conteúdo.',
-        responsibility: 'Montar formulários e requisições CRUD para a API esperada.',
-        evidence: 'admin/index.html · admin/app.js',
+        id: 'local-content', title: 'Acervo local', tech: 'HTML + imagens', state: 'implemented', x: 840, y: 105, mobileOrder: 5,
+        description: 'Páginas e imagens versionadas com o frontend continuam disponíveis como conteúdo estático.',
+        responsibility: 'Servir textos e imagens editoriais sem depender das coleções da API.',
+        evidence: 'Postais-da-Parnaiba/pages/ · images/',
       },
       {
-        id: 'token', title: 'Token no navegador', tech: 'localStorage', state: 'implemented', x: 300, y: 430, mobileOrder: 6,
-        description: 'O cliente armazena um token, lê o campo exp e envia o valor como Bearer.',
-        responsibility: 'Anexar a credencial do navegador às requisições administrativas.',
-        evidence: 'admin/app.js:5-77',
+        id: 'admin', title: 'Painel Admin', tech: 'HTML + JS', state: 'implemented', x: 90, y: 305, mobileOrder: 6,
+        description: 'Login, formulários de postais, posts e timeline, além de upload de imagens.',
+        responsibility: 'Enviar CRUD e arquivos; guardar o token no localStorage e usá-lo como Bearer.',
+        evidence: 'Postais-da-Parnaiba/admin/login.html · admin/index.html · admin/app.js',
       },
       {
-        id: 'external-api', title: 'API esperada', tech: 'HTTP localhost:8001', state: 'external', x: 800, y: 265, mobileOrder: 7,
-        description: 'Contrato HTTP consumido pela galeria e pelo painel, mas sem implementação neste repositório.',
-        responsibility: 'Fornecer coleções, autenticação, CRUD e upload quando existir externamente.',
-        evidence: 'js/galeria.js:1-99 · admin/app.js:1-688',
+        id: 'auth', title: 'Autenticação', tech: 'JWT + bcrypt', state: 'implemented', x: 275, y: 305, mobileOrder: 7,
+        description: 'A rota /auth/login confere a senha; dependências validam JWT e administrador nas rotas de escrita.',
+        responsibility: 'Proteger criação, edição, exclusão e upload.',
+        evidence: 'Backend-Postais_da_Parnaiba/app/routers/auth.py · routers/deps.py · core/security.py',
+      },
+      {
+        id: 'fastapi', title: 'API HTTP', tech: 'FastAPI + Pydantic', state: 'implemented', x: 465, y: 305, mobileOrder: 8,
+        description: 'Aplicação registra rotas de autenticação, postais, posts, timeline, upload e health, com CORS e limite de login.',
+        responsibility: 'Receber requisições, validar contratos e expor dados e ações administrativas.',
+        evidence: 'Backend-Postais_da_Parnaiba/app/main.py · app/schemas/',
+      },
+      {
+        id: 'routes', title: 'Rotas de conteúdo', tech: 'CRUD + paginação', state: 'implemented', x: 650, y: 305, mobileOrder: 9,
+        description: 'Handlers de postais, posts e eventos da timeline usam sessão SQLAlchemy; leitura pública e escrita protegida.',
+        responsibility: 'Aplicar filtros, estados editoriais e operações CRUD.',
+        evidence: 'Backend-Postais_da_Parnaiba/app/routers/postais.py · posts.py · timeline_events.py',
+      },
+      {
+        id: 'orm', title: 'Modelo de dados', tech: 'SQLAlchemy', state: 'implemented', x: 840, y: 305, mobileOrder: 10,
+        description: 'Modelos de admin, postal, post e timeline; sessões síncronas criadas por requisição.',
+        responsibility: 'Mapear conteúdo para tabelas e executar consultas e commits.',
+        evidence: 'Backend-Postais_da_Parnaiba/app/models/ · app/database/session.py',
+      },
+      {
+        id: 'compose', title: 'Ambiente', tech: 'Docker Compose', state: 'configured', x: 90, y: 510, mobileOrder: 11,
+        description: 'Perfis dev e prod declaram API, PostgreSQL e Nginx; a configuração prod de proxy ainda precisa apontar para o serviço prod.',
+        responsibility: 'Descrever containers, volumes e rede para execução integrada.',
+        evidence: 'Backend-Postais_da_Parnaiba/docker-compose.yml · nginx.prod.conf',
+      },
+      {
+        id: 'upload', title: 'Imagens enviadas', tech: 'Upload + /static', state: 'implemented', x: 465, y: 510, mobileOrder: 12,
+        description: 'Rota protegida valida tipo e tamanho, grava arquivo em static/uploads e retorna a URL pública.',
+        responsibility: 'Armazenar e servir imagens adicionadas pelo painel.',
+        evidence: 'Backend-Postais_da_Parnaiba/app/routers/upload.py · app/main.py',
+      },
+      {
+        id: 'postgres', title: 'Banco relacional', tech: 'PostgreSQL 16', state: 'configured', x: 840, y: 510, mobileOrder: 13,
+        description: 'URL de conexão e serviço PostgreSQL definidos no backend e no Compose; operação do banco não foi comprovada nesta revisão.',
+        responsibility: 'Persistir postais, posts, eventos e administradores.',
+        evidence: 'Backend-Postais_da_Parnaiba/app/core/config.py · docker-compose.yml',
       },
     ],
     connections: [
-      { from: 'visitor', to: 'site', label: 'navega', state: 'implemented' },
-      { from: 'site', to: 'scripts', label: 'carrega scripts', state: 'implemented' },
-      { from: 'site', to: 'local-content', label: 'renderiza conteúdo', state: 'implemented' },
-      { from: 'scripts', to: 'external-api', label: 'GET coleções', state: 'external' },
-      { from: 'admin', to: 'token', label: 'lê credencial', state: 'implemented' },
-      { from: 'token', to: 'external-api', label: 'Bearer + CRUD', state: 'external', via: [{ x: 650, y: 505 }, { x: 820, y: 405 }] },
+      { from: 'visitor', to: 'nginx', label: 'HTTP', state: 'configured' },
+      { from: 'nginx', to: 'site', label: 'serve páginas', state: 'configured' },
+      { from: 'site', to: 'scripts', label: 'carrega JS', state: 'implemented' },
+      { from: 'site', to: 'local-content', label: 'usa acervo local', state: 'implemented' },
+      { from: 'scripts', to: 'fastapi', label: 'GET via /api', state: 'configured' },
+      { from: 'admin', to: 'auth', label: 'login + Bearer', state: 'implemented' },
+      { from: 'admin', to: 'fastapi', label: 'CRUD via /api', state: 'configured' },
+      { from: 'nginx', to: 'fastapi', label: 'proxy /api/', state: 'configured' },
+      { from: 'fastapi', to: 'routes', label: 'despacha', state: 'implemented' },
+      { from: 'auth', to: 'routes', label: 'protege escrita', state: 'implemented' },
+      { from: 'routes', to: 'orm', label: 'consulta + commit', state: 'implemented' },
+      { from: 'orm', to: 'postgres', label: 'DATABASE_URL', state: 'configured' },
+      { from: 'fastapi', to: 'upload', label: 'arquivo autenticado', state: 'implemented' },
+      { from: 'compose', to: 'nginx', label: 'configura serviço', state: 'configured' },
+      { from: 'compose', to: 'postgres', label: 'provisiona serviço', state: 'configured', via: [{ x: 275, y: 575 }, { x: 840, y: 575 }] },
     ],
   },
   beck: {
@@ -219,6 +265,100 @@ const SYSTEM_ARCHITECTURES = {
       { from: 'alembic', to: 'sqlite', label: 'revisão vazia', state: 'incomplete' },
       { from: 'compose', to: 'fastapi', label: 'container API', state: 'configured', via: [{ x: 760, y: 585 }, { x: 150, y: 585 }, { x: 150, y: 205 }] },
       { from: 'compose', to: 'postgres', label: 'provisiona serviço', state: 'configured' },
+    ],
+  },
+  fundec: {
+    title: 'Hackathon FUNDEC/RS',
+    type: 'ETL analítico + aplicativo Qlik',
+    repo: 'https://github.com/Nalan27/Hackaton-Excelsior-',
+    summary: 'Fontes públicas passam pelo ETL em Python/pandas, geram um modelo estrela em SQLite e CSVs tratados. O Qlik carrega os CSVs por DataFiles; o SQLite não é a fonte da carga atual.',
+    defaultNode: 'etl',
+    nodes: [
+      {
+        id: 'sources', title: 'Fontes públicas', tech: 'CSV + PDF', state: 'boundary', x: 80, y: 110, mobileOrder: 1,
+        description: 'Repasses e ranking oficiais, bases do IBGE/SIDRA e lista da Defesa Civil usados em etapas distintas.',
+        responsibility: 'Fornecer as movimentações, os dados municipais e a referência de cobertura sem misturar seus critérios.',
+        evidence: 'data/raw/ · README.md:20-36',
+      },
+      {
+        id: 'etl', title: 'ETL e análises', tech: 'Python + pandas', state: 'implemented', x: 260, y: 110, mobileOrder: 2,
+        description: 'Limpa repasses, associa municípios ao IBGE, preserva estornos e produz as tabelas analíticas e de cobertura.',
+        responsibility: 'Transformar e validar fontes brutas antes de exportar dados para o banco e o Qlik.',
+        evidence: 'etl/analis_de_dados.py · etl/cobertura_municipal.py · etl/analise_idhm_repasses.py',
+      },
+      {
+        id: 'csv', title: 'Saídas tratadas', tech: 'CSV UTF-8', state: 'implemented', x: 450, y: 110, mobileOrder: 3,
+        description: 'Arquivos de fato, dimensões, intervalo, cobertura e relatórios de validação em data/processed/.',
+        responsibility: 'Entregar as tabelas usadas na carga do Qlik e permitir auditoria dos resultados.',
+        evidence: 'data/processed/ · README.md:109-131',
+      },
+      {
+        id: 'qlik', title: 'Carga Qlik', tech: 'DataFiles + QVS', state: 'implemented', x: 640, y: 110, mobileOrder: 4,
+        description: 'O script QVS carrega cinco CSVs e associa tabelas por chave_municipal e data.',
+        responsibility: 'Formar o modelo associativo usado pelas visualizações do aplicativo.',
+        evidence: 'qlik/load_data.qvs · README.md:188-260',
+      },
+      {
+        id: 'dashboard', title: 'Dashboard', tech: 'Qlik Cloud', state: 'implemented', x: 850, y: 110, mobileOrder: 5,
+        description: 'Sete telas de visão geral, distribuição, evolução, cobertura, concentração, vulnerabilidade e recomendações.',
+        responsibility: 'Apresentar métricas e análises com filtros de município, data e recurso.',
+        evidence: 'qlik/versoes-do-app/12-task-20/app.qvf · docs/evidencias/task-20/',
+      },
+      {
+        id: 'validation', title: 'Conciliação e testes', tech: 'unittest + CSV', state: 'implemented', x: 80, y: 355, mobileOrder: 6,
+        description: 'Testes e saídas de conciliação verificam chaves, totais, estornos, calendário, cobertura e integridade.',
+        responsibility: 'Confrontar o fato com o ranking oficial e registrar divergências sem ocultá-las.',
+        evidence: 'tests/ · data/processed/conciliacao.csv · data/processed/relatorio_validacao.csv',
+      },
+      {
+        id: 'sqlite', title: 'Banco analítico', tech: 'SQLite', state: 'implemented', x: 260, y: 355, mobileOrder: 7,
+        description: 'banco_hackathon.db guarda fato_repasses, dim_municipio, dim_calendario e intervalo_primeiro_repasse.',
+        responsibility: 'Persistir o modelo estrela local para consulta e conferência.',
+        evidence: 'etl/analis_de_dados.py:91-180 · banco_hackathon.db',
+      },
+      {
+        id: 'fact', title: 'Fato de repasses', tech: 'fato_repasses', state: 'implemented', x: 450, y: 355, mobileOrder: 8,
+        description: '658 movimentações individuais, incluindo 18 ajustes negativos preservados com sinal.',
+        responsibility: 'Registrar valores e datas por chave municipal para agregações.',
+        evidence: 'data/processed/fato_repasses.csv · etl/analis_de_dados.py:377-415',
+      },
+      {
+        id: 'municipality', title: 'Dimensão municipal', tech: 'dim_municipio', state: 'implemented', x: 640, y: 270, mobileOrder: 9,
+        description: '334 municípios com código IBGE, população e indicadores socioeconômicos.',
+        responsibility: 'Relacionar as movimentações e apoiar análises por município e por pessoa.',
+        evidence: 'data/processed/dim_municipio.csv · etl/analis_de_dados.py:274-374',
+      },
+      {
+        id: 'calendar', title: 'Dimensão calendário', tech: 'dim_calendario', state: 'implemented', x: 640, y: 450, mobileOrder: 10,
+        description: 'Calendário diário com ano, trimestre, mês e ordem cronológica.',
+        responsibility: 'Relacionar a data dos repasses aos filtros e séries temporais.',
+        evidence: 'data/processed/dim_calendario.csv · etl/analis_de_dados.py:455-509',
+      },
+      {
+        id: 'interval', title: 'Primeiro repasse', tech: 'intervalo_primeiro_repasse', state: 'implemented', x: 850, y: 270, mobileOrder: 11,
+        description: 'Tabela municipal do intervalo entre o marco documental e o primeiro crédito positivo elegível.',
+        responsibility: 'Apoiar a medida de tempo sem tratar estornos como primeiro crédito.',
+        evidence: 'data/processed/intervalo_primeiro_repasse.csv · etl/metricas_repasses.py',
+      },
+      {
+        id: 'coverage', title: 'Cobertura municipal', tech: 'cobertura_municipal', state: 'implemented', x: 850, y: 450, mobileOrder: 12,
+        description: 'Compara presença na lista de afetados com movimentações registradas na base FUNDEC.',
+        responsibility: 'Mostrar cobertura e lacunas sem inferir elegibilidade ou ausência de atendimento.',
+        evidence: 'data/processed/cobertura_municipal.csv · etl/cobertura_municipal.py',
+      },
+    ],
+    connections: [
+      { from: 'sources', to: 'etl', label: 'lê e normaliza', state: 'implemented' },
+      { from: 'etl', to: 'csv', label: 'exporta', state: 'implemented' },
+      { from: 'csv', to: 'qlik', label: 'carrega 5 tabelas', state: 'implemented' },
+      { from: 'qlik', to: 'dashboard', label: 'alimenta telas', state: 'implemented' },
+      { from: 'etl', to: 'validation', label: 'confere saídas', state: 'implemented' },
+      { from: 'etl', to: 'sqlite', label: 'persiste modelo', state: 'implemented' },
+      { from: 'sqlite', to: 'fact', label: 'armazena fato', state: 'implemented' },
+      { from: 'fact', to: 'municipality', label: 'chave_municipal', state: 'implemented' },
+      { from: 'fact', to: 'calendar', label: 'data', state: 'implemented' },
+      { from: 'interval', to: 'municipality', label: 'chave_municipal', state: 'implemented' },
+      { from: 'coverage', to: 'municipality', label: 'chave_municipal', state: 'implemented' },
     ],
   },
   flora: {
@@ -382,6 +522,7 @@ const SYSTEM_ARCHITECTURES = {
   };
   let currentSystem = 'postais';
   let pinnedNode = null;
+  let hasPinnedSelection = false;
   let nodeElements = [];
   let edgeElements = [];
 
@@ -441,11 +582,14 @@ const SYSTEM_ARCHITECTURES = {
     inspector.evidence.textContent = node.evidence;
   }
 
-  function setActiveNode(nodeId, persist) {
+  function setActiveNode(nodeId, persist, focusRelations = true) {
     const project = SYSTEM_ARCHITECTURES[currentSystem];
     const node = project.nodes.find(item => item.id === nodeId);
     if (!node) return;
-    if (persist) pinnedNode = nodeId;
+    if (persist) {
+      pinnedNode = nodeId;
+      hasPinnedSelection = focusRelations;
+    }
 
     const related = new Set([nodeId]);
     project.connections.forEach(connection => {
@@ -454,16 +598,16 @@ const SYSTEM_ARCHITECTURES = {
     });
 
     nodeElements.forEach(({ element, node: item }) => {
-      element.classList.toggle('system-node--active', item.id === nodeId);
-      element.classList.toggle('system-node--related', item.id !== nodeId && related.has(item.id));
-      element.classList.toggle('system-node--muted', !related.has(item.id));
-      element.setAttribute('aria-pressed', String(item.id === pinnedNode));
+      element.classList.toggle('system-node--active', focusRelations && item.id === nodeId);
+      element.classList.toggle('system-node--related', focusRelations && item.id !== nodeId && related.has(item.id));
+      element.classList.toggle('system-node--muted', focusRelations && !related.has(item.id));
+      element.setAttribute('aria-pressed', String(hasPinnedSelection && item.id === pinnedNode));
     });
 
     edgeElements.forEach(({ path, connection }) => {
       const active = connection.from === nodeId || connection.to === nodeId;
-      path.classList.toggle('system-edge--active', active);
-      path.classList.toggle('system-edge--muted', !active);
+      path.classList.toggle('system-edge--active', focusRelations && active);
+      path.classList.toggle('system-edge--muted', focusRelations && !active);
     });
 
     updateInspector(node, project);
@@ -474,6 +618,7 @@ const SYSTEM_ARCHITECTURES = {
     if (!project) return;
     currentSystem = systemId;
     pinnedNode = project.defaultNode || project.nodes[0].id;
+    hasPinnedSelection = false;
     nodeElements = [];
     edgeElements = [];
     map.innerHTML = '';
@@ -481,6 +626,7 @@ const SYSTEM_ARCHITECTURES = {
     projectType.textContent = project.type;
     projectTitle.textContent = project.title;
     projectRepo.href = project.repo;
+    projectRepo.firstChild.textContent = project.repoLabel || 'Repositório ';
     summary.textContent = project.summary;
     map.setAttribute('aria-label', `Fluxo arquitetural de ${project.title}`);
 
@@ -528,6 +674,11 @@ const SYSTEM_ARCHITECTURES = {
           .filter(connection => connection.from === node.id || connection.to === node.id)
           .map(connection => `${connection.from === node.id ? '→' : '←'} ${connection.label} · ${stateLabels[connection.state]}`);
         const relationSummary = relations.length ? relations.join(' · ') : 'componente lateral';
+        const primaryConnection = project.connections.find(connection => connection.from === node.id) ||
+          project.connections.find(connection => connection.to === node.id);
+        const mobileRelation = primaryConnection
+          ? `${primaryConnection.from === node.id ? '→' : '←'} ${primaryConnection.label}`
+          : 'sem conexão direta';
         const button = document.createElement('button');
         button.type = 'button';
         button.className = `system-node system-node--${node.state}`;
@@ -541,21 +692,24 @@ const SYSTEM_ARCHITECTURES = {
           `<span class="system-node__state" aria-hidden="true"></span>` +
           `<strong>${node.title}</strong>` +
           `<small>${node.tech}</small>` +
-          `<span class="system-node__mobile-flow">${relationSummary}</span>`;
+          `<span class="system-node__mobile-flow">${mobileRelation}</span>`;
         button.addEventListener('mouseenter', () => setActiveNode(node.id, false));
-        button.addEventListener('mouseleave', () => setActiveNode(pinnedNode, false));
+        button.addEventListener('mouseleave', () => setActiveNode(pinnedNode, false, hasPinnedSelection));
         button.addEventListener('focus', () => setActiveNode(node.id, false));
-        button.addEventListener('blur', () => setActiveNode(pinnedNode, false));
+        button.addEventListener('blur', () => setActiveNode(pinnedNode, false, hasPinnedSelection));
         button.addEventListener('click', () => setActiveNode(node.id, true));
         map.appendChild(button);
         nodeElements.push({ element: button, node });
       });
 
-    const connections = document.createElement('section');
+    const connections = document.createElement('details');
     connections.className = 'system-connections';
     connections.setAttribute('aria-label', `Conexões de ${project.title}`);
-    const connectionsTitle = document.createElement('h4');
-    connectionsTitle.textContent = 'Conexões do fluxo';
+    const connectionsTitle = document.createElement('summary');
+    connectionsTitle.textContent = 'Ver todas as conexões';
+    const connectionsCount = document.createElement('span');
+    connectionsCount.textContent = String(project.connections.length).padStart(2, '0');
+    connectionsTitle.appendChild(connectionsCount);
     const connectionsList = document.createElement('ol');
     project.connections.forEach(connection => {
       const from = nodeById[connection.from];
@@ -568,7 +722,7 @@ const SYSTEM_ARCHITECTURES = {
     connections.append(connectionsTitle, connectionsList);
     map.appendChild(connections);
 
-    setActiveNode(pinnedNode, true);
+    setActiveNode(pinnedNode, true, false);
   }
 
   function selectTab(tab, moveFocus) {

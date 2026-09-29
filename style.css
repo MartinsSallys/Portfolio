@@ -3134,16 +3134,17 @@ div[id] { scroll-margin-top: 72px; }
   position: absolute;
   z-index: 2;
   display: flex;
-  width: 122px;
-  min-height: 76px;
+  width: 136px;
+  min-height: 84px;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
   gap: 4px;
-  padding: 11px 12px 10px 16px;
+  padding: 12px 12px 11px 17px;
   border: 1px solid var(--border);
+  border-top: 2px solid var(--node-accent, var(--system-boundary));
   border-radius: var(--radius-md);
-  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  background: linear-gradient(160deg, color-mix(in srgb, var(--node-accent, var(--system-boundary)) 8%, var(--surface)), var(--surface) 62%);
   box-shadow: var(--shadow-sm);
   text-align: left;
   transform: translate(-50%, -50%);
@@ -3153,16 +3154,18 @@ div[id] { scroll-margin-top: 72px; }
 
 .system-node strong {
   color: var(--text);
-  font-size: 0.6875rem;
+  font-size: 0.71875rem;
   font-weight: 600;
   line-height: 1.25;
+  overflow-wrap: anywhere;
 }
 
 .system-node small {
-  color: var(--text-secondary);
+  color: var(--node-accent, var(--text-secondary));
   font-family: var(--font-mono);
-  font-size: 0.5rem;
+  font-size: 0.5625rem;
   line-height: 1.35;
+  overflow-wrap: anywhere;
 }
 
 .system-node__state {
@@ -3175,10 +3178,11 @@ div[id] { scroll-margin-top: 72px; }
   background: var(--system-boundary);
 }
 
-.system-node--implemented .system-node__state { background: var(--system-implemented); }
-.system-node--configured .system-node__state { background: var(--system-configured); }
-.system-node--external .system-node__state { background: var(--system-external); }
-.system-node--incomplete .system-node__state { background: var(--system-incomplete); }
+.system-node--implemented { --node-accent: var(--system-implemented); }
+.system-node--configured { --node-accent: var(--system-configured); }
+.system-node--external { --node-accent: var(--system-external); }
+.system-node--incomplete { --node-accent: var(--system-incomplete); }
+.system-node__state { background: var(--node-accent, var(--system-boundary)); }
 
 .system-node--configured { border-color: color-mix(in srgb, var(--system-configured) 38%, var(--border)); border-style: dashed; }
 .system-node--external { border-color: color-mix(in srgb, var(--system-external) 38%, var(--border)); border-style: dashed; }
@@ -4092,4 +4096,184 @@ div[id] { scroll-margin-top: 72px; }
   .supporting-card.is-active,
   .supporting-card.is-before,
   .supporting-card.is-after { transform: none; opacity: 1; filter: none; }
+}
+
+/* ============================================================
+   MOBILE EXPERIENCE — same visual language, touch-first layout
+   ============================================================ */
+@media (max-width: 768px) {
+  :root { --container-padding: 20px; }
+
+  .section { padding-block: 60px; }
+  .section__label { margin-bottom: 10px; font-size: 0.6875rem; }
+  .section__title { font-size: clamp(1.8rem, 6vw, 2.35rem); line-height: 1.12; }
+  .section__description { margin-bottom: 28px; font-size: 0.875rem; line-height: 1.65; }
+
+  .navbar {
+    height: 64px;
+    border-bottom: 1px solid var(--border);
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+  .navbar__logo-label { display: inline; font-size: 0.625rem; }
+  .navbar__logo-mark { width: 38px; height: 38px; }
+  .navbar__actions { margin-left: auto; }
+  .theme-toggle,
+  .navbar__toggle { width: 44px; height: 44px; }
+  .navbar__toggle { align-items: center; justify-content: center; margin-left: 4px; border: 1px solid var(--border); background: var(--surface); }
+  .navbar__links {
+    top: 70px;
+    right: 12px;
+    left: 12px;
+    max-height: calc(100svh - 82px);
+    overflow-y: auto;
+    padding: 8px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--surface);
+    box-shadow: var(--shadow-lg);
+  }
+  .navbar__link { min-height: 48px; display: flex; align-items: center; padding-inline: 16px; font-size: 0.875rem; }
+  .navbar__link--active { background: var(--primary-dim); color: var(--primary); }
+
+  .hero--systems {
+    min-height: min(740px, 100svh);
+    padding: 116px 0 72px;
+    text-align: left;
+  }
+  .hero--systems .hero__grid { background-size: 40px 40px; }
+  .hero--systems .hero__glow { top: 42%; left: 24%; width: 560px; height: 560px; }
+  .hero--systems .hero__content { align-items: flex-start; max-width: 580px; margin-inline: 0; }
+  .hero--systems .hero__label { margin-bottom: 24px; font-size: 0.625rem; }
+  .hero__title { max-width: 11ch; margin-bottom: 18px; font-size: clamp(2.7rem, 9vw, 4.2rem); line-height: 1.02; }
+  .hero__role { margin-bottom: 20px; font-size: 0.75rem; letter-spacing: 0.06em; }
+  .hero--systems .hero__description { max-width: 37ch; margin-bottom: 30px; font-size: 0.9375rem; }
+  .hero--systems .hero__actions { justify-content: flex-start; gap: 10px; }
+  .hero__actions .button { min-height: 46px; }
+
+  .projects-overview__intro,
+  .architecture-section__intro,
+  .profile-section__intro { gap: 12px; margin-bottom: 24px; }
+  .featured-projects { gap: 18px; }
+  .project-card { border-radius: 16px; }
+  .project-card__body { padding: 22px; }
+  .project-card__meta { flex-wrap: wrap; margin-bottom: 15px; }
+  .project-card__section { margin-bottom: 19px; }
+  .project-card__section h4 { margin-bottom: 8px; }
+  .project-card--blocks .project-card__section p,
+  .project-card__evidence li { font-size: 0.8125rem; line-height: 1.65; }
+  .project-card__techs { gap: 7px; }
+  .project-card__techs li { padding: 6px 9px; }
+  .project-card__footer { gap: 12px; }
+  .project-card__actions { width: 100%; gap: 10px; }
+  .project-card__actions > a,
+  .project-card__actions > button { min-height: 44px; }
+
+  .project-gallery,
+  .project-gallery--fundec {
+    display: flex;
+    gap: 10px;
+    height: clamp(205px, 48vw, 310px);
+    padding: 10px 12px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    background: var(--bg-subtle);
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 12px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .project-gallery::-webkit-scrollbar { display: none; }
+  .project-gallery__rail,
+  .project-gallery--fundec .project-gallery__rail { display: contents; }
+  .project-gallery__item,
+  .project-gallery__item--main,
+  .project-gallery--fundec .project-gallery__item--main,
+  .project-gallery--fundec .project-gallery__rail .project-gallery__item {
+    flex: 0 0 min(76vw, 440px);
+    height: 100%;
+    min-height: 0;
+    aspect-ratio: auto;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    scroll-snap-align: center;
+  }
+  .project-gallery__item figcaption { right: 12px; bottom: 11px; left: 12px; font-size: 0.625rem; }
+
+  .supporting-projects { margin-top: 36px; }
+  .supporting-projects__heading { flex-direction: row; align-items: center; gap: 10px; }
+  .supporting-projects__arrow { width: 44px; height: 44px; }
+  .supporting-projects__grid { --carousel-card-width: min(72vw, 320px); }
+  .supporting-card { min-height: 300px; }
+
+  .system-design__toolbar { gap: 12px; }
+  .system-tabs { scroll-snap-type: x proximity; }
+  .system-tab { min-height: 44px; scroll-snap-align: start; font-size: 0.6875rem; }
+  .system-legend { display: flex; flex-wrap: nowrap; max-width: 100%; overflow-x: auto; padding: 2px 0 4px; scrollbar-width: none; }
+  .system-legend::-webkit-scrollbar { display: none; }
+  .system-legend span { flex: 0 0 auto; }
+  .system-canvas__header { padding: 18px; }
+  .system-map { gap: 8px; padding: 14px; }
+  .system-node { min-height: 72px; }
+  .system-connections { padding: 0; }
+  .system-connections summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 48px;
+    padding: 12px 14px;
+    color: var(--primary);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+  }
+  .system-connections summary::-webkit-details-marker { display: none; }
+  .system-connections summary::after { content: '+'; margin-left: auto; font-size: 1rem; }
+  .system-connections[open] summary::after { content: '−'; }
+  .system-connections summary span { order: 2; margin-left: 10px; color: var(--text-secondary); font-size: 0.625rem; }
+  .system-connections summary:focus-visible { outline: 2px solid var(--primary); outline-offset: -3px; }
+  .system-connections ol { padding: 0 14px 14px; }
+  .system-connections li { padding-top: 7px; border-top: 1px solid var(--border); }
+
+  .profile-link { min-height: 96px; }
+  .certificates__grid { gap: 8px; padding: 12px; }
+  .certificate-card { min-height: 112px; }
+  .about__photo-terminal { max-width: 300px; margin: 0; }
+  .contato__links .button { min-height: 44px; }
+  .footer { padding-bottom: max(24px, env(safe-area-inset-bottom)); }
+}
+
+@media (max-width: 520px) {
+  :root { --container-padding: 16px; }
+  .hero--systems { min-height: min(680px, 100svh); padding: 112px 0 64px; }
+  .hero__title { font-size: clamp(2.55rem, 11vw, 3.4rem); }
+  .hero__role { font-size: 0.6875rem; }
+  .hero--systems .hero__actions { width: 100%; flex-direction: row; }
+  .hero__actions .button { width: auto; flex: 1 1 auto; }
+  .project-card__body { padding: 20px; }
+  .supporting-projects__grid { --carousel-card-width: min(78vw, 300px); }
+  .system-canvas__header { padding: 16px; }
+  .system-inspector { padding: 16px; }
+  .system-node__mobile-flow { font-size: 0.5625rem; }
+  .certificates__header { padding: 18px; }
+  .certificate-card { padding: 16px; }
+  .about__photo-terminal { max-width: 260px; }
+}
+
+@media (max-width: 360px) {
+  .navbar__logo-label { display: none; }
+  .hero__title { font-size: 2.45rem; }
+  .hero--systems .hero__actions { flex-direction: column; }
+  .hero__actions .button { width: 100%; }
+  .project-gallery__item,
+  .project-gallery__item--main,
+  .project-gallery--fundec .project-gallery__item--main,
+  .project-gallery--fundec .project-gallery__rail .project-gallery__item { flex-basis: 82vw; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-gallery { scroll-behavior: auto; }
 }

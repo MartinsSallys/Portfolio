@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="icon" href="public/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.css">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=mobile-20260928-2">
 </head>
 <body>
 
@@ -218,7 +218,7 @@
             <div class="project-card__body">
               <div class="project-card__meta">
                 <span>CASE 01</span>
-                <span class="project-status project-status--alpha">Alpha de integração</span>
+                <span class="project-status project-status--alpha">Integração em evolução</span>
               </div>
               <h3>Postais da Parnaíba</h3>
 
@@ -231,26 +231,26 @@
                 <h4 id="postais-built">O que construí</h4>
                 <ul class="project-card__evidence">
                   <li>Site multipágina com conteúdo editorial e acervo visual</li>
-                  <li>Slider, comparador antes/depois, galeria, timeline e crônicas via contrato HTTP</li>
-                  <li>Painel cliente para CRUD de conteúdo e upload de imagens</li>
+                  <li>Slider, comparador antes/depois, galeria, posts e timeline com dados da API</li>
+                  <li>Painel para CRUD e upload; backend FastAPI com autenticação e persistência</li>
                 </ul>
               </section>
 
               <section class="project-card__section" aria-labelledby="postais-point">
                 <h4 id="postais-point">Ponto técnico</h4>
-                <p>HTML estático para o editorial e JavaScript separado para as coleções dinâmicas, sem etapa de build. A API fica fora do repositório e usa <code>localhost</code> por padrão.</p>
+                <p>O código em <code>POSTAISCOMPLETO</code> reúne frontend e backend. Nginx serve o site e encaminha <code>/api</code> à API FastAPI; os dados usam modelos SQLAlchemy e PostgreSQL configurado no Compose.</p>
               </section>
 
               <section class="project-card__section" aria-labelledby="postais-stack">
                 <h4 id="postais-stack">Stack</h4>
                 <ul class="project-card__techs" aria-label="Tecnologias usadas">
-                  <li>HTML</li><li>CSS</li><li>JavaScript</li><li>Fetch API</li>
+                  <li>HTML</li><li>CSS</li><li>JavaScript</li><li>FastAPI</li><li>SQLAlchemy</li><li>PostgreSQL</li><li>Nginx</li>
                 </ul>
               </section>
 
               <div class="project-card__footer">
                 <div class="project-card__actions">
-                  <a href="https://github.com/MartinsSallys/Postais-da-Parnaiba" target="_blank" rel="noopener noreferrer">Repositório <span aria-hidden="true">↗</span></a>
+                  <a href="https://github.com/MartinsSallys/Postais-da-Parnaiba" target="_blank" rel="noopener noreferrer">Frontend no GitHub <span aria-hidden="true">↗</span></a>
                   <button class="case-toggle" type="button" aria-expanded="false" aria-controls="case-postais" data-case-toggle="postais">
                     Explorar case
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
@@ -265,7 +265,7 @@
                   <span>Case técnico completo / 01</span>
                   <h4 id="case-postais-title" tabindex="-1">Da narrativa editorial ao contrato HTTP</h4>
                 </div>
-                <span class="project-status project-status--alpha">Alpha de integração</span>
+                <span class="project-status project-status--alpha">Integração em evolução</span>
               </header>
 
               <div class="case-overview">
@@ -275,20 +275,20 @@
                 </section>
                 <section>
                   <h5 class="case-details__label">Solução construída</h5>
-                  <p>Um frontend multipágina sem etapa de build, com conteúdo local para as páginas editoriais e clientes HTTP separados para galeria, timeline, crônicas e administração.</p>
+                  <p>Frontend multipágina com conteúdo editorial local, clientes HTTP para coleções públicas e painel administrativo. O backend implementa rotas FastAPI, autenticação JWT, upload e modelos de dados.</p>
                 </section>
               </div>
 
               <section class="case-section" aria-labelledby="case-postais-flow">
                 <div class="case-section__heading">
                   <span>Fluxo principal</span>
-                  <h5 id="case-postais-flow">Duas experiências no navegador</h5>
+                  <h5 id="case-postais-flow">Do navegador aos dados</h5>
                 </div>
                 <ol class="case-flow">
-                  <li><span>01</span><strong>Visitante</strong><small>navega pelo acervo</small></li>
-                  <li><span>02</span><strong>Site editorial</strong><small>renderiza HTML e imagens locais</small></li>
-                  <li><span>03</span><strong>Scripts de interface</strong><small>slider, comparador e fetch</small></li>
-                  <li class="case-flow__external"><span>04</span><strong>API esperada</strong><small>dependência externa ausente</small></li>
+                  <li><span>01</span><strong>Navegador</strong><small>abre site ou painel</small></li>
+                  <li><span>02</span><strong>Nginx</strong><small>serve páginas e encaminha /api</small></li>
+                  <li><span>03</span><strong>FastAPI</strong><small>valida e atende as rotas</small></li>
+                  <li><span>04</span><strong>SQLAlchemy</strong><small>mapeia o conteúdo no banco</small></li>
                 </ol>
                 <a class="case-architecture-link" href="#arquitetura" data-system-target="postais">Inspecionar arquitetura completa <span aria-hidden="true">→</span></a>
               </section>
@@ -301,6 +301,9 @@
                     <div><dt>JavaScript</dt><dd>Interações, normalização de dados e montagem de coleções.</dd></div>
                     <div><dt>Fetch API</dt><dd>Contrato com postais, crônicas, timeline, autenticação e upload.</dd></div>
                     <div><dt>localStorage</dt><dd>Persistência do token usado pelo cliente administrativo.</dd></div>
+                    <div><dt>FastAPI + Pydantic</dt><dd>Rotas públicas, administração e validação dos dados.</dd></div>
+                    <div><dt>SQLAlchemy + PostgreSQL</dt><dd>Modelos e persistência configurada para o conteúdo.</dd></div>
+                    <div><dt>Nginx + Compose</dt><dd>Entrada HTTP e serviços declarados para site, API e banco.</dd></div>
                   </dl>
                 </section>
 
@@ -311,15 +314,15 @@
                     <li>CSS separado em base, layout, componentes e páginas.</li>
                     <li>Cliente administrativo compartilha um helper HTTP com Bearer token.</li>
                     <li>Textos dinâmicos públicos passam por escaping antes do HTML.</li>
+                    <li>Rotas de escrita exigem um administrador autenticado por JWT.</li>
                   </ul>
                 </section>
 
                 <section class="case-section case-section--warning">
                   <div class="case-section__heading"><span>Desafios atuais</span><h5>O que ainda limita a entrega</h5></div>
                   <ul class="case-list">
-                    <li>A URL padrão aponta para <code>localhost:8001</code>.</li>
-                    <li>Não existe backend ou banco neste repositório.</li>
-                    <li>Campos obrigatórios ocultos bloqueiam os formulários do admin.</li>
+                    <li>O Nginx de produção aponta o proxy para <code>app:8000</code>, enquanto o serviço no Compose se chama <code>prod</code>.</li>
+                    <li>A operação integrada em produção ainda não foi verificada nesta revisão.</li>
                     <li>Conteúdo estático e dinâmico ainda não compartilham uma fonte única.</li>
                   </ul>
                 </section>
@@ -327,16 +330,17 @@
                 <section class="case-section case-section--evidence">
                   <div class="case-section__heading"><span>Evidências</span><h5>Onde verificar</h5></div>
                   <ul class="case-evidence-list">
-                    <li><code>js/galeria.js</code><span>coleções públicas</span></li>
-                    <li><code>admin/app.js</code><span>auth, CRUD e upload</span></li>
-                    <li><code>js/antes-depois.js</code><span>comparador visual</span></li>
-                    <li><code>css/</code><span>arquitetura de estilos</span></li>
+                    <li><code>Postais-da-Parnaiba/js/galeria.js</code><span>coleções públicas</span></li>
+                    <li><code>Postais-da-Parnaiba/admin/app.js</code><span>auth, CRUD e upload</span></li>
+                    <li><code>Backend-Postais_da_Parnaiba/app/main.py</code><span>API e rotas</span></li>
+                    <li><code>Backend-Postais_da_Parnaiba/app/models/</code><span>modelos de dados</span></li>
+                    <li><code>Backend-Postais_da_Parnaiba/docker-compose.yml</code><span>serviços declarados</span></li>
                   </ul>
                 </section>
               </div>
 
               <footer class="case-details__footer">
-                <p><strong>Estado atual:</strong> frontend demonstrável; integração depende de um serviço externo.</p>
+                <p><strong>Estado atual:</strong> frontend e backend implementados; execução integrada de produção ainda não comprovada.</p>
                 <button type="button" class="case-close" data-case-toggle="postais">Recolher case</button>
               </footer>
             </section>
@@ -581,6 +585,7 @@
                 <div class="project-card__actions">
                   <a href="https://github.com/Nalan27/Hackaton-Excelsior-" target="_blank" rel="noopener noreferrer">Repositório <span aria-hidden="true">↗</span></a>
                   <a href="https://github.com/Nalan27/Hackaton-Excelsior-/blob/main/docs/relatorio-final.md" target="_blank" rel="noopener noreferrer">Relatório final <span aria-hidden="true">↗</span></a>
+                  <a href="#arquitetura" data-system-target="fundec">Ver arquitetura <span aria-hidden="true">→</span></a>
                 </div>
               </div>
             </div>
@@ -657,7 +662,7 @@
             <p class="section__label">System Design</p>
             <h2 class="section__title" id="architecture-title">Arquitetura baseada no código.</h2>
           </div>
-          <p class="section__description">Cada fluxo abaixo representa apenas componentes encontrados nos repositórios. Linhas tracejadas deixam claro o que é externo, configurado ou ainda incompleto.</p>
+          <p class="section__description">Cada fluxo representa componentes encontrados no código dos projetos. Linhas tracejadas mostram o que está configurado, é externo ou ainda está incompleto.</p>
         </div>
 
         <div class="system-design reveal reveal--delay-1">
@@ -665,6 +670,7 @@
             <div class="system-tabs" role="tablist" aria-label="Selecionar arquitetura">
               <button class="system-tab system-tab--active" id="system-tab-postais" role="tab" aria-selected="true" aria-controls="system-panel" tabindex="0" data-system="postais">Postais</button>
               <button class="system-tab" id="system-tab-beck" role="tab" aria-selected="false" aria-controls="system-panel" tabindex="-1" data-system="beck">BeckGlobal</button>
+              <button class="system-tab" id="system-tab-fundec" role="tab" aria-selected="false" aria-controls="system-panel" tabindex="-1" data-system="fundec">FUNDEC/RS</button>
               <button class="system-tab" id="system-tab-flora" role="tab" aria-selected="false" aria-controls="system-panel" tabindex="-1" data-system="flora">Flora Tropical</button>
               <button class="system-tab" id="system-tab-sysmgr" role="tab" aria-selected="false" aria-controls="system-panel" tabindex="-1" data-system="sysmgr">sysmgr-cli</button>
             </div>
@@ -682,10 +688,10 @@
               <section class="system-canvas" aria-labelledby="system-project-title">
                 <header class="system-canvas__header">
                   <div>
-                    <span class="system-canvas__eyebrow" id="system-project-type">Frontend editorial</span>
+                    <span class="system-canvas__eyebrow" id="system-project-type">Museu digital com frontend, API e persistência</span>
                     <h3 id="system-project-title">Postais da Parnaíba</h3>
                   </div>
-                  <a id="system-project-repo" href="https://github.com/MartinsSallys/Postais-da-Parnaiba" target="_blank" rel="noopener noreferrer">Repositório <span aria-hidden="true">↗</span></a>
+                  <a id="system-project-repo" href="https://github.com/MartinsSallys/Postais-da-Parnaiba" target="_blank" rel="noopener noreferrer">Frontend no GitHub <span aria-hidden="true">↗</span></a>
                 </header>
                 <div class="system-map" id="system-map" role="group" aria-label="Fluxo arquitetural de Postais da Parnaíba">
                   <p class="system-map__loading">Carregando componentes verificados...</p>
@@ -696,22 +702,22 @@
               <aside class="system-inspector" id="system-inspector" aria-label="Detalhes do componente selecionado" aria-live="polite" aria-atomic="true">
                 <div class="system-inspector__header">
                   <span class="system-state system-state--implemented" id="system-inspector-state">Implementado</span>
-                  <span class="system-inspector__index" id="system-inspector-index">01 / 07</span>
+                  <span class="system-inspector__index" id="system-inspector-index">08 / 13</span>
                 </div>
-                <span class="system-inspector__tech" id="system-inspector-tech">HTML + CSS</span>
-                <h3 id="system-inspector-title">Site editorial</h3>
-                <p id="system-inspector-description">Páginas públicas com conteúdo histórico, navegação e apresentação do acervo.</p>
+                <span class="system-inspector__tech" id="system-inspector-tech">FastAPI + Pydantic</span>
+                <h3 id="system-inspector-title">API HTTP</h3>
+                <p id="system-inspector-description">Aplicação com rotas para autenticação, postais, posts, timeline, upload e health.</p>
                 <dl class="system-inspector__details">
-                  <div><dt>Responsabilidade</dt><dd id="system-inspector-responsibility">Renderizar o conteúdo editorial e servir como entrada para as interações.</dd></div>
-                  <div><dt>Conexões</dt><dd id="system-inspector-connections">Recebe navegação do visitante e carrega os scripts da interface.</dd></div>
-                  <div><dt>Evidência</dt><dd><code id="system-inspector-evidence">index.html · pages/ · css/</code></dd></div>
+                  <div><dt>Responsabilidade</dt><dd id="system-inspector-responsibility">Receber requisições e expor dados e ações administrativas.</dd></div>
+                  <div><dt>Conexões</dt><dd id="system-inspector-connections">Recebe requisições e despacha rotas de conteúdo e upload.</dd></div>
+                  <div><dt>Evidência</dt><dd><code id="system-inspector-evidence">Backend-Postais_da_Parnaiba/app/main.py</code></dd></div>
                 </dl>
               </aside>
             </div>
 
             <footer class="system-design__summary">
               <span>Leitura do sistema</span>
-              <p id="system-summary">Duas interfaces no navegador, conteúdo local e uma API esperada que não está presente no repositório.</p>
+              <p id="system-summary">O site e o painel consomem uma API FastAPI; Nginx e Compose descrevem a integração com PostgreSQL.</p>
             </footer>
           </div>
         </div>
