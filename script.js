@@ -49,7 +49,7 @@
     navToggle.focus();
   });
 
-  const sections = Array.from(document.querySelectorAll('section[id]')).filter(section => !section.closest('[hidden]'));
+  const sections = Array.from(document.querySelectorAll('main > section[id]')).filter(section => !section.hidden);
   const sectionObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -1944,9 +1944,9 @@ function renderTerminalDetail(projectId) {
     anchor.addEventListener('click', function (e) {
       const href = this.getAttribute('href');
       if (href === '#') return;
-      e.preventDefault();
       const target = document.querySelector(href);
       if (target) {
+        e.preventDefault();
         const offset = 72;
         const position = target.getBoundingClientRect().top + window.scrollY - offset;
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

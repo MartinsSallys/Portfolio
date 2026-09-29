@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="icon" href="public/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.css">
-  <link rel="stylesheet" href="style.css?v=certificates-20260928">
+  <link rel="stylesheet" href="style.css?v=hierarchy-20260928">
 </head>
 <body>
 
@@ -24,8 +24,9 @@
       <nav class="navbar__links" id="nav-links" aria-label="Navegação principal">
         <a href="#projetos" class="navbar__link" data-section="projetos">Projetos</a>
         <a href="#arquitetura" class="navbar__link" data-section="arquitetura">Arquitetura</a>
-        <a href="#trajetoria" class="navbar__link" data-section="trajetoria">Perfis e certificados</a>
+        <a href="#outros-projetos" class="navbar__link" data-section="outros-projetos">Estudos</a>
         <a href="#sobre" class="navbar__link" data-section="sobre">Sobre</a>
+        <a href="#skills" class="navbar__link" data-section="skills">Skills</a>
         <a href="#contato" class="navbar__link" data-section="contato">Contato</a>
       </nav>
       <div class="navbar__actions">
@@ -48,6 +49,7 @@
 
     <!-- ========== HERO ========== -->
     <section class="hero hero--systems" id="hero" aria-labelledby="hero-title">
+      <span id="hero-legado" class="anchor-alias" aria-hidden="true"></span>
       <div class="hero__bg" aria-hidden="true">
         <div class="hero__grid"></div>
         <div class="hero__glow"></div>
@@ -78,117 +80,16 @@
       </div>
     </section>
 
-    <!-- ========== HERO LEGADO (REAPROVEITAMENTO FUTURO) ========== -->
-    <section class="hero" id="hero-legado" hidden>
-      <div class="hero__bg">
-        <div class="hero__grid"></div>
-        <div class="hero__glow"></div>
-
-        <!-- Floating code snippets -->
-        <div class="hero__code hero__code--1">
-          <span>def</span> create_api():<br>
-          &nbsp;&nbsp;app = FastAPI()<br>
-          &nbsp;&nbsp;<span>return</span> app
-        </div>
-        <div class="hero__code hero__code--2">
-          <span>SELECT</span> * <span>FROM</span><br>
-          users <span>WHERE</span> active<br>
-          = <span>TRUE</span>;
-        </div>
-        <div class="hero__code hero__code--3">
-          docker compose up -d
-        </div>
-        <div class="hero__code hero__code--4">
-          <span>class</span> User(Base):<br>
-          &nbsp;&nbsp;__tablename__ =<br>
-          &nbsp;&nbsp;<span>"users"</span>
-        </div>
-        <div class="hero__code hero__code--5">
-          <span>@app</span>.get(<span>"/api"</span>)<br>
-          <span>async def</span> root():<br>
-          &nbsp;&nbsp;<span>return</span> {<span>"ok"</span>: True}
-        </div>
-
-        <!-- Floating tech icons -->
-        <div class="hero__icon hero__icon--1">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-        </div>
-        <div class="hero__icon hero__icon--2">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
-        </div>
-        <div class="hero__icon hero__icon--3">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
-        </div>
-        <div class="hero__icon hero__icon--4">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        </div>
-        <div class="hero__icon hero__icon--5">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-        </div>
-
-        <!-- Official Tech Logos -->
-        <div class="hero__tech hero__tech--1">
-          <svg viewBox="0 0 128 128" fill="currentColor"><path d="M63.4 0C58.3 0 53.4.3 49 1c-8.8 1.2-8.3 6.1-8.3 6.1v4.8h8.5v2.4H36.4s-13.2-1.5-13 13c.1 8 5.7 12.3 5.7 12.3h4.9v-5.6s-.2-5.7 5.6-5.7h9.7s5.4.1 5.4-5.3V6.3S63.2 0 63.4 0zm-4.3 3.6a2.1 2.1 0 1 1 0 4.2 2.1 2.1 0 0 1 0-4.2z"/><path d="M64.7 128c5.1 0 10-.3 14.4-1 8.8-1.2 8.3-6.1 8.3-6.1v-4.8h-8.5v-2.4h14.5s13.2 1.5 13-13c-.1-8-5.7-12.3-5.7-12.3h-4.9v5.6s.2 5.7-5.6 5.7h-9.7s-5.4-.1-5.4 5.3v10.4s-.4 6.3 4.3 6.3zm4.3-3.6a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2z" fill="#3776AB"/><path d="M63.4 0c-.2 0-5.1.3-9.6 1-8.8 1.2-8.3 6.1-8.3 6.1v4.8h8.5v2.4H36.4s-13.2-1.5-13 13c.1 8 5.7 12.3 5.7 12.3h4.9v-5.6s-.2-5.7 5.6-5.7h9.7s5.4.1 5.4-5.3V6.3S63.2 0 63.4 0zm-4.3 3.6a2.1 2.1 0 1 1 0 4.2 2.1 2.1 0 0 1 0-4.2z" fill="#FFD43B"/></svg>
-        </div>
-        <div class="hero__tech hero__tech--2">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-        </div>
-        <div class="hero__tech hero__tech--3">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.983 11.078h2.119a.186.186 0 00.186-.186V9.006a.186.186 0 00-.186-.186h-2.119a.186.186 0 00-.186.186v1.886c0 .103.083.186.186.186zm-2.954-5.43h2.118a.186.186 0 00.186-.185V3.577a.186.186 0 00-.186-.186h-2.118a.186.186 0 00-.186.186v1.886c0 .102.084.185.186.185zm0 2.716h2.118a.187.187 0 00.186-.186V6.292a.186.186 0 00-.186-.186h-2.118a.186.186 0 00-.186.186v1.886c0 .103.084.186.186.186zm-2.93 0h2.12a.186.186 0 00.184-.186V6.292a.185.185 0 00-.185-.186H8.1a.186.186 0 00-.185.186v1.886c0 .103.083.186.185.186zm-2.964 0h2.119a.186.186 0 00.185-.186V6.292a.186.186 0 00-.185-.186H5.136a.186.186 0 00-.186.186v1.886c0 .103.084.186.186.186zm5.893 2.715h2.118a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.118a.186.186 0 00-.186.186v1.887c0 .102.084.185.186.185zm-2.93 0h2.12a.185.185 0 00.184-.185V9.006a.185.185 0 00-.184-.186h-2.12a.186.186 0 00-.184.186v1.887c0 .102.083.185.185.185zm-2.964 0h2.119a.185.185 0 00.185-.185V9.006a.186.186 0 00-.185-.186H5.136a.186.186 0 00-.186.186v1.887c0 .102.084.185.186.185zm-2.92 0h2.12a.185.185 0 00.184-.185V9.006a.185.185 0 00-.184-.186h-2.12a.185.185 0 00-.184.186v1.887c0 .102.083.185.185.185zM23.763 9.89c-.065-.051-.672-.51-1.954-.51-.338.001-.676.03-1.01.087-.248-1.7-1.653-2.53-1.716-2.566l-.344-.199-.226.327c-.284.438-.49.922-.612 1.43-.23.97-.09 1.882.403 2.661-.595.332-1.55.413-1.744.42H.751a.751.751 0 00-.75.748 11.687 11.687 0 00.692 4.062c.545 1.428 1.355 2.48 2.41 3.124 1.18.723 3.1 1.137 5.275 1.137.983.003 1.963-.086 2.93-.266a12.248 12.248 0 003.823-1.389c.98-.567 1.86-1.288 2.61-2.136 1.252-1.418 1.998-2.997 2.553-4.4h.221c1.372 0 2.215-.549 2.68-1.009.309-.293.55-.65.707-1.046l.098-.288z"/></svg>
-        </div>
-        <div class="hero__tech hero__tech--4">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
-        </div>
-        <div class="hero__tech hero__tech--5">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 0 0 9 9"/></svg>
-        </div>
-      </div>
-
-      <div class="container hero__inner">
-        <div class="hero__content">
-          <p class="hero__label">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            Disponível para oportunidades
-          </p>
-          <h1 class="hero__name">Sallys Martins</h1>
-          <p class="hero__subtitle" id="typewriter"></p>
-          <p class="hero__description">
-            Backend Developer construindo APIs e sistemas com Python, FastAPI, PostgreSQL e Docker.
-          </p>
-          <div class="hero__actions">
-            <a href="https://github.com/MartinsSallys" target="_blank" rel="noopener noreferrer" class="button button-primary">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-              GitHub
-            </a>
-            <a href="https://www.linkedin.com/in/sallysmartinsdev/" target="_blank" rel="noopener noreferrer" class="button button-secondary">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-              LinkedIn
-            </a>
-          </div>
-          <div class="hero__socials">
-            <a href="https://github.com/MartinsSallys" target="_blank" rel="noopener noreferrer" class="hero__social" aria-label="GitHub">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-            </a>
-            <a href="https://www.linkedin.com/in/sallysmartinsdev/" target="_blank" rel="noopener noreferrer" class="hero__social" aria-label="LinkedIn">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-            </a>
-            <a href="mailto:sallysmartins869@gmail.com" class="hero__social" aria-label="Email">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- ========== PROJETOS EM DESTAQUE ========== -->
     <section class="section projects-overview" id="projetos" aria-labelledby="projects-title">
+      <span id="projetos-legado" class="anchor-alias" aria-hidden="true"></span>
       <div class="container">
         <div class="projects-overview__intro reveal">
           <div>
             <p class="section__label">Projetos principais</p>
             <h2 class="section__title" id="projects-title">O trabalho vem antes da stack.</h2>
           </div>
-          <p class="section__description">Dois recortes diferentes do que construí: um produto editorial conectado a uma API e uma base backend em evolução.</p>
+          <p class="section__description">Três trabalhos com escopos diferentes: produto editorial, base de API e análise de dados em equipe.</p>
         </div>
 
         <div class="featured-projects">
@@ -592,59 +493,12 @@
           </article>
         </div>
 
-        <div class="supporting-projects reveal" id="outros-projetos">
-          <div class="supporting-projects__heading">
-            <div>
-              <h3 id="supporting-projects-title">Projetos secundários e estudos</h3>
-              <small>Deslize para explorar os três trabalhos</small>
-            </div>
-            <div class="supporting-projects__controls" aria-label="Controles dos projetos secundários e estudos">
-              <button type="button" class="supporting-projects__arrow" data-carousel-direction="-1" aria-label="Projeto anterior" aria-controls="supporting-projects-carousel">←</button>
-              <button type="button" class="supporting-projects__arrow" data-carousel-direction="1" aria-label="Próximo projeto" aria-controls="supporting-projects-carousel">→</button>
-            </div>
-          </div>
-          <div class="supporting-projects__grid" id="supporting-projects-carousel" role="region" aria-roledescription="carrossel" aria-labelledby="supporting-projects-title" tabindex="0">
-            <article class="supporting-card">
-              <div class="supporting-card__meta"><span>Ferramenta de sistema</span><span class="project-status project-status--mvp">MVP funcional</span></div>
-              <h4>sysmgr-cli</h4>
-              <p>CLI em Python para consultar dados reais de uma máquina Linux.</p>
-              <ul class="supporting-card__evidence">
-                <li>Comando <code>status</code> com argparse</li>
-                <li>Uptime e memória lidos em <code>/proc</code></li>
-              </ul>
-              <p class="supporting-card__limit"><strong>Limite:</strong> sem testes ou leitura de limites de memória por cgroups.</p>
-              <div class="supporting-card__footer"><span>Python · /proc</span><a href="https://github.com/MartinsSallys/sysmgr-cli" target="_blank" rel="noopener noreferrer">Repositório <span aria-hidden="true">↗</span></a></div>
-            </article>
-            <article class="supporting-card supporting-card--study">
-              <div class="supporting-card__meta"><span>API study</span><span class="project-status project-status--study">Estudo funcional</span></div>
-              <h4>backendGLobal</h4>
-              <p>CRUD FastAPI em memória para praticar contratos HTTP.</p>
-              <ul class="supporting-card__evidence">
-                <li>Cinco operações CRUD e validação de email</li>
-                <li>Sete testes básicos com TestClient</li>
-              </ul>
-              <p class="supporting-card__limit"><strong>Limite:</strong> estado volátil, IDs instáveis, senhas sem hash e testes dependentes de ordem.</p>
-              <div class="supporting-card__footer"><span>FastAPI · TestClient</span><a href="https://github.com/MartinsSallys/backendGLobal" target="_blank" rel="noopener noreferrer">Abrir estudo <span aria-hidden="true">↗</span></a></div>
-            </article>
-            <article class="supporting-card supporting-card--paused">
-              <div class="supporting-card__meta"><span>Security POC</span><span class="project-status project-status--paused">POC interrompida</span></div>
-              <h4>MagicScan</h4>
-              <p>Experimento de scanner offline com feed de hashes, inspeção PE e relatório JSON.</p>
-              <ul class="supporting-card__evidence">
-                <li>CLI, varredura de arquivos e feed</li>
-                <li>Geração de relatório JSON</li>
-              </ul>
-              <p class="supporting-card__limit"><strong>Bloqueio:</strong> cálculo de hash ausente; erros podem gerar relatório vazio. Não operacional.</p>
-              <div class="supporting-card__footer"><span>Experimento offline</span><a href="https://github.com/MartinsSallys/MagicScan" target="_blank" rel="noopener noreferrer">Abrir POC <span aria-hidden="true">↗</span></a></div>
-            </article>
-          </div>
-          <p class="supporting-projects__position" aria-live="polite" aria-atomic="true"><span id="supporting-project-current">01</span> / 03</p>
-        </div>
       </div>
     </section>
 
     <!-- ========== ARQUITETURA REAL ========== -->
     <section class="section architecture-section" id="arquitetura" aria-labelledby="architecture-title">
+      <span id="stack" class="anchor-alias" aria-hidden="true"></span>
       <div class="container">
         <div class="architecture-section__intro reveal">
           <div>
@@ -714,48 +568,99 @@
       </div>
     </section>
 
-    <!-- ========== PERFIS E CERTIFICADOS ========== -->
-    <section class="section profile-section" id="trajetoria" aria-labelledby="profile-title">
+    <!-- ========== PROJETOS SECUNDÁRIOS ========== -->
+    <section class="section section--alt supporting-section" id="outros-projetos" aria-labelledby="supporting-projects-title">
       <div class="container">
-        <div class="profile-section__intro reveal">
+        <div class="supporting-section__intro reveal">
           <div>
-            <p class="section__label">Onde me encontrar</p>
-            <h2 class="section__title" id="profile-title">Perfis e certificados.</h2>
+            <p class="section__label">Projetos secundários e estudos</p>
+            <h2 class="section__title" id="supporting-projects-title">Experimentos com escopo claro.</h2>
           </div>
-          <p class="section__description">Acompanhe meus projetos, conexões profissionais e certificados em um só lugar.</p>
+          <p class="section__description">Ferramentas e estudos menores, com o que funciona e o que ainda falta em cada um.</p>
         </div>
-
-        <div class="profile-links reveal reveal--delay-1">
-          <a class="profile-link" href="https://www.linkedin.com/in/sallysmartinsdev/" target="_blank" rel="noopener noreferrer">
-            <span class="profile-link__icon" aria-hidden="true">in</span>
-            <span class="profile-link__content"><small>Rede profissional</small><strong>LinkedIn</strong><span>Experiência, publicações e conexões</span></span>
-            <span class="profile-link__arrow" aria-hidden="true">↗</span>
-          </a>
-          <a class="profile-link" href="https://github.com/MartinsSallys" target="_blank" rel="noopener noreferrer">
-            <span class="profile-link__icon" aria-hidden="true">&lt;/&gt;</span>
-            <span class="profile-link__content"><small>Código e projetos</small><strong>GitHub</strong><span>Repositórios e trabalho em andamento</span></span>
-            <span class="profile-link__arrow" aria-hidden="true">↗</span>
-          </a>
-        </div>
-
-        <section class="github-activity reveal reveal--delay-2" aria-labelledby="github-activity-title">
-          <div class="github-activity__header">
+        <div class="supporting-projects reveal">
+          <div class="supporting-projects__heading">
             <div>
-              <span class="certificates__eyebrow">GitHub / MartinsSallys</span>
-              <h3 id="github-activity-title">Atividade pública recente</h3>
+              <h3>Explore os estudos</h3>
+              <small>Deslize para explorar os três trabalhos</small>
             </div>
-            <a href="https://github.com/MartinsSallys" target="_blank" rel="noopener noreferrer">Ver perfil <span aria-hidden="true">↗</span></a>
+            <div class="supporting-projects__controls" aria-label="Controles dos projetos secundários e estudos">
+              <button type="button" class="supporting-projects__arrow" data-carousel-direction="-1" aria-label="Projeto anterior" aria-controls="supporting-projects-carousel">←</button>
+              <button type="button" class="supporting-projects__arrow" data-carousel-direction="1" aria-label="Próximo projeto" aria-controls="supporting-projects-carousel">→</button>
+            </div>
           </div>
-          <ol class="github-activity__list" id="github-activity-list" aria-live="polite" aria-busy="true">
-            <li class="github-activity__message">Carregando atividades...</li>
-          </ol>
-        </section>
+          <div class="supporting-projects__grid" id="supporting-projects-carousel" role="region" aria-roledescription="carrossel" aria-labelledby="supporting-projects-title" tabindex="0">
+            <article class="supporting-card">
+              <div class="supporting-card__meta"><span>Ferramenta de sistema</span><span class="project-status project-status--mvp">MVP funcional</span></div>
+              <h4>sysmgr-cli</h4>
+              <p>CLI em Python para consultar dados reais de uma máquina Linux.</p>
+              <ul class="supporting-card__evidence">
+                <li>Comando <code>status</code> com argparse</li>
+                <li>Uptime e memória lidos em <code>/proc</code></li>
+              </ul>
+              <p class="supporting-card__limit"><strong>Limite:</strong> sem testes ou leitura de limites de memória por cgroups.</p>
+              <div class="supporting-card__footer"><span>Python · /proc</span><a href="https://github.com/MartinsSallys/sysmgr-cli" target="_blank" rel="noopener noreferrer">Repositório <span aria-hidden="true">↗</span></a></div>
+            </article>
+            <article class="supporting-card supporting-card--study">
+              <div class="supporting-card__meta"><span>API study</span><span class="project-status project-status--study">Estudo funcional</span></div>
+              <h4>backendGLobal</h4>
+              <p>CRUD FastAPI em memória para praticar contratos HTTP.</p>
+              <ul class="supporting-card__evidence">
+                <li>Cinco operações CRUD e validação de email</li>
+                <li>Sete testes básicos com TestClient</li>
+              </ul>
+              <p class="supporting-card__limit"><strong>Limite:</strong> estado volátil, IDs instáveis, senhas sem hash e testes dependentes de ordem.</p>
+              <div class="supporting-card__footer"><span>FastAPI · TestClient</span><a href="https://github.com/MartinsSallys/backendGLobal" target="_blank" rel="noopener noreferrer">Abrir estudo <span aria-hidden="true">↗</span></a></div>
+            </article>
+            <article class="supporting-card supporting-card--paused">
+              <div class="supporting-card__meta"><span>Security POC</span><span class="project-status project-status--paused">POC interrompida</span></div>
+              <h4>MagicScan</h4>
+              <p>Experimento de scanner offline com feed de hashes, inspeção PE e relatório JSON.</p>
+              <ul class="supporting-card__evidence">
+                <li>CLI, varredura de arquivos e feed</li>
+                <li>Geração de relatório JSON</li>
+              </ul>
+              <p class="supporting-card__limit"><strong>Bloqueio:</strong> cálculo de hash ausente; erros podem gerar relatório vazio. Não operacional.</p>
+              <div class="supporting-card__footer"><span>Experimento offline</span><a href="https://github.com/MartinsSallys/MagicScan" target="_blank" rel="noopener noreferrer">Abrir POC <span aria-hidden="true">↗</span></a></div>
+            </article>
+          </div>
+          <p class="supporting-projects__position" aria-live="polite" aria-atomic="true"><span id="supporting-project-current">01</span> / 03</p>
+        </div>
+      </div>
+    </section>
 
-        <div class="certificates reveal reveal--delay-2" aria-labelledby="certificates-title">
+    <!-- ========== SOBRE ========== -->
+    <section class="section" id="sobre" aria-labelledby="about-title">
+      <span id="evolucao" class="anchor-alias" aria-hidden="true"></span>
+      <div class="container">
+        <p class="section__label reveal">Quem está por trás do código</p>
+        <h2 class="section__title reveal reveal--delay-1" id="about-title">Sallys Martins</h2>
+        <div class="about__grid">
+          <div class="about__photo-terminal reveal reveal--delay-2">
+            <div class="about__photo-frame">
+              <div class="about__photo-header">sallys@dev: ~/about</div>
+              <div class="about__photo-body">
+                <div class="about__photo">
+                  <img src="assets/images/SallysIA.png" alt="Foto de Sallys Martins" />
+                  <span>Sallys Martins</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="about__text reveal reveal--delay-3">
+            <p>
+              Sou desenvolvedor com foco em backend e sistemas. Gosto de entender como as partes se conectam e tornar essas decisões visíveis no código.
+            </p>
+            <p>
+              Registro também os limites de cada projeto. Esse hábito me ajuda a aprender, revisar escolhas e explicar com clareza o que foi implementado.
+            </p>
+          </div>
+        </div>
+        <div class="certificates reveal reveal--delay-2" id="trajetoria" aria-labelledby="certificates-title">
           <div class="certificates__header">
             <div>
               <span class="certificates__eyebrow">Formação contínua</span>
-              <h3 id="certificates-title">Certificados</h3>
+              <h3 id="certificates-title">Formação e certificados</h3>
             </div>
             <span class="certificates__count">03 certificados</span>
           </div>
@@ -783,387 +688,22 @@
       </div>
     </section>
 
-    <!-- ========== SOBRE ========== -->
-    <section class="section" id="sobre">
-      <div class="container">
-        <p class="section__label reveal">Quem está por trás do código</p>
-        <h2 class="section__title reveal reveal--delay-1">Sallys Martins</h2>
-        <div class="about__grid">
-          <div class="about__photo-terminal reveal reveal--delay-2">
-            <div class="about__photo-frame">
-              <div class="about__photo-header">sallys@dev: ~/about</div>
-              <div class="about__photo-body">
-                <div class="about__photo">
-                  <img src="assets/images/SallysIA.png" alt="Foto de Sallys Martins" />
-                  <span>Sallys Martins</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="about__text reveal reveal--delay-3">
-            <p>
-              Sou Sallys Martins, desenvolvedor com foco em backend, APIs e construção de sistemas.
-              Meus projetos atuais combinam APIs FastAPI, interfaces que consomem contratos HTTP e ferramentas para Linux.
-            </p>
-            <p>
-              Uso cada projeto para aprofundar arquitetura, persistência, testes e infraestrutura, registrando também o que ainda está em evolução.
-              Acredito que código bom precisa ser compreensível, verificável e honesto sobre seus limites.
-            </p>
-            <div class="about__tech">
-              <span class="badge">Python</span>
-              <span class="badge">FastAPI</span>
-              <span class="badge">JavaScript</span>
-              <span class="badge">SQLAlchemy</span>
-              <span class="badge">Docker Compose</span>
-              <span class="badge">Linux</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== TECH STACK ========== -->
-    <section class="section section--alt" id="stack" hidden>
-      <div class="container">
-        <p class="section__label reveal">System Architecture</p>
-        <h2 class="section__title reveal reveal--delay-1">Arquitetura dos meus sistemas</h2>
-        <p class="section__description reveal reveal--delay-2">Como os componentes se conectam para formar uma aplicação backend.</p>
-
-        <div class="arch-controls-row reveal reveal--delay-2">
-          <div class="arch-selector" id="arch-selector">
-            <button class="arch-selector__tab arch-selector__tab--active" data-project="postais-parnaiba">Postais da Parnaíba</button>
-            <button class="arch-selector__tab" data-project="beck-global">BeckGlobal</button>
-            <button class="arch-selector__tab" data-project="postais-api">Postais API</button>
-          </div>
-          <div class="view-mode" id="view-mode">
-            <button class="view-mode__tab view-mode__tab--active" data-mode="both">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-              Design + Vídeo
-            </button>
-            <div class="view-mode__dropdown" id="view-design-dropdown">
-              <button class="view-mode__tab" data-mode="design-web">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                Design Web
-              </button>
-              <button class="view-mode__tab" data-mode="design-system">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-                Design System
-              </button>
-            </div>
-            <button class="view-mode__tab view-mode__parent" id="view-design-toggle" data-mode="design">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
-              Só Design
-              <svg class="view-mode__chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <button class="view-mode__tab" data-mode="video">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-              Só Vídeo
-            </button>
-          </div>
-        </div>
-
-        <div class="arch-content reveal reveal--delay-3" id="arch-content">
-          <div class="arch-canvas" id="arch-canvas">
-            <div class="arch-controls">
-              <button class="arch-controls__btn" id="arch-zoom-in" aria-label="Zoom in">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              </button>
-              <button class="arch-controls__btn" id="arch-zoom-out" aria-label="Zoom out">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              </button>
-              <button class="arch-controls__btn" id="arch-zoom-reset" aria-label="Reset view">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
-              </button>
-            </div>
-            <div class="arch-diagram" id="arch-diagram"></div>
-            <div class="arch-tooltip" id="arch-tooltip">
-              <span class="arch-tooltip__text" id="arch-tooltip-text"></span>
-            </div>
-            <div class="arch-legend">
-              <span class="arch-legend__item"><span class="arch-legend__dot"></span>Core Flow</span>
-              <span class="arch-legend__item"><span class="arch-legend__dot arch-legend__dot--aux"></span>Auxiliary</span>
-            </div>
-            <div class="arch-running-label">
-              <span class="arch-running-label__dot"></span>
-              Sistema ativo
-            </div>
-          </div>
-          <div class="design-carousel" id="design-carousel">
-            <div class="design-carousel__track" id="design-carousel-track">
-              <div class="design-carousel__slide design-carousel__slide--active">
-                <div class="design-carousel__placeholder">
-                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                  <span>Selecione um projeto para ver os designs</span>
-                </div>
-              </div>
-            </div>
-            <div class="design-carousel__controls">
-              <button class="design-carousel__btn design-carousel__btn--prev" id="design-carousel-prev" aria-label="Anterior">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-              </button>
-              <div class="design-carousel__dots" id="design-carousel-dots"></div>
-              <button class="design-carousel__btn design-carousel__btn--next" id="design-carousel-next" aria-label="Próximo">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-              </button>
-            </div>
-            <div class="design-carousel__info" id="design-carousel-info">
-              <h3 class="design-carousel__title" id="design-carousel-title">Design Web</h3>
-              <p class="design-carousel__desc" id="design-carousel-desc">Layouts e interfaces dos projetos.</p>
-            </div>
-          </div>
-          <div class="video-panel" id="video-panel">
-            <div class="video-panel__container">
-              <div class="video-panel__placeholder" id="video-placeholder">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                <span>Em breve</span>
-              </div>
-              <iframe class="video-panel__iframe" id="video-iframe" title="Vídeo de apresentação do projeto" loading="lazy"></iframe>
-            </div>
-            <div class="video-panel__info" id="video-info">
-              <h3 class="video-panel__title" id="video-title">Visão Geral</h3>
-              <p class="video-panel__desc" id="video-desc">Diagrama completo da arquitetura backend utilisada nos projetos.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== PROJETOS ========== -->
-    <section class="section arch-section" id="projetos-legado" hidden>
-      <div class="container">
-        <p class="section__label reveal">~/projects</p>
-        <h2 class="section__title reveal reveal--delay-1">Sistemas que construí</h2>
-        <p class="section__description reveal reveal--delay-2">Projetos desenvolvidos por mim — explore a estrutura de cada sistema.</p>
-        <div class="terminal-explorer reveal reveal--delay-3" id="terminal-explorer">
-          <div class="terminal-explorer__header">
-            <div class="terminal-explorer__dots">
-              <span class="terminal-explorer__dot terminal-explorer__dot--red"></span>
-              <span class="terminal-explorer__dot terminal-explorer__dot--yellow"></span>
-              <span class="terminal-explorer__dot terminal-explorer__dot--green"></span>
-            </div>
-            <span class="terminal-explorer__path" id="terminal-path">sallys@dev: ~/projects</span>
-          </div>
-          <div class="terminal-explorer__body" id="explorer-body">
-            <div class="terminal-explorer__line">
-              <span class="terminal-explorer__prompt">$</span>
-              <span class="terminal-explorer__cmd">ls</span>
-            </div>
-            <div class="terminal-explorer__output"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== EVOLUÇÃO ========== -->
-    <section class="section section--alt" id="evolucao" hidden>
-      <div class="container">
-        <p class="section__label reveal">Evolução técnica</p>
-        <h2 class="section__title reveal reveal--delay-1">Minha jornada</h2>
-        <p class="section__description reveal reveal--delay-2">Cada etapa que me trouxe até aqui.</p>
-        <div class="timeline reveal reveal--delay-3" id="timeline">
-          <button class="timeline__arrow timeline__arrow--left" id="timeline-left" aria-label="Rolar para esquerda">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-          </button>
-          <div class="timeline__track" id="timeline-track">
-            <div class="timeline__line"></div>
-            <div class="timeline__item" data-step="0">
-              <div class="timeline__dot timeline__dot--active"></div>
-              <div class="timeline__card">
-                <span class="timeline__number">01</span>
-                <h3 class="timeline__title">O Começo</h3>
-                <p class="timeline__desc">Primeiros contatos com lógica de programação e desenvolvimento web.</p>
-                <div class="timeline__tags"><span class="badge badge--sm badge--outline">HTML5</span><span class="badge badge--sm badge--outline">CSS3</span></div>
-                <button class="timeline__expand" aria-label="Expandir"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-                <div class="timeline__extra"><p>HTML, CSS e os primeiros passos na programação. Entendi a base de como a web funciona.</p></div>
-              </div>
-            </div>
-            <div class="timeline__item" data-step="1">
-              <div class="timeline__dot timeline__dot--active"></div>
-              <div class="timeline__card">
-                <span class="timeline__number">02</span>
-                <h3 class="timeline__title">JavaScript</h3>
-                <p class="timeline__desc">Interatividade e lógica nas páginas. Aplicações dinâmicas.</p>
-                <div class="timeline__tags"><span class="badge badge--sm badge--outline">JavaScript</span><span class="badge badge--sm badge--outline">ES6+</span></div>
-                <button class="timeline__expand" aria-label="Expandir"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-                <div class="timeline__extra"><p>Manipulação do DOM, fetch API, módulos ES6+. Aprendi a pensar em lógica de programa real.</p></div>
-              </div>
-            </div>
-            <div class="timeline__item" data-step="2">
-              <div class="timeline__dot timeline__dot--active"></div>
-              <div class="timeline__card">
-                <span class="timeline__number">03</span>
-                <h3 class="timeline__title">Python</h3>
-                <p class="timeline__desc">Migrei para o backend e automação de processos.</p>
-                <div class="timeline__tags"><span class="badge badge--sm badge--outline">Python</span><span class="badge badge--sm badge--outline">Pytest</span></div>
-                <button class="timeline__expand" aria-label="Expandir"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-                <div class="timeline__extra"><p>Sintaxe, funções, estruturas de dados e POO. Encontrei minha linguagem principal.</p></div>
-              </div>
-            </div>
-            <div class="timeline__item" data-step="3">
-              <div class="timeline__dot timeline__dot--active"></div>
-              <div class="timeline__card">
-                <span class="timeline__number">04</span>
-                <h3 class="timeline__title">Banco de Dados</h3>
-                <p class="timeline__desc">Modelagem e persistência de dados relacionais.</p>
-                <div class="timeline__tags"><span class="badge badge--sm badge--outline">PostgreSQL</span><span class="badge badge--sm badge--outline">SQLAlchemy</span><span class="badge badge--sm badge--outline">Alembic</span></div>
-                <button class="timeline__expand" aria-label="Expandir"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-                <div class="timeline__extra"><p>SQL, consultas complexas, relacionamentos e ORM. Entendi como dados vivem em sistemas reais.</p></div>
-              </div>
-            </div>
-            <div class="timeline__item" data-step="4">
-              <div class="timeline__dot timeline__dot--active"></div>
-              <div class="timeline__card">
-                <span class="timeline__number">05</span>
-                <h3 class="timeline__title">APIs</h3>
-                <p class="timeline__desc">Sistemas conversando via HTTP e APIs REST.</p>
-                <div class="timeline__tags"><span class="badge badge--sm badge--outline">FastAPI</span><span class="badge badge--sm badge--outline">Pydantic</span><span class="badge badge--sm badge--outline">REST</span></div>
-                <button class="timeline__expand" aria-label="Expandir"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-                <div class="timeline__extra"><p>FastAPI, validação com Pydantic, documentação automática. Comecei a construir sistemas completos.</p></div>
-              </div>
-            </div>
-            <div class="timeline__item" data-step="5">
-              <div class="timeline__dot timeline__dot--active"></div>
-              <div class="timeline__card">
-                <span class="timeline__number">06</span>
-                <h3 class="timeline__title">Backend</h3>
-                <p class="timeline__desc">Autenticação, testes, arquitetura de sistemas.</p>
-                <div class="timeline__tags"><span class="badge badge--sm badge--outline">JWT</span><span class="badge badge--sm badge--outline">Clean Architecture</span><span class="badge badge--sm badge--outline">Testes</span></div>
-                <button class="timeline__expand" aria-label="Expandir"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-                <div class="timeline__extra"><p>APIs robustas e escaláveis. JWT, clean architecture e testes automatizados.</p></div>
-              </div>
-            </div>
-            <div class="timeline__item" data-step="6">
-              <div class="timeline__dot timeline__dot--active"></div>
-              <div class="timeline__card">
-                <span class="timeline__number">07</span>
-                <h3 class="timeline__title">Infraestrutura</h3>
-                <p class="timeline__desc">Containerização e deploy com Docker.</p>
-                <div class="timeline__tags"><span class="badge badge--sm badge--outline">Docker</span><span class="badge badge--sm badge--outline">Docker Compose</span></div>
-                <button class="timeline__expand" aria-label="Expandir"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-                <div class="timeline__extra"><p>Ambientes reproduzíveis, containers, deploy simplificado. Meus sistemas rodando em qualquer lugar.</p></div>
-              </div>
-            </div>
-            <div class="timeline__item" data-step="7">
-              <div class="timeline__dot timeline__dot--current"></div>
-              <div class="timeline__card timeline__card--current">
-                <span class="timeline__number">08</span>
-                <h3 class="timeline__title">Hoje</h3>
-                <p class="timeline__desc">Sistemas completos e evolução contínua.</p>
-                <div class="timeline__tags"><span class="badge badge--sm">FastAPI</span><span class="badge badge--sm">PostgreSQL</span><span class="badge badge--sm">Docker</span><span class="badge badge--sm">Arquitetura</span></div>
-                <button class="timeline__expand" aria-label="Expandir"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-                <div class="timeline__extra"><p>Construção de sistemas completos, arquitetura de software, projetos reais e engenharia de verdade.</p></div>
-                <span class="timeline__here"><span class="timeline__here-dot"></span> you are here</span>
-              </div>
-            </div>
-          </div>
-          <button class="timeline__arrow timeline__arrow--right" id="timeline-right" aria-label="Rolar para direita">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-        </div>
-      </div>
-    </section>
-
     <!-- ========== SKILLS ========== -->
-    <section class="section" id="skills" hidden>
+    <section class="section section--alt skills-section" id="skills" aria-labelledby="skills-title">
       <div class="container">
-        <p class="section__label reveal">Skills</p>
-        <h2 class="section__title reveal reveal--delay-1">O que sei fazer</h2>
-        <div class="skills-grid">
-          <div class="skill-card reveal">
-            <h3 class="skill-card__title">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-              Backend
-            </h3>
-            <ul class="skill-card__list">
-              <li class="skill-card__item">Criação de APIs REST</li>
-              <li class="skill-card__item">CRUD completo</li>
-              <li class="skill-card__item">Autenticação e autorização</li>
-              <li class="skill-card__item">Validação de dados</li>
-              <li class="skill-card__item">Arquitetura de serviços</li>
-              <li class="skill-card__item">Integração com banco de dados</li>
-              <li class="skill-card__item">Tratamento de erros</li>
-            </ul>
-            <div class="skill-card__projects">
-              <span class="skill-card__projects-title">Utilizado em</span>
-              <span class="skill-card__project-link">Postais da Parnaíba</span>
-              <span class="skill-card__project-link">BeckGlobal</span>
-              <span class="skill-card__project-link">Postais API</span>
-            </div>
+        <div class="skills-section__intro reveal">
+          <div>
+            <p class="section__label">Skills</p>
+            <h2 class="section__title" id="skills-title">Ferramentas que uso.</h2>
           </div>
-          <div class="skill-card reveal">
-            <h3 class="skill-card__title">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
-              Database
-            </h3>
-            <ul class="skill-card__list">
-              <li class="skill-card__item">SQL e consultas complexas</li>
-              <li class="skill-card__item">PostgreSQL</li>
-              <li class="skill-card__item">Modelagem de dados</li>
-              <li class="skill-card__item">Relacionamentos</li>
-              <li class="skill-card__item">ORM com SQLAlchemy</li>
-              <li class="skill-card__item">Migrações com Alembic</li>
-            </ul>
-            <div class="skill-card__projects">
-              <span class="skill-card__projects-title">Utilizado em</span>
-              <span class="skill-card__project-link">Postais da Parnaíba</span>
-              <span class="skill-card__project-link">BeckGlobal</span>
-              <span class="skill-card__project-link">Postais API</span>
-            </div>
-          </div>
-          <div class="skill-card reveal">
-            <h3 class="skill-card__title">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-              Testing
-            </h3>
-            <ul class="skill-card__list">
-              <li class="skill-card__item">Pytest</li>
-              <li class="skill-card__item">Testes de API</li>
-              <li class="skill-card__item">Testes de serviços</li>
-              <li class="skill-card__item">Cobertura de código</li>
-              <li class="skill-card__item">Organização de testes</li>
-            </ul>
-            <div class="skill-card__projects">
-              <span class="skill-card__projects-title">Utilizado em</span>
-              <span class="skill-card__project-link">Postais da Parnaíba</span>
-              <span class="skill-card__project-link">Postais API</span>
-            </div>
-          </div>
-          <div class="skill-card reveal">
-            <h3 class="skill-card__title">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
-              Infrastructure
-            </h3>
-            <ul class="skill-card__list">
-              <li class="skill-card__item">Docker e containerização</li>
-              <li class="skill-card__item">Docker Compose</li>
-              <li class="skill-card__item">Variáveis de ambiente</li>
-              <li class="skill-card__item">Ambientes de desenvolvimento</li>
-            </ul>
-            <div class="skill-card__projects">
-              <span class="skill-card__projects-title">Utilizado em</span>
-              <span class="skill-card__project-link">Postais da Parnaíba</span>
-              <span class="skill-card__project-link">BeckGlobal</span>
-              <span class="skill-card__project-link">Postais API</span>
-            </div>
-          </div>
-          <div class="skill-card reveal">
-            <h3 class="skill-card__title">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-              Engineering
-            </h3>
-            <ul class="skill-card__list">
-              <li class="skill-card__item">Git e controle de versão</li>
-              <li class="skill-card__item">GitHub e colaboração</li>
-              <li class="skill-card__item">Organização de projetos</li>
-              <li class="skill-card__item">Arquitetura de software</li>
-              <li class="skill-card__item">Documentação técnica</li>
-            </ul>
-            <div class="skill-card__projects">
-              <span class="skill-card__projects-title">Utilizado em</span>
-              <span class="skill-card__project-link">Todos os projetos</span>
-            </div>
-          </div>
+          <p class="section__description">Tecnologias presentes nos projetos acima; os cases mostram como cada uma foi aplicada.</p>
         </div>
+        <ul class="skills-compact reveal reveal--delay-1">
+          <li><strong>APIs</strong><span>Python · FastAPI · HTTP</span></li>
+          <li><strong>Dados</strong><span>SQL · PostgreSQL · SQLAlchemy</span></li>
+          <li><strong>Infraestrutura</strong><span>Linux · Docker Compose</span></li>
+          <li><strong>Interfaces e testes</strong><span>JavaScript · CSS · Pytest</span></li>
+        </ul>
       </div>
     </section>
 
@@ -1217,6 +757,6 @@
   <script src="https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/umd/photoswipe.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/umd/photoswipe-lightbox.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.min.js"></script>
-  <script src="script.js?v=mobile-diagram-20260928"></script>
+  <script src="script.js?v=hierarchy-20260928"></script>
 </body>
 </html>
