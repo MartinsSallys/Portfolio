@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="icon" href="public/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.css">
-  <link rel="stylesheet" href="style.css?v=profiles-20260928-3">
+  <link rel="stylesheet" href="style.css?v=mobile-diagram-20260928">
 </head>
 <body>
 
@@ -596,7 +596,7 @@
           <div class="supporting-projects__heading">
             <div>
               <h3 id="supporting-projects-title">Projetos secundários e estudos</h3>
-              <small>Deslize para explorar os quatro trabalhos</small>
+              <small>Deslize para explorar os três trabalhos</small>
             </div>
             <div class="supporting-projects__controls" aria-label="Controles dos projetos secundários e estudos">
               <button type="button" class="supporting-projects__arrow" data-carousel-direction="-1" aria-label="Projeto anterior" aria-controls="supporting-projects-carousel">←</button>
@@ -604,17 +604,6 @@
             </div>
           </div>
           <div class="supporting-projects__grid" id="supporting-projects-carousel" role="region" aria-roledescription="carrossel" aria-labelledby="supporting-projects-title" tabindex="0">
-            <article class="supporting-card">
-              <div class="supporting-card__meta"><span>Frontend modular</span><span class="project-status project-status--demo">Demo navegável</span></div>
-              <h4>Flora Tropical</h4>
-              <p>Catálogo multipágina com mocks locais e estrutura preparada para uma API.</p>
-              <ul class="supporting-card__evidence">
-                <li>Controllers, serviços e renderizadores</li>
-                <li>Busca, filtros, paginação e formulário</li>
-              </ul>
-              <p class="supporting-card__limit"><strong>Limite:</strong> carrinho é um stub; sem checkout ou backend.</p>
-              <div class="supporting-card__footer"><span>HTML · CSS · JavaScript</span><a href="https://github.com/MartinsSallys/Flora_Tropical" target="_blank" rel="noopener noreferrer">Repositório <span aria-hidden="true">↗</span></a></div>
-            </article>
             <article class="supporting-card">
               <div class="supporting-card__meta"><span>Ferramenta de sistema</span><span class="project-status project-status--mvp">MVP funcional</span></div>
               <h4>sysmgr-cli</h4>
@@ -649,7 +638,7 @@
               <div class="supporting-card__footer"><span>Experimento offline</span><a href="https://github.com/MartinsSallys/MagicScan" target="_blank" rel="noopener noreferrer">Abrir POC <span aria-hidden="true">↗</span></a></div>
             </article>
           </div>
-          <p class="supporting-projects__position" aria-live="polite" aria-atomic="true"><span id="supporting-project-current">01</span> / 04</p>
+          <p class="supporting-projects__position" aria-live="polite" aria-atomic="true"><span id="supporting-project-current">01</span> / 03</p>
         </div>
       </div>
     </section>
@@ -671,7 +660,6 @@
               <button class="system-tab system-tab--active" id="system-tab-postais" role="tab" aria-selected="true" aria-controls="system-panel" tabindex="0" data-system="postais">Postais</button>
               <button class="system-tab" id="system-tab-beck" role="tab" aria-selected="false" aria-controls="system-panel" tabindex="-1" data-system="beck">BeckGlobal</button>
               <button class="system-tab" id="system-tab-fundec" role="tab" aria-selected="false" aria-controls="system-panel" tabindex="-1" data-system="fundec">FUNDEC/RS</button>
-              <button class="system-tab" id="system-tab-flora" role="tab" aria-selected="false" aria-controls="system-panel" tabindex="-1" data-system="flora">Flora Tropical</button>
               <button class="system-tab" id="system-tab-sysmgr" role="tab" aria-selected="false" aria-controls="system-panel" tabindex="-1" data-system="sysmgr">sysmgr-cli</button>
             </div>
             <div class="system-legend" role="list" aria-label="Legenda dos componentes">
@@ -693,10 +681,12 @@
                   </div>
                   <a id="system-project-repo" href="https://github.com/MartinsSallys/Postais-da-Parnaiba" target="_blank" rel="noopener noreferrer">Frontend no GitHub <span aria-hidden="true">↗</span></a>
                 </header>
-                <div class="system-map" id="system-map" role="group" aria-label="Fluxo arquitetural de Postais da Parnaíba">
-                  <p class="system-map__loading">Carregando componentes verificados...</p>
+                <div class="system-map-viewport" id="system-map-viewport" role="region" aria-label="Diagrama da arquitetura. Deslize para os lados para explorar todos os componentes." tabindex="0">
+                  <div class="system-map" id="system-map" role="group" aria-label="Fluxo arquitetural de Postais da Parnaíba">
+                    <p class="system-map__loading">Carregando componentes verificados...</p>
+                  </div>
                 </div>
-                <p class="system-canvas__hint">Passe o cursor, use Tab ou selecione um componente para inspecionar suas conexões.</p>
+                <p class="system-canvas__hint"><span class="system-canvas__hint-desktop">Passe o cursor, use Tab ou selecione um componente para inspecionar suas conexões.</span><span class="system-canvas__hint-mobile">Deslize o diagrama para os lados e toque em um componente para ver seus detalhes abaixo.</span></p>
               </section>
 
               <aside class="system-inspector" id="system-inspector" aria-label="Detalhes do componente selecionado" aria-live="polite" aria-atomic="true">
@@ -1224,6 +1214,6 @@
   <script src="https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/umd/photoswipe.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/umd/photoswipe-lightbox.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.min.js"></script>
-  <script src="script.js?v=profiles-20260928-4"></script>
+  <script src="script.js?v=mobile-diagram-20260928"></script>
 </body>
 </html>

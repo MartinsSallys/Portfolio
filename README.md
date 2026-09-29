@@ -83,10 +83,10 @@ git add . && git commit -m "feat: atualização do portfolio" && git push
 - Dois cases principais com escopo, entrega, decisões, evidências, limitações e maturidade
 - Galeria com telas reais de Postais da Parnaíba
 - Superfície completa das seis rotas de aplicação do BeckGlobal
-- Flora Tropical, sysmgr-cli, backendGLobal e MagicScan reunidos em um carrossel 3D, com estados e limites explícitos
+- sysmgr-cli, backendGLobal e MagicScan reunidos em um carrossel 3D, com estados e limites explícitos
 - Expansão inline dos cases com problema, solução, fluxo, stack contextual, decisões e evidências
 - Deep links e sincronização entre cada case e seu diagrama arquitetural
-- Diagramas de Postais, BeckGlobal, FUNDEC/RS, Flora Tropical e sysmgr-cli com componentes, conexões, estados e evidências por tecnologia
+- Diagramas de Postais, BeckGlobal, FUNDEC/RS e sysmgr-cli com componentes, conexões, estados e evidências por tecnologia
 - O case e o diagrama de Postais usam como referência o frontend e o backend da pasta local `POSTAISCOMPLETO`
 
 ### Navegação e acessibilidade

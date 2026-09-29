@@ -361,72 +361,6 @@ const SYSTEM_ARCHITECTURES = {
       { from: 'coverage', to: 'municipality', label: 'chave_municipal', state: 'implemented' },
     ],
   },
-  flora: {
-    title: 'Flora Tropical',
-    type: 'Frontend modular com mocks',
-    repo: 'https://github.com/MartinsSallys/Flora_Tropical',
-    summary: 'Os controllers consomem o ApiService e passam os dados aos renderizadores; a fonte ativa é local e o backend HTTP continua ausente.',
-    defaultNode: 'service',
-    nodes: [
-      {
-        id: 'visitor', title: 'Visitante', tech: 'Browser', state: 'boundary', x: 90, y: 120, mobileOrder: 1,
-        description: 'Navega pelo catálogo, categorias, unidades e conteúdo medicinal.',
-        responsibility: 'Iniciar buscas, filtros, navegação e envio de formulários.',
-        evidence: 'index.html · produtos.html · contato.html',
-      },
-      {
-        id: 'pages', title: 'Páginas estáticas', tech: 'HTML + CSS', state: 'implemented', x: 285, y: 120, mobileOrder: 2,
-        description: 'Sete páginas HTML compartilham a identidade e carregam scripts em ordem explícita.',
-        responsibility: 'Fornecer estrutura, navegação e pontos de montagem do conteúdo.',
-        evidence: '*.html · style.css',
-      },
-      {
-        id: 'controllers', title: 'Page controllers', tech: 'JavaScript', state: 'implemented', x: 485, y: 120, mobileOrder: 3,
-        description: 'Coordena busca, filtros, formulários e renderização específica de cada página.',
-        responsibility: 'Transformar eventos da interface em chamadas ao serviço e atualizações do DOM.',
-        evidence: 'js/pages/ · script.js',
-      },
-      {
-        id: 'service', title: 'ApiService', tech: 'fetch + AbortController', state: 'implemented', x: 685, y: 120, mobileOrder: 4,
-        description: 'Abstrai acesso a dados, timeout e alternância entre mocks e HTTP.',
-        responsibility: 'Entregar coleções aos controllers por uma interface única.',
-        evidence: 'js/services.js · js/config.js',
-      },
-      {
-        id: 'mocks', title: 'Mock data ativo', tech: 'JavaScript objects', state: 'implemented', x: 890, y: 120, mobileOrder: 5,
-        description: 'Produtos, categorias, unidades, benefícios e FAQ usados pelo site atual.',
-        responsibility: 'Permitir navegação demonstrável sem backend.',
-        evidence: 'js/mock-data.js · CONFIG.MOCK_DATA=true',
-      },
-      {
-        id: 'renderers', title: 'Renderizadores', tech: 'Template strings', state: 'implemented', x: 485, y: 380, mobileOrder: 6,
-        description: 'Funções reutilizáveis montam cards, estados de loading, erros, FAQ e paginação.',
-        responsibility: 'Converter os dados recebidos em componentes de interface.',
-        evidence: 'js/components.js',
-      },
-      {
-        id: 'dom', title: 'Interface renderizada', tech: 'DOM', state: 'implemented', x: 685, y: 380, mobileOrder: 7,
-        description: 'Catálogo e conteúdo final apresentados no navegador.',
-        responsibility: 'Exibir resultados, estados vazios e feedback de formulário.',
-        evidence: 'js/pages/ · js/components.js',
-      },
-      {
-        id: 'future-api', title: 'API futura', tech: 'HTTP localhost:8000/api', state: 'external', x: 890, y: 380, mobileOrder: 8,
-        description: 'Endpoint base configurado, mas sem servidor implementado e com divergências no contrato documentado.',
-        responsibility: 'Substituir os mocks quando existir uma implementação compatível.',
-        evidence: 'js/config.js · FASTAPI_INTEGRATION.md',
-      },
-    ],
-    connections: [
-      { from: 'visitor', to: 'pages', label: 'navega', state: 'implemented' },
-      { from: 'pages', to: 'controllers', label: 'carrega', state: 'implemented' },
-      { from: 'controllers', to: 'service', label: 'solicita dados', state: 'implemented' },
-      { from: 'service', to: 'mocks', label: 'fonte ativa', state: 'implemented' },
-      { from: 'controllers', to: 'renderers', label: 'renderiza', state: 'implemented' },
-      { from: 'renderers', to: 'dom', label: 'innerHTML', state: 'implemented' },
-      { from: 'service', to: 'future-api', label: 'modo futuro', state: 'external' },
-    ],
-  },
   sysmgr: {
     title: 'sysmgr-cli',
     type: 'CLI de inspeção Linux',
@@ -492,6 +426,7 @@ const SYSTEM_ARCHITECTURES = {
   const tabs = Array.from(document.querySelectorAll('.system-tab'));
   const panel = document.getElementById('system-panel');
   const map = document.getElementById('system-map');
+  const mapViewport = document.getElementById('system-map-viewport');
   const projectType = document.getElementById('system-project-type');
   const projectTitle = document.getElementById('system-project-title');
   const projectRepo = document.getElementById('system-project-repo');
@@ -622,6 +557,7 @@ const SYSTEM_ARCHITECTURES = {
     nodeElements = [];
     edgeElements = [];
     map.innerHTML = '';
+    if (mapViewport) mapViewport.scrollLeft = 0;
 
     projectType.textContent = project.type;
     projectTitle.textContent = project.title;
@@ -674,25 +610,18 @@ const SYSTEM_ARCHITECTURES = {
           .filter(connection => connection.from === node.id || connection.to === node.id)
           .map(connection => `${connection.from === node.id ? '→' : '←'} ${connection.label} · ${stateLabels[connection.state]}`);
         const relationSummary = relations.length ? relations.join(' · ') : 'componente lateral';
-        const primaryConnection = project.connections.find(connection => connection.from === node.id) ||
-          project.connections.find(connection => connection.to === node.id);
-        const mobileRelation = primaryConnection
-          ? `${primaryConnection.from === node.id ? '→' : '←'} ${primaryConnection.label}`
-          : 'sem conexão direta';
         const button = document.createElement('button');
         button.type = 'button';
         button.className = `system-node system-node--${node.state}`;
         button.dataset.node = node.id;
         button.style.left = `${node.x / MAP_WIDTH * 100}%`;
         button.style.top = `${node.y / MAP_HEIGHT * 100}%`;
-        button.style.setProperty('--mobile-order', node.mobileOrder);
         button.setAttribute('aria-label', `${node.title}. ${stateLabels[node.state]}. ${node.tech}. Conexões: ${relationSummary}`);
         button.setAttribute('aria-pressed', 'false');
         button.innerHTML =
           `<span class="system-node__state" aria-hidden="true"></span>` +
           `<strong>${node.title}</strong>` +
-          `<small>${node.tech}</small>` +
-          `<span class="system-node__mobile-flow">${mobileRelation}</span>`;
+          `<small>${node.tech}</small>`;
         button.addEventListener('mouseenter', () => setActiveNode(node.id, false));
         button.addEventListener('mouseleave', () => setActiveNode(pinnedNode, false, hasPinnedSelection));
         button.addEventListener('focus', () => setActiveNode(node.id, false));
@@ -925,20 +854,7 @@ const TERMINAL_PROJECTS = {
       { type: 'file', name: 'index.html' },
     ],
   },
-  'flora-tropical': {
-    title: 'Flora Tropical',
-    desc: 'Site institucional sobre flora tropical com arquitetura modular.',
-    stack: ['HTML', 'CSS', 'JavaScript'],
-    github: 'https://github.com/MartinsSallys',
-    tree: [
-      { type: 'dir', name: 'css/' },
-      { type: 'dir', name: 'js/' },
-      { type: 'dir', name: '  modules/', indent: 1 },
-      { type: 'dir', name: 'pages/' },
-      { type: 'dir', name: 'assets/' },
-      { type: 'file', name: 'index.html' },
-    ],
-  },
+
 };
 
 /* ============================================================
