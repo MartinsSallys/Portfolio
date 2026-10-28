@@ -79,12 +79,17 @@ git add . && git commit -m "feat: atualização do portfolio" && git push
 - Índice direto para Postais da Parnaíba, BeckGlobal e sysmgr-cli
 - Sem métricas de cobertura ou escalabilidade não comprovadas
 
+### Destaque de conquista
+- Banner na primeira dobra com o 2º lugar no hackathon nacional (Unicesumar × Qlik)
+- Link direto para o case do projeto premiado (FUNDEC/RS)
+
 ### Vitrine de projetos
 - Dois cases principais com escopo, entrega, decisões, evidências, limitações e maturidade
 - Galeria com telas reais de Postais da Parnaíba
 - Superfície completa das seis rotas de aplicação do BeckGlobal
 - sysmgr-cli, backendGLobal e MagicScan reunidos em um carrossel 3D, com estados e limites explícitos
 - Expansão inline dos cases com problema, solução, fluxo, stack contextual, decisões e evidências
+- Case expansível do Hackathon FUNDEC/RS com pipeline de dados, resultados, validação e aprendizados
 - Deep links e sincronização entre cada case e seu diagrama arquitetural
 - Diagramas de Postais, BeckGlobal, FUNDEC/RS e sysmgr-cli com componentes, conexões, estados e evidências por tecnologia
 - O case e o diagrama de Postais usam como referência o frontend e o backend da pasta local `POSTAISCOMPLETO`

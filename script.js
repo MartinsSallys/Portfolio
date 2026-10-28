@@ -176,7 +176,7 @@ const SYSTEM_ARCHITECTURES = {
   },
   beck: {
     title: 'BeckGlobal',
-    type: 'Protótipo de API REST',
+    type: 'Boilerplate de backend Python',
     repo: 'https://github.com/MartinsSallys/BeckGlobal',
     summary: 'O código define um fluxo CRUD síncrono e aponta para SQLite, mas o checkout não possui a tabela users e ainda não executa esse caminho de ponta a ponta.',
     defaultNode: 'fastapi',
@@ -521,6 +521,10 @@ const SYSTEM_ARCHITECTURES = {
     const project = SYSTEM_ARCHITECTURES[currentSystem];
     const node = project.nodes.find(item => item.id === nodeId);
     if (!node) return;
+    if (tourOpen) {
+      updateInspector(node, project);
+      return;
+    }
     if (persist) {
       pinnedNode = nodeId;
       hasPinnedSelection = focusRelations;
@@ -612,7 +616,9 @@ const SYSTEM_ARCHITECTURES = {
         const relationSummary = relations.length ? relations.join(' · ') : 'componente lateral';
         const button = document.createElement('button');
         button.type = 'button';
-        button.className = `system-node system-node--${node.state}`;
+        const shape = ['postgres', 'sqlite'].includes(node.id) ? 'database'
+          : ['local-content', 'csv', 'sources', 'uptime', 'memory'].includes(node.id) ? 'document' : 'process';
+        button.className = `system-node system-node--${node.state} system-node--${shape}`;
         button.dataset.node = node.id;
         button.style.left = `${node.x / MAP_WIDTH * 100}%`;
         button.style.top = `${node.y / MAP_HEIGHT * 100}%`;
@@ -663,6 +669,7 @@ const SYSTEM_ARCHITECTURES = {
     });
     panel.setAttribute('aria-labelledby', tab.id);
     renderSystem(tab.dataset.system);
+    resetTourForProject(tab.dataset.system);
     if (moveFocus) tab.focus();
   }
 
@@ -687,6 +694,132 @@ const SYSTEM_ARCHITECTURES = {
     });
   });
 
+  const tour = document.getElementById('system-tour');
+  const tourContent = document.getElementById('system-tour-content');
+  const tourToggle = document.getElementById('system-tour-toggle');
+  const tourPrevious = document.getElementById('system-tour-prev');
+  const tourNext = document.getElementById('system-tour-next');
+  const tourResult = document.getElementById('system-tour-result');
+  const tourSteps = [
+    { node: 'site', path: ['visitor', 'nginx', 'site'], title: 'O visitante abre a galeria', description: 'No ambiente integrado, o Nginx serve a página do site. O visitante abre a galeria e inicia o carregamento do acervo.' },
+    { node: 'scripts', path: ['site', 'scripts', 'fastapi'], title: 'A interface solicita até 50 postais', description: 'O site carrega o JavaScript, que envia GET /api/postais?size=50. A conexão com a API passa pelo proxy Nginx configurado no ambiente.' },
+    { node: 'routes', path: ['fastapi', 'routes', 'orm'], title: 'A API prepara a consulta', description: 'FastAPI valida a paginação. A rota pública usa SQLAlchemy para contar os registros e consultar a página, ordenada por criação. Essa leitura não exige login.' },
+    { node: 'postgres', path: ['orm', 'postgres'], title: 'A consulta chega ao banco', description: 'A sessão SQLAlchemy consulta o PostgreSQL definido na configuração, limitando a quantidade de postais. A integração com o banco está configurada no projeto.' },
+    { node: 'scripts', path: ['postgres', 'orm', 'routes', 'fastapi', 'scripts'], title: 'A resposta volta à galeria', description: 'Acompanhe as setas no sentido de volta: banco → SQLAlchemy → rotas → API → interface. A resposta traz os postais e os dados de paginação; o navegador monta os cartões.' },
+    { node: 'scripts', path: ['scripts'], title: 'O visitante explora o acervo carregado', description: 'Busca, década, localização e ordenação acontecem aqui, no JavaScript do navegador. Nenhuma conexão com a API ou o banco é acionada ao usar esses filtros.' },
+  ];
+  let tourIndex = 0;
+  let tourOpen = false;
+
+  function renderTourStep() {
+    const step = tourSteps[tourIndex];
+    document.getElementById('system-tour-count').textContent = `Passo ${tourIndex + 1} de ${tourSteps.length}`;
+    document.getElementById('system-tour-title').textContent = step.title;
+    document.getElementById('system-tour-description').textContent = step.description;
+    tourPrevious.disabled = tourIndex === 0;
+    tourNext.disabled = tourIndex === tourSteps.length - 1;
+    updateInspector(SYSTEM_ARCHITECTURES.postais.nodes.find(node => node.id === step.node), SYSTEM_ARCHITECTURES.postais);
+    map.querySelector('.system-tour-edges')?.remove();
+    const overlay = svgElement('g', { class: 'system-tour-edges' });
+    const activeNodes = new Set(step.path);
+    nodeElements.forEach(({ element, node }) => {
+      element.classList.toggle('system-node--active', node.id === step.node);
+      element.classList.toggle('system-node--related', activeNodes.has(node.id) && node.id !== step.node);
+      element.classList.toggle('system-node--muted', !activeNodes.has(node.id));
+      element.setAttribute('aria-pressed', 'false');
+      if (node.id === step.node) element.setAttribute('aria-current', 'step');
+      else element.removeAttribute('aria-current');
+    });
+    edgeElements.forEach(({ path }) => {
+      path.classList.remove('system-edge--active');
+      path.classList.add('system-edge--muted');
+    });
+    for (let index = 0; index < step.path.length - 1; index++) {
+      const fromId = step.path[index];
+      const toId = step.path[index + 1];
+      const project = SYSTEM_ARCHITECTURES.postais;
+      const connection = project.connections.find(edge =>
+        (edge.from === fromId && edge.to === toId) || (edge.to === fromId && edge.from === toId));
+      if (!connection) continue;
+      const from = project.nodes.find(node => node.id === fromId);
+      const to = project.nodes.find(node => node.id === toId);
+      const via = connection.from === fromId ? connection.via : connection.via?.slice().reverse();
+      overlay.appendChild(svgElement('path', {
+        d: connectionPath(from, to, via),
+        class: `system-edge system-edge--${connection.state} system-edge--active`,
+        'marker-end': `url(#system-arrow-${connection.state})`,
+        'data-from': fromId, 'data-to': toId,
+      }));
+    }
+    map.querySelector('svg').appendChild(overlay);
+    const current = nodeElements.find(({ node }) => node.id === step.node)?.element;
+    if (current && mapViewport.scrollWidth > mapViewport.clientWidth) {
+      mapViewport.scrollTo({ left: current.offsetLeft - mapViewport.clientWidth / 2,
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+    }
+  }
+
+  function setTourOpen(open) {
+    tourOpen = open;
+    tourContent.hidden = !open;
+    tourToggle.setAttribute('aria-expanded', String(open));
+    tourToggle.textContent = open ? 'Encerrar demonstração' : 'Acompanhar uma ação →';
+    mapViewport.hidden = false;
+    document.querySelector('.system-canvas__hint').hidden = open;
+    if (open) renderTourStep();
+    else {
+      map.querySelector('.system-tour-edges')?.remove();
+      nodeElements.forEach(({ element }) => element.removeAttribute('aria-current'));
+      hasPinnedSelection = false;
+      setActiveNode(pinnedNode, false, false);
+    }
+  }
+
+  function resetTourForProject(systemId) {
+    tourIndex = 0;
+    tourResult.value = 'success';
+    renderTourBranch();
+    tour.querySelectorAll('details').forEach(details => { details.open = false; });
+    setTourOpen(false);
+    tour.hidden = systemId !== 'postais';
+  }
+
+  function renderTourBranch() {
+    const outcomes = {
+      success: ['A consulta funcionou?', 'Sim → Vieram postais? → Sim', 'A galeria monta os cartões e permite filtrar os registros carregados.'],
+      empty: ['Vieram postais?', 'Não', 'A galeria informa: “Nenhum postal cadastrado ainda.”'],
+      error: ['A consulta funcionou?', 'Não', 'Se a requisição falhar ou a resposta não puder ser lida, a galeria informa: “Erro ao carregar postais.”'],
+      filtered: ['O filtro encontrou postais?', 'Não', 'A galeria exibe o estado vazio e o contador fica em zero. Os dados carregados continuam disponíveis para mudar os filtros.'],
+    };
+    const [question, answer, outcome] = outcomes[tourResult.value];
+    const branch = document.getElementById('system-tour-branch');
+    branch.replaceChildren();
+    const decision = document.createElement('div');
+    decision.className = 'system-tour__diamond';
+    const label = document.createElement('strong');
+    label.textContent = question;
+    decision.appendChild(label);
+    const result = document.createElement('div');
+    const direction = document.createElement('strong');
+    direction.textContent = answer;
+    const text = document.createElement('p');
+    text.textContent = outcome;
+    result.append(direction, text);
+    branch.append(decision, result);
+  }
+
+  tourToggle.addEventListener('click', () => setTourOpen(!tourOpen));
+  tourPrevious.addEventListener('click', () => { tourIndex = Math.max(0, tourIndex - 1); renderTourStep(); });
+  tourNext.addEventListener('click', () => { tourIndex = Math.min(tourSteps.length - 1, tourIndex + 1); renderTourStep(); });
+  document.getElementById('system-tour-reset').addEventListener('click', () => {
+    tourIndex = 0;
+    tourResult.value = 'success';
+    renderTourBranch();
+    renderTourStep();
+  });
+  tourResult.addEventListener('change', renderTourBranch);
+  renderTourBranch();
+
   renderSystem(currentSystem);
 })();
 
@@ -694,12 +827,17 @@ const SYSTEM_ARCHITECTURES = {
    PROJECT CASES — Inline expansion + deep links
    ============================================================ */
 (function () {
-  const caseIds = ['postais', 'beck'];
+  const caseIds = ['postais', 'beck', 'fundec'];
+  const caseCardIds = {
+    postais: 'postais-parnaiba',
+    beck: 'beck-global',
+    fundec: 'hackathon-fundec',
+  };
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const motionLib = window.Motion && typeof window.Motion.animate === 'function' ? window.Motion : null;
   const cases = Object.fromEntries(caseIds.map(id => {
     const details = document.getElementById(`case-${id}`);
-    const card = document.getElementById(id === 'postais' ? 'postais-parnaiba' : 'beck-global');
+    const card = document.getElementById(caseCardIds[id]);
     const title = document.getElementById(`case-${id}-title`);
     const primaryToggle = document.querySelector(`.case-toggle[data-case-toggle="${id}"]`);
     const toggles = Array.from(document.querySelectorAll(`[data-case-toggle="${id}"]`));
@@ -734,7 +872,7 @@ const SYSTEM_ARCHITECTURES = {
 
     const item = cases[id];
     if (options.updateHistory !== false) {
-      const hash = id === 'postais' ? '#postais-parnaiba' : '#beck-global';
+      const hash = `#${caseCardIds[id]}`;
       if (window.location.hash !== hash) window.history.pushState({ case: id }, '', hash);
     }
     if (options.focus) requestAnimationFrame(() => item.title.focus({ preventScroll: true }));
@@ -744,7 +882,7 @@ const SYSTEM_ARCHITECTURES = {
   function closeCase(id, returnFocus) {
     if (!cases[id]) return;
     setCaseState(id, false);
-    if (window.location.hash === '#postais-parnaiba' || window.location.hash === '#beck-global') {
+    if (caseIds.some(caseId => window.location.hash === `#${caseCardIds[caseId]}`)) {
       window.history.pushState(null, '', '#projetos');
     }
     if (returnFocus) cases[id].primaryToggle.focus();
@@ -760,19 +898,22 @@ const SYSTEM_ARCHITECTURES = {
     });
   });
 
-  document.querySelectorAll('a[href="#postais-parnaiba"], a[href="#beck-global"]').forEach(link => {
-    link.addEventListener('click', () => {
-      openCase(link.getAttribute('href') === '#postais-parnaiba' ? 'postais' : 'beck', { updateHistory: false });
-    });
+  const caseDeepLinks = Object.fromEntries(
+    caseIds.map(id => [`#${caseCardIds[id]}`, id])
+  );
+
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    const caseId = caseDeepLinks[link.getAttribute('href')];
+    if (!caseId) return;
+    link.addEventListener('click', () => openCase(caseId, { updateHistory: false }));
   });
 
   function syncCaseFromHash(scroll) {
-    const id = window.location.hash === '#postais-parnaiba' || window.location.hash === '#case-postais'
-      ? 'postais'
-      : window.location.hash === '#beck-global' || window.location.hash === '#case-beck'
-        ? 'beck'
-        : null;
-    if (!id) {
+    const id = caseDeepLinks[window.location.hash]
+      || (window.location.hash.startsWith('#case-')
+        ? window.location.hash.replace('#case-', '')
+        : null);
+    if (!id || !cases[id]) {
       caseIds.forEach(caseId => setCaseState(caseId, false));
       return;
     }

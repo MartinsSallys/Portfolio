@@ -2346,7 +2346,8 @@ div[id] { scroll-margin-top: 72px; }
   padding: 26px;
 }
 
-.project-card--visual .project-card__body { height: auto; }
+.project-card--visual .project-card__body,
+.project-card--wide .project-card__body { height: auto; }
 
 .project-card__meta {
   display: flex;
@@ -4296,4 +4297,269 @@ div[id] { scroll-margin-top: 72px; }
 @media (max-width: 360px) {
   .certificate-card { grid-template-columns: 76px minmax(0, 1fr); }
   .certificate-card__preview { width: 76px; }
+}
+
+/* Guided architecture: uses the existing section's palette and components. */
+.system-tour[hidden], #system-tour-content[hidden], .system-map-viewport[hidden],
+.system-canvas__hint[hidden] { display: none; }
+.system-tour { padding: 20px 24px; border-bottom: 1px solid var(--border); }
+.system-tour__intro { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.system-tour h4 { color: var(--text); font-size: 1rem; margin: 6px 0; }
+.system-tour p { color: var(--text-secondary); font-size: .8125rem; line-height: 1.65; margin: 8px 0; }
+.system-tour button, .system-tour select { font: inherit; font-size: .75rem; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 10px 12px; cursor: pointer; }
+.system-tour button:hover { border-color: var(--primary); }
+.system-tour button:focus-visible, .system-tour select:focus-visible,
+.system-tour summary:focus-visible { outline: 2px solid var(--primary); outline-offset: 4px; }
+.system-tour button:disabled { opacity: .4; cursor: default; }
+.system-tour__intro > button { flex-shrink: 0; color: var(--primary); }
+.system-tour .system-tour__note { font-size: .6875rem; margin: 20px 0; }
+.system-node--database::before { content: ''; position: absolute; height: 12px; top: 3px; left: 1px; right: 1px; border-bottom: 1px solid var(--border); border-radius: 50%; pointer-events: none; }
+.system-node--document { border-radius: 3px 15px 3px 3px; }
+.system-node--document::after { content: ''; position: absolute; right: 3px; top: 3px; width: 10px; height: 10px; border-left: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.system-tour__reading { margin-top: 20px; padding: 18px; border-left: 2px solid var(--primary); background: var(--primary-dim); border-radius: 0 var(--radius-md) var(--radius-md) 0; }
+.system-tour__controls { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 20px; }
+.system-tour details { border-top: 1px solid var(--border); padding: 14px 0; }
+.system-tour summary { cursor: pointer; color: var(--text); font-size: .8125rem; }
+.system-tour label { display: block; font-size: .75rem; margin: 16px 0 8px; color: var(--text-secondary); }
+.system-tour select { max-width: 100%; }
+.system-tour__branch { display: flex; align-items: center; gap: 30px; padding: 26px 8px 8px; font-size: .8125rem; color: var(--text); }
+.system-tour__diamond { width: 110px; height: 110px; flex-shrink: 0; display: grid; place-items: center; position: relative; text-align: center; }
+.system-tour__diamond::before { content: ''; position: absolute; inset: 12px; transform: rotate(45deg); border: 1px solid var(--primary); border-radius: 4px; background: var(--primary-dim); }
+.system-tour__diamond strong { position: relative; max-width: 88px; font-size: .6875rem; }
+@media (max-width: 600px) {
+  .system-tour { padding: 18px 16px; }
+  .system-tour__intro { align-items: flex-start; flex-direction: column; }
+  .system-tour__branch { gap: 16px; padding-left: 0; padding-right: 0; }
+}
+
+.system-map .system-node[aria-current="step"] { outline: 2px solid var(--primary); outline-offset: 4px; }
+.system-node--database { border-radius: 50% / 14%; padding-top: 23px; }
+
+/* ============================================================
+   AWARD HIGHLIGHT — 2º LUGAR HACKATHON
+   ============================================================ */
+
+.award-banner { padding: 4px 0 56px; }
+
+.award-banner__inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 24px;
+  align-items: center;
+  padding: 22px 26px 22px 30px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.award-banner__inner::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 14px;
+  bottom: 14px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: #f59e0b;
+}
+
+.award-banner__inner:hover {
+  border-color: rgba(245, 158, 11, 0.3);
+  box-shadow: var(--shadow-md);
+}
+
+.award-banner__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 13px;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  border-radius: 999px;
+  background: rgba(245, 158, 11, 0.08);
+  color: #f59e0b;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.award-banner__content h2 {
+  margin-bottom: 6px;
+  color: var(--text);
+  font-size: 1.125rem;
+  letter-spacing: -0.02em;
+}
+
+.award-banner__content p {
+  max-width: 62ch;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.award-banner .button { flex-shrink: 0; }
+
+.project-status--award {
+  border-color: rgba(245, 158, 11, 0.3);
+  background: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+}
+
+.project-card__techline {
+  margin: -4px 0 24px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+}
+
+.project-card__event {
+  margin: -8px 0 10px;
+  color: var(--primary);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+}
+
+.project-card__summary {
+  max-width: 72ch;
+  margin: 0 0 22px;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.65;
+}
+
+.project-card__facts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  margin-bottom: 28px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--border);
+}
+
+.project-card__fact {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 16px;
+  background: var(--bg-subtle);
+}
+
+.project-card__fact span {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.project-card__fact strong {
+  color: var(--text);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.project-card__highlights {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 26px 32px;
+  margin-bottom: 28px;
+}
+
+.project-card__highlight h4 {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 10px;
+  color: var(--text);
+  font-size: 0.9375rem;
+  letter-spacing: -0.01em;
+}
+
+.project-card__highlight h4 span {
+  color: var(--primary);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+}
+
+.project-card__highlight p,
+.project-card__highlight li {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.65;
+}
+
+.project-card__highlight ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.project-card__highlight li {
+  position: relative;
+  padding-left: 16px;
+}
+
+.project-card__highlight li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--primary);
+}
+
+[data-theme="light"] .award-banner__badge,
+[data-theme="light"] .project-status--award { color: #a54808; }
+
+[data-theme="light"] .award-banner__inner::before { background: #d97706; }
+
+[data-theme="light"] .award-banner__inner:hover {
+  border-color: rgba(217, 119, 6, 0.35);
+}
+
+/* Pipeline do case FUNDEC possui cinco etapas */
+#case-fundec .case-flow { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+
+@media (max-width: 1024px) {
+  #case-fundec .case-flow { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 900px) {
+  .award-banner__inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    padding: 20px 22px 20px 26px;
+  }
+
+  .award-banner__badge { justify-self: start; }
+  .award-banner .button { justify-self: start; }
+}
+
+@media (max-width: 768px) {
+  .award-banner { padding: 0 0 40px; }
+
+  .project-card__highlights { grid-template-columns: 1fr; gap: 22px; }
+  .project-card__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  #case-fundec .case-flow { grid-template-columns: 1fr; }
+  #case-fundec .case-flow li + li { border-top: 1px solid var(--border); border-left: 0; }
+}
+
+@media (max-width: 420px) {
+  .award-banner__content h2 { font-size: 1rem; }
+  .award-banner__badge { font-size: 0.625rem; }
+  .project-card__facts { grid-template-columns: 1fr; }
 }
