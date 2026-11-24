@@ -1,0 +1,28 @@
+{
+  "name": "portfolio-sallys",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.23.4"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^7.4.13",
+    "three": "^0.160.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@fontsource/instrument-serif": "^5.3.0",
+    "@fontsource/inter": "^5.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "@types/three": "^0.160.0",
+    "lighthouse": "^12.8.2",
+    "playwright": "^1.65.1",
+    "typescript": "^6.0.3"
+  }
+}

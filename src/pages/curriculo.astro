@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import { projects } from '../data/projects';
+---
+<Base title="Currículo · Sallys Martins">
+  <main class="resume">
+    <a href={import.meta.env.BASE_URL}>← Portfólio</a>
+    <h1>Sallys Moraes Martins</h1>
+    <p>Parnaíba, PI · Em busca de estágio em desenvolvimento backend e dados</p>
+    <a href="mailto:sallysmartins869@gmail.com">sallysmartins869@gmail.com</a>
+    <h2>Formação</h2>
+    <p>Análise e Desenvolvimento de Sistemas · UniCesumar · fev. 2026 a jul. 2028 (previsão)</p>
+    <h2>Projetos selecionados</h2>
+    {projects.map(p => <section><h3><a href={p.url}>{p.now}</a></h3><p>{p.dl[0][1]} · {p.dl[1][1]}</p><p>{p.lead}</p></section>)}
+    <p>2º lugar nacional no hackathon UniCesumar × Qlik com o projeto FUNDEC-RS.</p>
+  </main>
+</Base>
+<style>
+.resume{max-width:760px;margin:auto;padding:3rem 1.5rem;line-height:1.55}
+h1,h2,h3{margin:1.4rem 0 .4rem}a{text-decoration:underline}
+</style>

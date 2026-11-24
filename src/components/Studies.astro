@@ -1,0 +1,23 @@
+---
+const studies = [
+  { no: 'E.01', name: 'sysmgr-cli', desc: 'CLI em Python que lê uptime e memória direto de /proc.', stack: 'Python · /proc' },
+  { no: 'E.02', name: 'backendGLobal', desc: 'CRUD FastAPI em memória para praticar contratos HTTP, com 7 testes.', stack: 'FastAPI · TestClient' },
+  { no: 'E.03', name: 'MagicScan', desc: 'POC de scanner offline, interrompida e documentada.', stack: 'Python · segurança' },
+];
+---
+
+<div class="sec" id="estudos" style="padding-top:60px">
+  <h2>Estudos <i>&amp;</i> experimentos</h2>
+  <p class="mono">escopo pequeno, limites documentados</p>
+</div>
+<div class="idx">
+  {studies.map((s) => (
+    <a class="row" href={`https://github.com/MartinsSallys/${s.name}`}>
+      <span class="k">{s.no}</span>
+      <h3>{s.name}</h3>
+      <p>{s.desc}</p>
+      <span class="k">{s.stack}</span>
+      <span aria-hidden="true">↗</span>
+    </a>
+  ))}
+</div>

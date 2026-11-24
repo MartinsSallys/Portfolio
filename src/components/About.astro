@@ -1,0 +1,33 @@
+---
+import { Image } from 'astro:assets';
+import photo from '../assets/SallysIA.png';
+---
+
+<section class="about" id="sobre">
+  <div class="photo">
+    <Image src={photo} alt="Foto de Sallys Martins em preto e branco" widths={[520, 1040]} sizes="(max-width:1023px) 100vw, 520px" />
+    <span class="tagp">sallys@dev:~/sobre</span>
+  </div>
+  <div>
+    <div class="k">SOBRE</div>
+    <blockquote>Gosto de entender como as partes se conectam e de deixar <i>essas decisões visíveis</i> no código.</blockquote>
+    <div class="cols">
+      <div>
+        <h4>O QUE FAÇO</h4>
+        <p>APIs, pipelines de dados e infraestrutura em Linux. Documento os limites de cada projeto para revisar escolhas e explicar com clareza.</p>
+      </div>
+      <div>
+        <h4>FORMAÇÃO</h4>
+        <p>Análise e Desenvolvimento de Sistemas<br />UniCesumar · 2026–2028 (previsão)</p>
+      </div>
+      <div>
+        <h4>BACKEND &amp; DADOS</h4>
+        <p>Python · FastAPI · Pydantic · SQLAlchemy · Alembic · SQL · PostgreSQL · pandas · Qlik</p>
+      </div>
+      <div>
+        <h4>INFRA &amp; FLUXO</h4>
+        <p>Linux · Docker · Compose · Nginx · Pytest · Git · Poetry · pre-commit</p>
+      </div>
+    </div>
+  </div>
+</section>

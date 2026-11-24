@@ -1,0 +1,147 @@
+---
+import { projects } from '../data/projects';
+
+const stageSpec = projects.map((p) => ({
+  monitor: p.monitor,
+  laptop: p.laptop,
+  phone: p.phone,
+  labels: p.labels.map((l) => [l.html, l.pos]),
+}));
+const info = projects.map((p) => [p.now, p.what]);
+---
+
+<div class="sec" id="trabalhos">
+  <h2>Trabalhos<br /><i>selecionados</i></h2>
+  <p class="mono">role · o palco acompanha o texto</p>
+</div>
+
+<section class="sx">
+  <div class="sx-l">
+    {projects.map((p, i) => (
+      <article class="blk" data-i={i}>
+        <p class="sr-only">{p.fallbackAlt}</p>
+        <div class="vis-m">
+          {p.fallbackImg
+            ? <img src={p.fallbackImg} alt={p.fallbackAlt} loading="lazy" decoding="async" />
+            : <canvas role="img" aria-label={p.fallbackAlt} class="vis-canvas" data-draw="code" width="1200" height="900"></canvas>}
+        </div>
+        <div class="bno"><span>{p.no}</span><em class="mono">/ 04</em></div>
+        <div class="k">{p.kicker}</div>
+        <h3 set:html={p.title}></h3>
+        <p class="lead">{p.lead}</p>
+        <dl>
+          {p.dl.map(([dt, dd]) => (<><dt>{dt}</dt><dd>{dd}</dd></>))}
+        </dl>
+        <div class="rs">
+          {p.metrics.map(([b, s]) => (<div><b>{b}</b><span>{s}</span></div>))}
+        </div>
+        <a class="btn" href={p.url}>{p.id === "fundec-rs" ? "Ler relatório" : "Ver projeto no GitHub"} <b>→</b></a>
+      </article>
+    ))}
+  </div>
+
+  <div class="sx-r">
+    <div class="stg">
+      <div id="stage" aria-hidden="true"></div>
+      <div class="top mono">
+        <span>agora: <b id="now">{projects[0].now}</b></span>
+        <span id="what">{projects[0].what}</span>
+      </div>
+      <div class="nav mono" role="group" aria-label="projetos">
+        {projects.map((p, i) => (
+          <div class:list={['n', { on: i === 0 }]} data-i={i} role="button" tabindex="0">
+            <i aria-hidden="true"><u></u></i>
+            <span><b>{p.no}</b> {p.navLabel}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script type="application/json" id="stage-spec" set:html={JSON.stringify(stageSpec)}></script>
+<script type="application/json" id="stage-info" set:html={JSON.stringify(info)}></script>
+
+<script>
+  import type { StageCtl, ProjectSpec } from '../three/devices';
+
+  type SpecEntry = ProjectSpec;
+
+  const specEl = document.getElementById('stage-spec');
+  const infoEl = document.getElementById('stage-info');
+  const spec: SpecEntry[] = specEl ? JSON.parse(specEl.textContent ?? '[]') : [];
+  const info: [string, string][] = infoEl ? JSON.parse(infoEl.textContent ?? '[]') : [];
+
+  const blks = [...document.querySelectorAll<HTMLElement>('.blk')];
+  const ns = [...document.querySelectorAll<HTMLElement>('.n')];
+  const nowEl = document.getElementById('now');
+  const whatEl = document.getElementById('what');
+  const stageEl = document.getElementById('stage');
+
+  let st: StageCtl | null = null;
+  let act = -1;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function onScroll() {
+    const mid = innerHeight / 2;
+    let a = 0;
+    blks.forEach((b, i) => {
+      const r = b.getBoundingClientRect();
+      if (r.top < mid) a = i;
+      const f = Math.min(1, Math.max(0, (mid - r.top) / r.height));
+      const u = ns[i]?.querySelector('u') as HTMLElement | null;
+      if (u) u.style.width = f * 100 + '%';
+    });
+    if (a !== act) {
+      act = a;
+      st?.set(a);
+      ns.forEach((n, i) => n.classList.toggle('on', i === a));
+      if (nowEl) nowEl.textContent = info[a]?.[0] ?? '';
+      if (whatEl) whatEl.textContent = info[a]?.[1] ?? '';
+    }
+  }
+
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // nav: clique rola até o bloco
+  ns.forEach((n) => {
+    const go = () => {
+      const i = Number(n.dataset.i);
+      const b = blks[i];
+      if (b) b.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+    };
+    n.addEventListener('click', go);
+    n.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); }
+    });
+  });
+
+  // Three.js só quando o palco entra na viewport
+  if (stageEl) {
+    const io = new IntersectionObserver(async (entries) => {
+      if (!entries.some((e) => e.isIntersecting)) return;
+      io.disconnect();
+      try {
+        const mod = await import('../three/devices');
+        st = await mod.stage(stageEl, spec, { reduced });
+        if (act > 0) st.jump(act);
+      } catch { stageEl.closest(".sx")?.classList.add("static-stage"); }
+    }, { rootMargin: '200px' });
+    io.observe(stageEl);
+  }
+
+  // fallback estático <1024px: desenha o código do BeckGlobal em canvas 2D
+  const codeCanvas = document.querySelector<HTMLCanvasElement>('canvas.vis-canvas[data-draw="code"]');
+  if (codeCanvas) {
+    import('../three/draws').then((m) => {
+      const g = codeCanvas.getContext('2d');
+      if (g) {
+        g.save();
+        g.scale(codeCanvas.width / 1600, codeCanvas.height / 1000);
+        m.drawCode(g, 1600, 1000);
+        g.restore();
+      }
+    });
+  }
+</script>

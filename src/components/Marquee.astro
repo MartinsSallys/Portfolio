@@ -1,0 +1,17 @@
+---
+const items = ['Python','FastAPI','PostgreSQL','pandas','Linux','Docker','Nginx','SQLite','Qlik','Python'];
+// trilha duplicada para loop contínuo
+const track = [...items, ...items];
+---
+
+<div class="marq" aria-hidden="true">
+  <div class="track">
+    {track.map((t, i) => (
+      <>
+        {i > 0 && <i>✳</i>}
+        <span>{t}</span>
+      </>
+    ))}
+    <i>✳</i>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+---
+const apiUrl = import.meta.env.PUBLIC_API_URL ?? '';
+
+---
+
+<section class="try" aria-label="teste a API">
+  <div class="q">{apiUrl ? "Teste a API" : "Simulação de uma consulta à API"}</div>
+  <div class="inp">
+    <span><b>GET</b> <span id="api-path">{apiUrl || "/api/projetos"}</span></span>
+    <button class="go" id="api-go" type="button" data-url={apiUrl}>{apiUrl ? "enviar ↵" : "simular ↵"}</button>
+  </div>
+  <div class="out" id="api-out" aria-live="polite">Aguardando consulta.</div>
+</section>
+
+<script>
+  const btn = document.getElementById('api-go') as HTMLButtonElement | null;
+  const out = document.getElementById('api-out');
+  const path = document.getElementById('api-path');
+  const url = btn?.dataset.url?.trim();
+
+  if (url && path) path.textContent = url.replace(/^https?:\/\//, '');
+
+  btn?.addEventListener('click', async () => {
+    if (!out) return;
+    if (!url) {
+      out.innerHTML = 'Resposta simulada<br>[ <em>"jas-easy-path"</em>, <em>"fundec-rs"</em>, <em>"postais-parnaiba"</em>, <em>"beckglobal"</em> ]';
+      return;
+    }
+    out.textContent = '→ …';
+    const t0 = performance.now();
+    try {
+      const res = await fetch(url);
+      const ms = Math.round(performance.now() - t0);
+      const body = await res.text();
+      let pretty = body;
+      try { pretty = JSON.stringify(JSON.parse(body)); } catch {}
+      out.innerHTML = `→ ${res.status} · ${ms}ms<br>${escapeHtml(pretty)}`;
+    } catch {
+      out.innerHTML = `→ erro de rede · ${Math.round(performance.now() - t0)}ms`;
+    }
+  });
+
+  function escapeHtml(s: string) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+</script>
