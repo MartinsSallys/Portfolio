@@ -34,7 +34,7 @@ function ctex(c: HTMLCanvasElement): THREE.CanvasTexture {
 }
 
 async function screenTex(src: ScreenSource, aspect: number): Promise<THREE.CanvasTexture> {
-  const W = 2048, H = Math.round(W / aspect);
+  const W = Math.round(1536 * Math.min(1, aspect)), H = Math.round(W / aspect);
   const c = document.createElement('canvas');
   c.width = W;
   c.height = H;
@@ -50,8 +50,9 @@ async function screenTex(src: ScreenSource, aspect: number): Promise<THREE.Canva
   const p = tg.getImageData(4, im.height - 4, 1, 1).data;
   g.fillStyle = `rgb(${p[0]},${p[1]},${p[2]})`;
   g.fillRect(0, 0, W, H);
-  const h = (W * im.height) / im.width;
-  g.drawImage(im, 0, 0, W, h);
+  const scale = Math.min(W / im.width, H / im.height);
+  const iw = im.width * scale, ih = im.height * scale;
+  g.drawImage(im, (W - iw) / 2, (H - ih) / 2, iw, ih);
   return ctex(c);
 }
 

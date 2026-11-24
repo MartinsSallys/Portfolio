@@ -7,6 +7,7 @@ const stageSpec = projects.map((p) => ({
   phone: p.phone,
   labels: p.labels.map((l) => [l.html, l.pos]),
 }));
+const engineering: Record<string, string> = {"jas-easy-path": "Motor em Python com OR-Tools para ordenar entregas considerando capacidade e janelas de tempo. A API integra o cálculo ao fluxo da aplicação; testes validam sequência, restrições e retorno ao depósito. Projeto em desenvolvimento.", "fundec-rs": "Pipeline ETL em Python e pandas, modelo estrela em SQLite e dashboards Qlik. Análise da distribuição, cobertura e velocidade dos repasses após as enchentes. Resultado: 2º lugar nacional e 23 testes.", "postais-parnaiba": "Acervo para um historiador, com API REST, autenticação JWT, CRUD administrativo, PostgreSQL e migrações Alembic. MVP com site público e painel de conteúdo.", "beckglobal": "Base reutilizável de APIs com FastAPI, SQLAlchemy, Pydantic, migrações Alembic e Docker Compose. Protótipo para padronizar estrutura, autenticação e testes."};
 const info = projects.map((p) => [p.now, p.what]);
 ---
 
@@ -35,7 +36,19 @@ const info = projects.map((p) => [p.now, p.what]);
         <div class="rs">
           {p.metrics.map(([b, s]) => (<div><b>{b}</b><span>{s}</span></div>))}
         </div>
-        <a class="btn" href={p.url}>{p.id === "fundec-rs" ? "Ler relatório" : "Ver projeto no GitHub"} <b>→</b></a>
+        <div class="project-actions">
+          <a class="btn" href={p.url}>{p.id === "fundec-rs" ? "Ler relatório" : "Ver projeto no GitHub"} <b>→</b></a>
+          {p.id === 'fundec-rs' && <a class="link" href="https://github.com/Nalan27/Hackaton-Excelsior-/">Código-fonte ↗</a>}
+        </div>
+        <details class="engineering">
+          <summary>Explorar engenharia do projeto</summary>
+          <p>{engineering[p.id]}</p>
+          <div class="project-shots">
+            {[p.monitor, p.laptop, p.phone].filter((src): src is string => Boolean(src) && src !== 'code()' && src !== 'docs()').map((src, i) => (
+              <a href={src} target="_blank" rel="noopener" aria-label={`Abrir captura ${i + 1} em tamanho original`}><img src={src} alt={`Captura ${i + 1} de ${p.now}`} loading="lazy" decoding="async" /><span>Ampliar ↗</span></a>
+            ))}
+          </div>
+        </details>
       </article>
     ))}
   </div>
@@ -118,7 +131,7 @@ const info = projects.map((p) => [p.now, p.what]);
   });
 
   // Three.js só quando o palco entra na viewport
-  if (stageEl) {
+  if (stageEl && matchMedia('(min-width: 1024px)').matches) {
     const io = new IntersectionObserver(async (entries) => {
       if (!entries.some((e) => e.isIntersecting)) return;
       io.disconnect();

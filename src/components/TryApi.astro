@@ -1,46 +1,34 @@
 ---
-const apiUrl = import.meta.env.PUBLIC_API_URL ?? '';
-
+const remote = import.meta.env.PUBLIC_API_URL?.trim().replace(/\/+$/, '');
+const endpoints = [
+  ['Projetos', 'projects'], ['Perfil', 'profile'], ['Stack', 'skills'],
+].map(([name, resource]) => ({name, url: remote ? `${remote}/api/v1/${resource}` : `${import.meta.env.BASE_URL}api/v1/${resource}.json`}));
 ---
-
-<section class="try" aria-label="teste a API">
-  <div class="q">{apiUrl ? "Teste a API" : "Simulação de uma consulta à API"}</div>
-  <div class="inp">
-    <span><b>GET</b> <span id="api-path">{apiUrl || "/api/projetos"}</span></span>
-    <button class="go" id="api-go" type="button" data-url={apiUrl}>{apiUrl ? "enviar ↵" : "simular ↵"}</button>
+<section class="try playground" id="api" aria-label="Backend Playground">
+  <div class="q">Backend <i>Playground</i><p class="mono">{remote ? 'API FastAPI externa · requisições HTTP' : 'JSON estático publicado com Astro · HTTP real, sem servidor FastAPI'}</p>{remote && <a class="link api-docs" href={remote + '/docs'}>Swagger ↗</a>}</div>
+  <div class="api-console">
+    <div class="inp"><span><b>GET</b> <select id="api-path" aria-label="Endpoint">
+      {endpoints.map(({name,url}) => <option value={url}>{name} · {url}</option>)}
+    </select></span><button class="go" id="api-go" type="button">enviar ↵</button></div>
+    <pre class="out" id="api-out" aria-live="polite">Aguardando consulta.</pre>
   </div>
-  <div class="out" id="api-out" aria-live="polite">Aguardando consulta.</div>
 </section>
-
 <script>
   const btn = document.getElementById('api-go') as HTMLButtonElement | null;
   const out = document.getElementById('api-out');
-  const path = document.getElementById('api-path');
-  const url = btn?.dataset.url?.trim();
-
-  if (url && path) path.textContent = url.replace(/^https?:\/\//, '');
-
+  const path = document.getElementById('api-path') as HTMLSelectElement | null;
   btn?.addEventListener('click', async () => {
-    if (!out) return;
-    if (!url) {
-      out.innerHTML = 'Resposta simulada<br>[ <em>"jas-easy-path"</em>, <em>"fundec-rs"</em>, <em>"postais-parnaiba"</em>, <em>"beckglobal"</em> ]';
-      return;
-    }
-    out.textContent = '→ …';
+    if (!out || !path || !btn) return;
+    btn.disabled = true;
+    out.textContent = 'Consultando…';
     const t0 = performance.now();
     try {
-      const res = await fetch(url);
-      const ms = Math.round(performance.now() - t0);
+      const res = await fetch(path.value, { headers: { Accept: 'application/json' }, signal: AbortSignal.timeout(10000) });
       const body = await res.text();
       let pretty = body;
-      try { pretty = JSON.stringify(JSON.parse(body)); } catch {}
-      out.innerHTML = `→ ${res.status} · ${ms}ms<br>${escapeHtml(pretty)}`;
-    } catch {
-      out.innerHTML = `→ erro de rede · ${Math.round(performance.now() - t0)}ms`;
-    }
+      try { pretty = JSON.stringify(JSON.parse(body), null, 2); } catch {}
+      out.textContent = `${res.status} ${res.statusText} · ${Math.round(performance.now() - t0)}ms\n${pretty}`;
+    } catch { out.textContent = 'Falha na consulta. Tente novamente.'; }
+    finally { btn.disabled = false; }
   });
-
-  function escapeHtml(s: string) {
-    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  }
 </script>

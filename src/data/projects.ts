@@ -98,7 +98,7 @@ export const projects: Project[] = [
     id: 'postais-parnaiba',
     url: 'https://github.com/MartinsSallys/Postais-da-Parnaiba',
     no: '03',
-    kicker: 'FULLSTACK · MVP',
+    kicker: 'FULLSTACK · CLIENTE REAL · MVP',
     title: 'Postais da <i>Parnaíba</i>',
     lead: 'Um acervo digital reúne fotografias e crônicas de Parnaíba. O historiador gerencia o conteúdo pelo painel administrativo.',
     dl: [
