@@ -34,7 +34,8 @@ function ctex(c: HTMLCanvasElement): THREE.CanvasTexture {
 }
 
 async function screenTex(src: ScreenSource, aspect: number): Promise<THREE.CanvasTexture> {
-  const W = Math.round(1536 * Math.min(1, aspect)), H = Math.round(W / aspect);
+  const resolution = matchMedia('(pointer: coarse)').matches ? 768 : 1536;
+  const W = Math.round(resolution * Math.min(1, aspect)), H = Math.round(W / aspect);
   const c = document.createElement('canvas');
   c.width = W;
   c.height = H;
@@ -42,12 +43,8 @@ async function screenTex(src: ScreenSource, aspect: number): Promise<THREE.Canva
   let im: CanvasImageSource & { width: number; height: number };
   if (typeof src === 'string') im = await img(src);
   else im = src().image as CanvasImageSource & { width: number; height: number };
-  const tmp = document.createElement('canvas');
-  tmp.width = im.width;
-  tmp.height = im.height;
-  const tg = tmp.getContext('2d')!;
-  tg.drawImage(im, 0, 0);
-  const p = tg.getImageData(4, im.height - 4, 1, 1).data;
+  g.drawImage(im, 4, im.height - 4, 1, 1, 0, 0, 1, 1);
+  const p = g.getImageData(0, 0, 1, 1).data;
   g.fillStyle = `rgb(${p[0]},${p[1]},${p[2]})`;
   g.fillRect(0, 0, W, H);
   const scale = Math.min(W / im.width, H / im.height);
@@ -233,11 +230,11 @@ export async function phone(src: ScreenSource, H = 2.3): Promise<THREE.Group> {
   shell.position.y = H / 2;
   shell.castShadow = true;
   body.add(shell);
-  const sw = W * 0.92, sh = (sw * 844) / 390;
-  const st = screenStack(t, sw, Math.min(sh, H * 0.955), D / 2 + 0.001, W * 0.965, H * 0.975, 0.14);
+  const sh = Math.min(W * 0.92 * 844 / 390, H * 0.955), sw = sh * 390 / 844;
+  const st = screenStack(t, sw, sh, D / 2 + 0.001, W * 0.965, H * 0.975, 0.14);
   st.position.y = H / 2;
   body.add(st);
-  (st.children[1] as THREE.Mesh).geometry = rplane(sw, Math.min(sh, H * 0.955), 0.11);
+  (st.children[1] as THREE.Mesh).geometry = rplane(sw, sh, 0.11);
   const isl = new THREE.Mesh(rplane(W * 0.3, 0.085, 0.042), new THREE.MeshBasicMaterial({ color: 0x050505 }));
   isl.position.set(0, H * 0.955, D / 2 + 0.008);
   body.add(isl);
@@ -265,9 +262,10 @@ function stageLabel(h: string): CSS2DObject {
 }
 
 function stageSetup(el: HTMLElement) {
-  const w = el.clientWidth, h = el.clientHeight;
+  const w = el.clientWidth || 1, h = el.clientHeight || 1;
   const r = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  r.setPixelRatio(Math.min(devicePixelRatio, 2));
+  const coarse = matchMedia('(pointer: coarse)').matches;
+  r.setPixelRatio(Math.min(devicePixelRatio, coarse ? 1.25 : 2));
   r.setSize(w, h);
   r.toneMapping = THREE.ACESFilmicToneMapping;
   r.toneMappingExposure = 1.05;
@@ -280,13 +278,16 @@ function stageSetup(el: HTMLElement) {
   el.appendChild(lr.domElement);
   const s = new THREE.Scene();
   const pm = new THREE.PMREMGenerator(r);
-  s.environment = pm.fromScene(new RoomEnvironment(r), 0.04).texture;
+  const room = new RoomEnvironment(r);
+  s.environment = pm.fromScene(room, 0.04).texture;
+  room.dispose();
+  pm.dispose();
   const c = new THREE.PerspectiveCamera(28, w / h, 0.1, 100);
   s.add(new THREE.HemisphereLight(0xffffff, 0xe8e6df, 0.6));
   const dl = new THREE.DirectionalLight(0xffffff, 1.6);
   dl.position.set(2, 14, 5);
   dl.castShadow = true;
-  dl.shadow.mapSize.set(2048, 2048);
+  dl.shadow.mapSize.setScalar(coarse ? 512 : 2048);
   dl.shadow.radius = 8;
   dl.shadow.bias = -0.0004;
   Object.assign(dl.shadow.camera, { left: -9, right: 9, top: 9, bottom: -9, near: 1, far: 40 });
@@ -305,7 +306,7 @@ function resolve(src: string): ScreenSource {
   return src;
 }
 
-export async function stage(el: HTMLElement, projects: ProjectSpec[], opts: { reduced?: boolean } = {}): Promise<StageCtl> {
+export async function stage(el: HTMLElement, projects: ProjectSpec[]): Promise<StageCtl> {
   await document.fonts.load('600 52px Inter');
   await document.fonts.load('32px "JetBrains Mono"');
   const { s, c, go, r, lr } = stageSetup(el);
@@ -341,7 +342,7 @@ export async function stage(el: HTMLElement, projects: ProjectSpec[], opts: { re
     G.push({ g, lbls });
   }
 
-  const reduced = opts.reduced ?? false;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   let cur = 0, tgt = 0, mx = 0, tx = 0;
 
   function apply() {
@@ -358,66 +359,68 @@ export async function stage(el: HTMLElement, projects: ProjectSpec[], opts: { re
 
   c.position.set(0.8, 3.6, 17.2);
   c.lookAt(0.45, 1.95, 0);
-  apply();
-
-  // loop: pausa fora da viewport; renderiza só quando há mudança
-  let raf = 0, visible = true, last = performance.now();
+  let raf = 0, visible = false, last = performance.now();
   function loop(now: number) {
     raf = 0;
     const dt = Math.min(0.1, (now - last) / 1000);
     last = now;
     const k = 1 - Math.exp(-dt * 5);
     const dc = tgt - cur, dm = tx - mx;
-    if (Math.abs(dc) > 0.0001 || Math.abs(dm) > 0.0001) {
-      cur += dc * k;
-      mx += dm * k;
-      if (Math.abs(tgt - cur) < 0.001) cur = tgt;
-      apply();
-    }
-    if (visible) raf = requestAnimationFrame(loop);
+    cur = reduced.matches || Math.abs(dc) < 0.001 ? tgt : cur + dc * k;
+    mx = reduced.matches || Math.abs(dm) < 0.001 ? tx : mx + dm * k;
+    apply();
+    if (cur !== tgt || mx !== tx) raf = requestAnimationFrame(loop);
   }
   function start() {
-    if (!raf) {
+    if (!visible || document.hidden) {
+      cancelAnimationFrame(raf);
+      raf = 0;
+    } else if (!raf) {
       last = performance.now();
       raf = requestAnimationFrame(loop);
     }
   }
   const io = new IntersectionObserver((entries) => {
     visible = entries.some((e) => e.isIntersecting);
-    if (visible) start();
+    start();
   });
   io.observe(el);
-  start();
+  document.addEventListener('visibilitychange', start);
+  reduced.addEventListener('change', () => { tx = 0; start(); });
 
-  if (!reduced) {
-    el.addEventListener('pointermove', (e) => {
-      const b = el.getBoundingClientRect();
-      tx = (e.clientX - b.left) / b.width - 0.5;
-    });
-    el.addEventListener('pointerleave', () => {
-      tx = 0;
-    });
-  }
+  el.addEventListener('pointermove', (e) => {
+    if (reduced.matches || !e.isPrimary || (e.pointerType === 'touch' && !e.buttons)) return;
+    const b = el.getBoundingClientRect();
+    tx = (e.clientX - b.left) / b.width - 0.5;
+    start();
+  });
+  el.addEventListener('pointerleave', () => {
+    tx = 0;
+    start();
+  });
+  for (const event of ['pointercancel', 'pointerup']) el.addEventListener(event, () => { tx = 0; start(); });
 
   const resize = () => {
     const w = el.clientWidth, h = el.clientHeight;
     if (!w || !h) return;
     c.aspect = w / h;
+    c.position.z = Math.max(13, 19 / c.aspect);
+    c.lookAt(0.45, 1.95, 0);
     c.updateProjectionMatrix();
     r.setSize(w, h);
     lr.setSize(w, h);
-    apply();
+    start();
   };
   new ResizeObserver(resize).observe(el);
 
   return {
     set(i) {
       tgt = i;
-      if (reduced) { cur = i; apply(); }
+      start();
     },
     jump(i) {
       cur = tgt = i;
-      apply();
+      start();
     },
   };
 }

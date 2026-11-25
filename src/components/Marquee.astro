@@ -1,17 +1,27 @@
 ---
-const items = ['Python','FastAPI','PostgreSQL','pandas','Linux','Docker','Nginx','SQLite','Qlik','Python'];
-// trilha duplicada para loop contínuo
-const track = [...items, ...items];
+const items = ['Python', 'FastAPI', 'PostgreSQL', 'SQLAlchemy', 'Pydantic', 'Alembic', 'Docker', 'Docker Compose', 'Linux', 'Nginx', 'Git', 'GitHub Actions', 'Pytest', 'pandas', 'SQLite', 'Qlik', 'OR-Tools', 'REST API', 'ETL', 'OpenAPI', 'TypeScript', 'Astro', 'Three.js'];
 ---
 
 <div class="marq" aria-hidden="true">
   <div class="track">
-    {track.map((t, i) => (
-      <>
-        {i > 0 && <i>✳</i>}
-        <span>{t}</span>
-      </>
+    {[0, 1].map(() => (
+      <div class="sequence">{items.map(t => <><span>{t}</span><i>✳</i></>)}</div>
     ))}
-    <i>✳</i>
   </div>
 </div>
+
+<script>
+  const band = document.querySelector<HTMLElement>('.marq');
+  const sequence = band?.querySelector<HTMLElement>('.sequence');
+  if (band && sequence) {
+    const size = new ResizeObserver(() => {
+      const pixelsPerSecond = Math.min(64, Math.max(24, band.clientWidth / 32));
+      band.style.setProperty('--duration', `${sequence.offsetWidth / pixelsPerSecond}s`);
+    });
+    size.observe(sequence);
+    size.observe(band);
+    new IntersectionObserver(([entry]) => {
+    band.classList.toggle('in-view', entry.isIntersecting);
+    }).observe(band);
+  }
+</script>

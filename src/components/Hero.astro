@@ -1,14 +1,171 @@
-<section class="hero" aria-label="introdução">
-  <div id="cube" aria-hidden="true"></div>
-  <h1><span class="word w1">Back-end,</span>
-  <span class="word w2">dados</span>
-  <span class="word w3">&amp; sistemas.</span></h1>
-  <div class="hero-actions">
-    <p class="hint">Construo <b>APIs, motores de processamento e pipelines de dados</b> com Python e SQL.</p>
-    <div class="hero-links">
-      <a class="btn primary" href="#trabalhos">Ver projetos <b>↘</b></a>
-      <a class="btn" href={import.meta.env.BASE_URL + 'curriculo/'}>Currículo <b>↗</b></a>
+---
+import { cubeEntries as entries, cubeFaces as faces } from '../data/cubeEntries';
+import EtlDemo from './EtlDemo.astro';
+
+---
+<section id="hero" aria-labelledby="hero-title">
+  <div class="spread">
+    <header>
+      <h1 id="hero-title">Back-end,<br/><i>dados</i><br/>&amp; sistemas.</h1>
+      <p class="dek">Construo <strong>APIs, motores de processamento e pipelines de dados</strong> com Python e SQL.</p>
+      <nav aria-label="Acesso direto"><a class="btn primary" href="#trabalhos">Ver projetos ↘</a><a class="btn" href={import.meta.env.BASE_URL + 'curriculo/'}>Currículo ↗</a></nav>
+    </header>
+    <div class="atlas">
+      <h2 class="mono">Índice do cubo</h2>
+      <div id="cube" aria-hidden="true"></div>
+      {faces.length > 0 && <label class="mono">Orientar por face <select id="cube-face">{faces.map((face,i) => <option value={i+1}>{i+1} / {face}</option>)}</select></label>}
+      <p class="caption"><span>Arraste para girar ou selecione um bloco azul. </span>Explore os blocos pelo índice abaixo.</p>
+      <div class="entries">{entries.map((entry,i) => <a class="block" data-cube-index={i} data-entry-id={entry.id} data-face={entry.face} href={entry.type === 'http' ? '#api' : entry.href} aria-controls="cube-card" aria-expanded="false"><b class="mono">{String(i+1).padStart(2,'0')}</b> {entry.name}</a>)}</div>
+  <section id="cube-card" hidden>
+    <button id="cube-close" type="button">Fechar ×</button>
+    {entries.map((entry,i) => <article hidden data-detail={i}>
+      <p class="mono">{entry.category}{entry.face && ` / Face ${entry.face} · ${faces[entry.face-1]}`}</p>
+      <h2 id={`block-title-${i}`}>{entry.name}</h2><p>{entry.summary}</p>
+      <a class="link" href={entry.type === 'http' ? '#api' : entry.href}>{entry.type === 'http' ? 'Abrir Backend Playground' : entry.cta} ↗</a>
+      {!!entry.technologies?.length && <p><strong>Tecnologias: </strong>{entry.technologies.join(' · ')}</p>}
+      {!!entry.metrics?.length && <ul>{entry.metrics.map(metric => <li>{metric}</li>)}</ul>}
+      {entry.type === 'etl' && <EtlDemo />}
+      {entry.type === 'http' && <p>O demonstrador envia uma requisição HTTP real no Backend Playground.</p>}
+    </article>)}
+  </section>
     </div>
   </div>
-  <p class="scroll mono">↓ role para ver os trabalhos</p>
 </section>
+
+<style>
+  .spread { max-width: 110rem; margin: auto; padding: clamp(1.25rem,4vw,5rem); display: grid; grid-template-columns: .9fr 1.1fr; align-items: center; gap: clamp(2rem,5vw,6rem); }
+  .spread > * { min-width: 0; }
+  nav, .entries { display: flex; align-items: center; gap: .65rem; flex-wrap: wrap; }
+  h1, article h2 { font: 400 clamp(4rem,8vw,10rem)/.9 'Instrument Serif',serif; letter-spacing: -.04em; margin-block: .25em; }
+  h1 i, .block b { color: var(--a); }
+  .dek, article { line-height: 1.55; }
+  .dek { max-width: 43ch; margin: 1.5rem 0; }
+  .primary { background: var(--ink); color: var(--bg); }
+  .atlas { position: relative; border-block: 1px solid var(--line); padding-block: 1rem; }
+  .atlas > h2, label, article .mono { font-size: .85rem; font-weight: 500; }
+  #cube { position: relative; inset: auto; transform: none; width: 100%; height: auto; aspect-ratio: 1.5; margin: 0; }
+  #cube::before { content: ''; position: absolute; inset: 76% 24% 6%; pointer-events: none; background: radial-gradient(ellipse, rgb(13 13 13 / .10), transparent 68%); }
+  .caption { color: var(--mu); margin: 1rem 0 .6rem; }
+  #cube[hidden] ~ .caption span { display: none; }
+  .block, select, button { min-height: 44px; padding: .55rem .75rem; border: 1px solid var(--line); font: inherit; color: inherit; background: var(--bg); cursor: pointer; max-width: 100%; }
+  .block { display: inline-flex; gap: .6rem; align-items: center; font-size: .9rem; }
+  .block:hover, button:hover { border-color: var(--a); }
+  #cube-card { position: absolute; z-index: 5; width: min(23rem,100%); max-height: 52dvh; overflow: auto; overflow-wrap: anywhere; padding: 1rem; background: var(--bg); color: var(--ink); border: 1px solid var(--line); box-shadow: 0 .4rem 1rem #0002; }
+  #cube-close { float: right; margin-left: .5rem; }
+  article h2 { font-size: 2rem; }
+  article > * + * { margin-top: .85rem; }
+  article ul { padding-left: 1.3em; }
+  [hidden] { display: none; }
+  @media(max-width: 48rem) { .spread { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  import { cubeEntries } from '../data/cubeEntries';
+  const cube = document.querySelector<HTMLElement>('#cube')!;
+  const face = document.querySelector<HTMLSelectElement>('#cube-face');
+  const blocks = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-cube-index]'));
+  const card = document.querySelector<HTMLElement>('#cube-card')!;
+  const atlas = card.parentElement!;
+  const closeButton = card.querySelector('button')!;
+  const details = card.querySelectorAll<HTMLElement>('[data-detail]');
+  let fromCube = false, pinned = false, restoring = false;
+  let timer: number | undefined;
+  let selected: number | null = null;
+  let controller: { select(i: number|null): void; orient?(face:number):void; dispose?():void } | undefined;
+
+  function onFace(n: number) {
+    if (!face || !Array.from(face.options).some(option => +option.value === n)) return;
+    face.value = String(n);
+    blocks.forEach(block => { block.hidden = block.dataset.face !== face.value && block !== document.activeElement; });
+  }
+  if (face) onFace(+face.value);
+  face?.addEventListener('change', () => { dismiss(); onFace(+face.value); controller?.orient?.(+face.value); });
+  function place(x: number, y: number) {
+    card.style.left = `${Math.max(0, Math.min(x, atlas.clientWidth-card.offsetWidth))}px`;
+    card.style.top = `${y}px`;
+  }
+  function placeAtLink() {
+    if (selected === null || fromCube) return;
+    const rect = blocks[selected].getBoundingClientRect(), box = atlas.getBoundingClientRect();
+    place(rect.left-box.left, rect.bottom-box.top+3);
+  }
+  function openBlock(i: number, canvas = false, pin = false) {
+    clearTimeout(timer);
+    if (selected !== null) blocks[selected].setAttribute('aria-expanded','false');
+    if (selected !== i) card.scrollTop = 0;
+    selected = i;
+    fromCube = canvas; pinned = pin;
+    controller?.select(i);
+    details.forEach((detail,j) => { detail.hidden = i !== j; });
+    blocks[i].setAttribute('aria-expanded','true');
+    card.setAttribute('aria-labelledby', `block-title-${i}`);
+    card.hidden = false;
+    placeAtLink();
+  }
+  function dismiss(restore = false) {
+    clearTimeout(timer);
+    if (selected === null) return;
+    if (restore && card.contains(document.activeElement)) {
+      restoring = true;
+      (blocks[selected].hidden ? face : blocks[selected])?.focus({preventScroll:true});
+      restoring = false;
+    }
+    blocks[selected].setAttribute('aria-expanded','false');
+    card.hidden = true; pinned = false;
+    selected = null; controller?.select(null);
+  }
+  function leave() {
+    clearTimeout(timer);
+    timer = window.setTimeout(() => {
+      if (!pinned && !card.matches(':hover,:focus-within') && !blocks[selected ?? -1]?.matches(':focus')) dismiss();
+    }, 300);
+  }
+  blocks.forEach((block,i) => {
+    block.addEventListener('pointerenter', e => {
+      if (e.pointerType !== 'touch' && !pinned && !card.contains(document.activeElement)) openBlock(i);
+    });
+    block.addEventListener('pointerleave', leave);
+    block.addEventListener('focus', () => { if (!restoring) openBlock(i); });
+    block.addEventListener('click', e => {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault(); openBlock(i,false,true);
+      if (!e.detail) closeButton.focus();
+    });
+  });
+  closeButton.addEventListener('click', () => dismiss(true));
+  card.addEventListener('pointerenter', () => clearTimeout(timer));
+  card.addEventListener('pointerleave', leave);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && selected !== null) dismiss(true); });
+  document.addEventListener('focusin', e => {
+    if (!restoring && !card.contains(e.target as Node) && !blocks.includes(e.target as HTMLAnchorElement)) dismiss();
+  });
+  document.addEventListener('pointerdown', e => {
+    if (cube.contains(e.target as Node) && selected !== null) { pinned = true; clearTimeout(timer); }
+    else if (!card.contains(e.target as Node) && !(e.target as Element).closest('[data-cube-index]')) dismiss();
+  });
+  card.querySelectorAll('a').forEach(a => a.addEventListener('click', e => {
+    if (!e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey) dismiss();
+  }));
+  window.addEventListener('resize', placeAtLink);
+  function onHover(index: number|null, x: number, y: number) {
+    if (pinned || card.contains(document.activeElement) || blocks.includes(document.activeElement as HTMLAnchorElement)) return;
+    if (index === null) { if (fromCube) leave(); return; }
+    openBlock(index,true); onAnchor(x,y);
+  }
+  function onAnchor(x:number,y:number) {
+    if (fromCube && selected !== null) place(cube.offsetLeft+x-12,cube.offsetTop+y+18);
+  }
+  const observer = new IntersectionObserver(async ([entry]) => {
+    if (!entry.isIntersecting) return;
+    observer.disconnect();
+    try {
+      const {dataCube} = await import('../three/dataCube');
+      const options = { entries: cubeEntries, onSelect: (i:number) => openBlock(i,true,true), onHover, onFace, onAnchor };
+      controller = dataCube(cube, options);
+      if (face && +face.value !== 1) controller.orient?.(+face.value);
+      controller.select(selected);
+    } catch { cube.hidden = true; }
+  });
+  observer.observe(cube);
+  window.addEventListener('pagehide', e => { if (!e.persisted) { observer.disconnect(); controller?.dispose?.(); } });
+</script>

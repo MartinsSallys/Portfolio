@@ -7,7 +7,7 @@ export interface Setup {
   s: THREE.Scene;
   c: THREE.PerspectiveCamera;
   go: () => void;
-  resize: () => void;
+  resize: (render?: boolean) => void;
 }
 
 export function setup(el: HTMLElement, fov = 35): Setup {
@@ -22,14 +22,14 @@ export function setup(el: HTMLElement, fov = 35): Setup {
   el.appendChild(lr.domElement);
   const s = new THREE.Scene(), c = new THREE.PerspectiveCamera(fov, w / h, 0.1, 100);
   const go = () => { r.render(s, c); lr.render(s, c); };
-  const resize = () => {
+  const resize = (render = true) => {
     const w2 = el.clientWidth, h2 = el.clientHeight;
     if (!w2 || !h2) return;
     c.aspect = w2 / h2;
     c.updateProjectionMatrix();
     r.setSize(w2, h2);
     lr.setSize(w2, h2);
-    go();
+    if (render) go();
   };
   return { r, lr, s, c, go, resize };
 }

@@ -22,26 +22,3 @@ import Footer from '../components/Footer.astro';
   </main>
   <Footer />
 </Base>
-
-<script>
-  // cubo do hero: Three.js só quando entra na viewport
-  const cubeEl = document.getElementById('cube');
-  if (cubeEl) {
-    const io = new IntersectionObserver(async (entries) => {
-      if (!entries.some((e) => e.isIntersecting)) return;
-      io.disconnect();
-      await document.fonts.ready;
-      const { dataCube } = await import('../three/dataCube');
-      try { dataCube(cubeEl, {
-        cube: 0xeeeeea,
-        line: 0x0d0d0d,
-        accent: 0x2b50ff,
-        labels: [
-          ['<b>●</b> fundec-rs', [2.6, 2.6, 0.5]],
-          ['PostgreSQL', [-3.4, -2.2, 1]],
-        ],
-      }); } catch { /* sem WebGL */ }
-    }, { rootMargin: '200px' });
-    io.observe(cubeEl);
-  }
-</script>

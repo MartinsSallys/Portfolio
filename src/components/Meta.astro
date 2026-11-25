@@ -1,6 +1,15 @@
+---
+import { Image } from 'astro:assets';
+import avatar from '../assets/SallysIA.png';
+---
 <header class="meta mono" id="topo">
-  <b>Sallys Martins</b>
+  <b class="identity"><Image src={avatar} width={40} height={40} alt="" /> Sallys Martins</b>
   <span>backend · dados · infra</span>
-  <nav aria-label="seções"><a href="#trabalhos">trabalhos</a>&nbsp;·&nbsp;<a href="#estudos">estudos</a>&nbsp;·&nbsp;<a href="#sobre">sobre &amp; contato</a>&nbsp;·&nbsp;<a href={import.meta.env.BASE_URL + "curriculo/"}>currículo ↗</a></nav>
+  <nav aria-label="seções"><a href="#trabalhos">trabalhos</a><a href="#estudos">estudos</a><a href="#sobre">sobre &amp; contato</a><a href={import.meta.env.BASE_URL + "curriculo/"}>currículo ↗</a></nav>
   <span><b style="color:#1aa260">●</b> disponível para vagas</span>
 </header>
+
+<style>
+  .identity { display: inline-flex; align-items: center; gap: .65rem; }
+  .identity img { border-radius: 50%; object-fit: cover; }
+</style>

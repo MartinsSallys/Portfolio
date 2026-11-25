@@ -1,0 +1,26 @@
+<form class="etl-demo">
+  <strong>Simulação ETL · dados sintéticos</strong>
+  <label>Identificadores de exemplo, separados por vírgula
+    <input name="amostra" value=" lote-a, LOTE-B, lote-a" maxlength="160" />
+  </label>
+  <p>A transformação remove espaços, uniformiza maiúsculas e descarta duplicatas. A carga fica apenas nesta página.</p>
+  <button type="submit">Executar ETL</button>
+  <output aria-live="polite"></output>
+</form>
+<style>
+  .etl-demo { display: grid; gap: .6rem; text-align: left; border-block: 1px solid var(--line); padding-block: 1rem; }
+  input, button { padding: .6rem; min-height: 44px; color: inherit; background: var(--bg); border: 1px solid var(--line); font: inherit; }
+  input { display: block; width: 100%; } button { justify-self: start; cursor: pointer; } output { color: var(--a); }
+</style>
+<script>
+  document.querySelectorAll<HTMLFormElement>('.etl-demo').forEach(form => {
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      const raw = String(new FormData(form).get('amostra')).split(',').map(s => s.trim()).filter(Boolean);
+      const loaded = [...new Set(raw.map(s => s.toLocaleUpperCase('pt-BR')))];
+      form.querySelector('output')!.value = raw.length
+        ? `Extraídos: ${raw.length}. Carregados: ${loaded.length}. Resultado: ${loaded.join(', ')}.`
+        : 'Nenhum registro para carregar. Informe um identificador.';
+    });
+  });
+</script>
